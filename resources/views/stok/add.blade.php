@@ -29,7 +29,7 @@
 
     <div class="mb-4">
         <label for="desc" class="block text-sm font-bold mb-2">Deskripsi:</label>
-        <textarea type="textarea" id="password_confirmation" name="password_confirmation" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <textarea type="textarea" id="desc" name="desc" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
     </div>
     <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan Data</button>
     </form>

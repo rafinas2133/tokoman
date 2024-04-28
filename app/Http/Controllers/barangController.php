@@ -29,7 +29,7 @@ class barangController extends Controller
             'jenis' => 'required',
             'nama' => 'required',
             'stok' => 'required|integer',
-            'deskripsi' => 'nullable|string',
+            'desc' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
@@ -37,10 +37,10 @@ class barangController extends Controller
         }
 
         $barang = new StokBarang();
-        $barang->jenis_barang = $request->jenis_barang;
-        $barang->nama_barang = $request->nama_barang;
+        $barang->jenis_barang = $request->jenis;
+        $barang->nama_barang = $request->nama;
         $barang->stok = $request->stok;
-        $barang->deskripsi = $request->deskripsi;
+        $barang->deskripsi = $request->desc;
         $barang->save();
 
         return redirect('/stok')->with('success', 'Barang berhasil ditambahkan!');

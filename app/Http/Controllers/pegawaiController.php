@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -79,18 +80,17 @@ class pegawaiController extends Controller
         return redirect('/admin');
     }
     public function delete($id){
-        $idauth = Auth::user()->id;
         
         DB::table('users')->where('id', $id)->delete();;
-        if ($id == $idauth ) {
-            return redirect('/forgot-token');
+        if($id = Auth::user()->id){
+            Session::forget('role_id');
+            return redirect('/');
         }
-        
 
         return redirect('/admin');
     }
     public function deleteALL(){
-        redirect('/forgot-token');
+        Session::forget('role_id');
         DB::table('users')->delete();
         DB::statement('ALTER TABLE users AUTO_INCREMENT = 1');
         return redirect('/');

@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,6 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $role_id = Auth::user()->role_id; // Ambil role ID dari user
+        $request->session()->put('role_id', $role_id); // Simpan role ID ke dalam session
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 
@@ -35,7 +39,9 @@ class AuthenticatedSessionController extends Controller
      * Destroy an authenticated session.
      */
     public function destroy(Request $request): RedirectResponse
-    {
+    {   
+        Session::forget('role_id');
+
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -79,7 +79,7 @@ class barangController extends Controller
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
     public function deleteAll(){
-        StokBarang::delete();
+        StokBarang::truncate();
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
 }

@@ -14,7 +14,7 @@
         <a href="/stok/deleteAll" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> - Hapus semua data barang</a>
     </div>
     @if($barang->isEmpty())
-        <div class="text-center text-info">
+        <div class="text-center text-white text-info">
             <p>Belum ada data</p>
         </div>
     @else

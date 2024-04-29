@@ -16,9 +16,12 @@ class barangController extends Controller
     }
     public function employeeIndex(){
         $barang = StokBarang::paginate(9);
+        return view("dashboard", ["barangs" => $barang]);
+    }
+    public function adminIndex(){
+        $barang = StokBarang::paginate(9);
         return view("stok.index", ["barang" => $barang]);
     }
-
     public function add(){
         return view("stok.add");
     }

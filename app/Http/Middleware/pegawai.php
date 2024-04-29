@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Route;
 
-class admin
+class pegawai
 {
     /**
      * Handle an incoming request.
@@ -18,8 +18,8 @@ class admin
     {
         $roleId = $request->session()->get('role_id');
         switch ($roleId) {
-            case '0': return $next($request);
-            case '1': return redirect('/empdashboard');
+            case '0': return redirect ('/dashboard');
+            case '1': return $next($request);
             default : return redirect('/');
         }
     }

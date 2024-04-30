@@ -67,16 +67,18 @@ class barangController extends Controller
         $fileName1='';
         $fileName2= '';
         if($request->file('gambar1') != null){
+            $path=(public_path());
             $file=$request->file('gambar1');
             $fileName1=date('YmdHi').$file->getClientOriginalName();
-            $paths='/'.$fileName1;
+            $paths=$path.'/'.$fileName1;
             move_uploaded_file($file, $paths);
             $path1='/'.$fileName1;
         }
         if($request->file('gambar2')!= null){
+            $path=public_path();
             $file=$request->file('gambar2');
             $fileName2=date('YmdHi').$file->getClientOriginalName();
-            $paths='/'.$fileName2;
+            $paths=$path.'/'.$fileName2;
             move_uploaded_file($file, $paths);
             $path2='/'.$fileName2;
         }
@@ -147,17 +149,19 @@ class barangController extends Controller
         $fileName2=$barang->fileName2;
         if($request->file('gambar1') != null){
             $this->timpaGambar1($id);
+            $path=public_path();
             $file=$request->file('gambar1');
             $fileName1=date('YmdHi').$file->getClientOriginalName();
-            $paths='/'.$fileName1;
+            $paths=$path.'/'.$fileName1;
             move_uploaded_file($file, $paths);
             $path1='/'.$fileName1;
         }
         if($request->file('gambar2') != null){
             $this->timpaGambar2($id);
+            $path=public_path();
             $file=$request->file('gambar2');
             $fileName2=date('YmdHi').$file->getClientOriginalName();
-            $paths='/'.$fileName2;
+            $paths=$path.'/'.$fileName2;
             move_uploaded_file($file, $paths);
             $path2='/'.$fileName2;
         }

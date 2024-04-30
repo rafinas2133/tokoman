@@ -1,13 +1,13 @@
 @if ($barang -> stok > 0)
 <?php $pathimage='https://w7.pngwing.com/pngs/362/594/png-transparent-whatsapp-inc-business-whatsapp-text-logo-sign-thumbnail.png'?>
-<div class="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500">
+<div class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10">
     @if($barang->pathImg1=='')
-    <img class="max-w-[300px] max-h-[300px]" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
+    <img class="w-full max-h-[350px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
     @else
     @if($barang->pathImg2=='')
-    <img class="w-[300px] h-[300px]" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
+    <img class="w-full h-[350px] rounded-lg" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
     @else
-    <div class="w-[300px] h-[300px]">
+    <div class="w-full h-[300px] rounded-lg">
     <!-- Slides -->
     <div class="mySlide hidden opacity-0 transition-opacity duration-1000 ease-in-out">
         <img src="{{$barang->pathImg1}}" class="w-full">

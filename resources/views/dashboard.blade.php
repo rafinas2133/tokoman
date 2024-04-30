@@ -5,6 +5,7 @@
         </h2>
     </x-slot>
     @if(session('role_id')==1)
+    <x-search-stok :route="'emp'"/>
     <x-stok-layout :barang="$barangs" />
     @endif 
     @if(session('role_id') ==0)

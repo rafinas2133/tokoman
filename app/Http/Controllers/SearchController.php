@@ -24,13 +24,13 @@ class SearchController extends Controller
         }
 
         if (!empty($type)) {
-            $barangs->where('jenis_barang', $type);
+            $barangs->where('jenis_tutup', $type);
         }
 
         $barangs = $barangs->paginate(9);
 
         // Ambil 3 jenis barang acak yang berbeda
-        $types = StokBarang::select('jenis_barang')->distinct()->inRandomOrder()->take(3)->get();
+        $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->take(3)->get();
 
         return view('welcome', compact('barangs', 'types'));
     }

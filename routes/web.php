@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\barangController;
+use App\Http\Controllers\SearchStok;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\TokenController;
@@ -16,6 +17,7 @@ use App\Http\Middleware;
 // Route untuk user terAuth()
 Route::middleware(['auth','verified'])->group(function () {
     //Route Semua Role User
+    Route::get('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
     Route::get('/stok/add', [barangController::class,'add'])->name('tambahStok');
     Route::post('/stok/addsave', [barangController::class,'addsave'])->name('stokSave');
     Route::get('/stok/edit/{id}', [barangController::class,'edit'])->name('editStok');
@@ -25,9 +27,11 @@ Route::middleware(['auth','verified'])->group(function () {
     //Route khusus Pegawai
     Route::middleware(['employee'])->group(function () {
         Route::get('/empdashboard', [barangController::class,'employeeIndex'])->name('dashboard');
+        Route::get('/empdashboard/search', [SearchStok::class,'index'])->name('searchStokemp');
     });
     //Khusus Admin
     Route::middleware(['admin'])->group(function () {
+        Route::get('/stok/search', [SearchStok::class,'index'])->name('searchStokadmin');
         Route::get('/admin',[pegawaiController::class,'index'])->name('Manajemen.Admin');
         Route::get('admin/add', [pegawaiController::class,'add'])->name('Tambah.Pegawai');
         Route::post('admin/addsave', [pegawaiController::class,'addSave'])->name('Tambahkan.Pegawai');
@@ -47,6 +51,7 @@ Route::get('/', [barangController::class,'index'])->name('stokBarang');
 
 //RouteSearch
 Route::get('/search', [SearchController::class,'index'])->name('search');
+Route::get('dashboard/search', [SearchStok::class,'index'])->name('searchStok');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

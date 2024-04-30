@@ -67,20 +67,14 @@ class barangController extends Controller
         $fileName1='';
         $fileName2= '';
         if($request->file('gambar1') != null){
-            $path=(public_path());
-            $file=$request->file('gambar1');
-            $fileName1=date('YmdHi').$file->getClientOriginalName();
-            $paths=$path.'/'.$fileName1;
-            move_uploaded_file($file, $paths);
+            $imageName = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
+            $request->file('gambar1')->move(public_path(), $imageName);
             $path1='/'.$fileName1;
         }
         if($request->file('gambar2')!= null){
-            $path=public_path();
-            $file=$request->file('gambar2');
-            $fileName2=date('YmdHi').$file->getClientOriginalName();
-            $paths=$path.'/'.$fileName2;
-            move_uploaded_file($file, $paths);
-            $path2='/'.$fileName2;
+            $imageName = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
+            $request->file('gambar2')->move(public_path(), $imageName);
+            $path1='/'.$fileName1;
         }
         
         $barang = new StokBarang();
@@ -148,22 +142,14 @@ class barangController extends Controller
         $fileName1=$barang->fileName1;
         $fileName2=$barang->fileName2;
         if($request->file('gambar1') != null){
-            $this->timpaGambar1($id);
-            $path=public_path();
-            $file=$request->file('gambar1');
-            $fileName1=date('YmdHi').$file->getClientOriginalName();
-            $paths=$path.'/'.$fileName1;
-            move_uploaded_file($file, $paths);
+            $imageName = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
+            $request->file('gambar1')->move(public_path(), $imageName);
             $path1='/'.$fileName1;
         }
-        if($request->file('gambar2') != null){
-            $this->timpaGambar2($id);
-            $path=public_path();
-            $file=$request->file('gambar2');
-            $fileName2=date('YmdHi').$file->getClientOriginalName();
-            $paths=$path.'/'.$fileName2;
-            move_uploaded_file($file, $paths);
-            $path2='/'.$fileName2;
+        if($request->file('gambar2')!= null){
+            $imageName = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
+            $request->file('gambar2')->move(public_path(), $imageName);
+            $path1='/'.$fileName1;
         }
         
         

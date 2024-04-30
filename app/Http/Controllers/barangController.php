@@ -68,13 +68,13 @@ class barangController extends Controller
         $fileName2= '';
         if($request->file('gambar1') != null){
             $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
-            $request->file('gambar1')->store($fileName1,['disk' => 'public']);
-            $path1='/'.$fileName1;
+            $request->file('gambar1')->move(public_path('/imageUpload'), $fileName1);
+            $path1='/imageUpload'.$fileName1;
         }
         if($request->file('gambar2')!= null){
-            $fileName2= time().'.'.$request->file('gambar2')->getClientOriginalExtension();
-            $request->file('gambar2')->store($fileName2,['disk' => 'public']);
-            $path1='/'.$fileName2;
+            $$fileName2 = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
+            $request->file('gambar2')->move(public_path('/imageUpload'), $fileName2);
+            $path2='/imageUpload'.$fileName2;
         }
         
         $barang = new StokBarang();
@@ -142,15 +142,15 @@ class barangController extends Controller
         $fileName1=$barang->fileName1;
         $fileName2=$barang->fileName2;
         if($request->file('gambar1') != null){
-            $imageName = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
-            $request->file('gambar1')->move(public_path(), $imageName);
-            $path1='/'.$fileName1;
+            $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
+            $request->file('gambar1')->move(public_path('/imageUpload'), $fileName1);
+            $path1='/imageUpload'.$fileName1;
         }
         if($request->file('gambar2')!= null){
-            $imageName = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
-            $request->file('gambar2')->move(public_path(), $imageName);
-            $path1='/'.$fileName1;
-        }
+            $$fileName2 = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
+            $request->file('gambar2')->move(public_path('/imageUpload'), $fileName2);
+            $path2='/imageUpload'.$fileName2;
+        }  
         
         
         $barang->nama_barang = $request->nama;
@@ -172,9 +172,9 @@ class barangController extends Controller
         $barang=StokBarang::where('id', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            unlink('/'.$barang->fileName2);
+            unlink('imageUpload'.'/'.$barang->fileName2);
         }
-        unlink('/'.$barang->fileName1);
+        unlink('imageUpload'.'/'.$barang->fileName1);
         StokBarang::destroy($id);
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
@@ -184,9 +184,9 @@ class barangController extends Controller
         foreach($barang as $value){
         $pathImg2 = $value->pathImg2;
             if($pathImg2!=''){
-                unlink('/'.$value->fileName2);
+                unlink('imageUpload'.'/'.$value->fileName2);
             }
-            unlink('/'.$value->fileName1);
+            unlink('imageUpload'.'/'.$value->fileName1);
         }
         StokBarang::truncate();
         

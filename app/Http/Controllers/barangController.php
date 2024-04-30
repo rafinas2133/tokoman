@@ -67,20 +67,20 @@ class barangController extends Controller
         $fileName1='';
         $fileName2= '';
         if($request->file('gambar1') != null){
-            $path=public_path().'/uploads/images/';
+            $path=public_path();
             $file=$request->file('gambar1');
             $fileName1=date('YmdHi').$file->getClientOriginalName();
             $paths=$path.'/'.$fileName1;
             move_uploaded_file($file, $paths);
-            $path1='/uploads/images/'.$fileName1;
+            $path1='/'.$fileName1;
         }
         if($request->file('gambar2')!= null){
-            $path=public_path().'/uploads/images/';
+            $path=public_path();
             $file=$request->file('gambar2');
             $fileName2=date('YmdHi').$file->getClientOriginalName();
             $paths=$path.'/'.$fileName2;
             move_uploaded_file($file, $paths);
-            $path2='/uploads/images/'.$fileName2;
+            $path2='/'.$fileName2;
         }
         
         $barang = new StokBarang();
@@ -109,7 +109,7 @@ class barangController extends Controller
         $barang->pathImg2 ='';
         $fileName = $barang->fileName2;
         $barang->fileName2 ='';
-        unlink('uploads/images/'.$fileName);
+        unlink('/'.$fileName);
         $barang->save();
         return redirect('/stok')->with('success','');
     }
@@ -117,7 +117,7 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg1 = $barang->pathImg1;
         if($pathImg1!=''){
-            unlink('uploads/images/'.$barang->fileName1);
+            unlink('/'.$barang->fileName1);
         }
         
     }
@@ -125,7 +125,7 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            unlink('uploads/images/'.$barang->fileName2);
+            unlink('/'.$barang->fileName2);
         } 
     }
     public function editSave(Request $request, $id)
@@ -149,21 +149,21 @@ class barangController extends Controller
         $fileName2=$barang->fileName2;
         if($request->file('gambar1') != null){
             $this->timpaGambar1($id);
-            $path=public_path().'/uploads/images/';
+            $path=public_path();
             $file=$request->file('gambar1');
             $fileName1=date('YmdHi').$file->getClientOriginalName();
             $paths=$path.'/'.$fileName1;
             move_uploaded_file($file, $paths);
-            $path1='/uploads/images/'.$fileName1;
+            $path1='/'.$fileName1;
         }
         if($request->file('gambar2') != null){
             $this->timpaGambar2($id);
-            $path=public_path().'/uploads/images/';
+            $path=public_path();
             $file=$request->file('gambar2');
             $fileName2=date('YmdHi').$file->getClientOriginalName();
             $paths=$path.'/'.$fileName2;
             move_uploaded_file($file, $paths);
-            $path2='/uploads/images/'.$fileName2;
+            $path2='/'.$fileName2;
         }
         
         
@@ -186,9 +186,9 @@ class barangController extends Controller
         $barang=StokBarang::where('id', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            unlink('uploads/images/'.$barang->fileName2);
+            unlink('/'.$barang->fileName2);
         }
-        unlink('uploads/images/'.$barang->fileName1);
+        unlink('/'.$barang->fileName1);
         StokBarang::destroy($id);
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
@@ -198,9 +198,9 @@ class barangController extends Controller
         foreach($barang as $value){
         $pathImg2 = $value->pathImg2;
             if($pathImg2!=''){
-                unlink('uploads/images/'.$value->fileName2);
+                unlink('/'.$value->fileName2);
             }
-            unlink('uploads/images/'.$value->fileName1);
+            unlink('/'.$value->fileName1);
         }
         StokBarang::truncate();
         

@@ -67,14 +67,14 @@ class barangController extends Controller
         $fileName1='';
         $fileName2= '';
         if($request->file('gambar1') != null){
-            $imageName = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
-            $request->file('gambar1')->store($imageName,['disk' => 'public']);
+            $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalExtension();
+            $request->file('gambar1')->store($fileName1,['disk' => 'public']);
             $path1='/'.$fileName1;
         }
         if($request->file('gambar2')!= null){
-            $imageName = time().'.'.$request->file('gambar2')->getClientOriginalExtension();
-            $request->file('gambar2')->store($imageName,['disk' => 'public']);
-            $path1='/'.$fileName1;
+            $fileName2= time().'.'.$request->file('gambar2')->getClientOriginalExtension();
+            $request->file('gambar2')->store($fileName2,['disk' => 'public']);
+            $path1='/'.$fileName2;
         }
         
         $barang = new StokBarang();

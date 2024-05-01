@@ -40,8 +40,5 @@ class DatabaseSeeder extends Seeder
             'password' => 'testkary2',
             'role_id'=>'1',
         ]);
-        $this->call([
-            barangSeeder::class,
-        ]);
     }
 }

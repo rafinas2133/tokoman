@@ -21,8 +21,6 @@ class barangSeeder extends Seeder
                 'ukuran' => 'M',
                 'pathImg1' => '',
                 'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
             ],
             [
                 'id_barang' => 2,
@@ -34,8 +32,6 @@ class barangSeeder extends Seeder
                 'ukuran' => 'M',
                 'pathImg1' => '',
                 'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
             ],
             [
                 'id_barang' => 3,
@@ -47,8 +43,6 @@ class barangSeeder extends Seeder
                 'ukuran' => 'M',
                 'pathImg1' => '',
                 'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
             ],
             [
                 'id_barang' => 4,
@@ -60,8 +54,6 @@ class barangSeeder extends Seeder
                 'ukuran' => 'M',
                 'pathImg1' => '',
                 'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
             ],
             [
                 'id_barang' => 5,
@@ -73,8 +65,6 @@ class barangSeeder extends Seeder
                 'ukuran' => 'M',
                 'pathImg1' => '',
                 'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
             ]
         ]);
     }

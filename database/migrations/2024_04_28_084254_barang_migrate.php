@@ -19,8 +19,6 @@ return new class extends Migration
             $table->string('ukuran');
             $table->string('pathImg1')->nullable();
             $table->string('pathImg2')->nullable();
-            $table->string('fileName1')->nullable();
-            $table->string('fileName2')->nullable();
             $table->timestamps(); // created_at dan updated_at
         });
     }

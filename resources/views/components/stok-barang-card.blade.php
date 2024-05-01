@@ -5,7 +5,7 @@
     <img class="w-full max-h-[350px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
     @else
     @if($barang->pathImg2=='')
-    <img class="w-full h-[350px] rounded-lg" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
+    <img class="w-full h-[350px] rounded-lg" src="{{'/'.$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
     @else
     <div class="w-full h-[300px] rounded-lg">
     <!-- Slides -->

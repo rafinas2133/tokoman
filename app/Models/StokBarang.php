@@ -12,6 +12,6 @@ class StokBarang extends Model
     protected $table = 'stok_barangs'; // Nama tabel di database
 
     protected $fillable = [
-        'id_barang', 'nama_barang', 'stok', 'harga_beli','harga_jual','jenis_tutup','ukuran','pathImg1','pathImg2'
+        'id_barang', 'nama_barang', 'stok', 'harga_beli','harga_jual','jenis_tutup','ukuran','pathImg1','pathImg2','fileName1','fileName2',
     ];
 }

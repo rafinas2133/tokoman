@@ -27,7 +27,11 @@ class barangController extends Controller
     public function add(){
         return view("stok.add");
     }
-
+    public function getUrlImg($value)
+    {
+        $url = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/images/';
+        return $url . $value;
+    }
     public function addSave(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -62,13 +66,19 @@ class barangController extends Controller
         $id .= $request->stok;
         $path1='';
         $path2='';
+        $filename1='';
+        $filename2= '';
         if($request->file('gambar1') != null){
-            $path=$request->file('gambar1')->store('image');
-            $path1=$path;
+            $file = $request->file('gambar1');
+            $filename1 = '-' . time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file));
+            $path1 = $this->getUrlImg($filename1);
         }
         if($request->file('gambar2')!= null){
-            $path=$request->file('gambar2')->store('image');
-            $path2=$path;
+            $file = $request->file('gambar2');
+            $filename2 = '-' . time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file));
+            $path2 = $this->getUrlImg($filename2);
         }
         
         $barang = new StokBarang();
@@ -81,6 +91,8 @@ class barangController extends Controller
         $barang->ukuran = $request->ukuran;
         $barang->pathImg1 = $path1;
         $barang->pathImg2 = $path2;
+        $barang->fileName1 = $filename1;
+        $barang->fileName2 = $filename2;
         $barang->save();
 
         return redirect('/stok')->with('success', 'Barang berhasil ditambahkan!');
@@ -92,7 +104,7 @@ class barangController extends Controller
     }
     public function deleteImg($id){
         $barang = StokBarang::where('id_barang',$id)->first();
-        Storage::delete($barang->pathImg2);
+        Storage::disk('s3')->delete('images/' . $barang->fileName2);
         $barang->pathImg2 ='';
         $barang->save();
         return redirect('/stok')->with('success','');
@@ -101,7 +113,7 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg1 = $barang->pathImg1;
         if($pathImg1!=''){
-            Storage::delete($pathImg1);
+            Storage::disk('s3')->delete('images/' . $barang->fileName1);
         }
         
     }
@@ -109,9 +121,10 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            Storage::delete($pathImg2);
+            Storage::disk('s3')->delete('images/' . $barang->fileName2);
         } 
     }
+    
     public function editSave(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
@@ -128,16 +141,22 @@ class barangController extends Controller
         }
         $barang = StokBarang::where('id_barang', $id)->first();
         $path1=$barang->pathImg1;
-        $path2=$barang->pathImg2;;
+        $path2=$barang->pathImg2;
+        $filename1=$barang->fileName1;
+        $filename2=$barang->fileName2;
         if($request->file('gambar1') != null){
             $this->timpaGambar1($id);
-            $path=$request->file('gambar1')->store('image');
-            $path1=$path;
+            $file = $request->file('gambar1');
+            $filename1 = '-' . time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file));
+            $path1 = $this->getUrlImg($filename1);
         }
         if($request->file('gambar2')!= null){
             $this->timpaGambar2($id);
-            $path=$request->file('gambar2')->store('image');
-            $path2=$path;
+            $file = $request->file('gambar2');
+            $filename2 = '-' . time() . '.' . $file->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file));
+            $path2= $this->getUrlImg($filename2);
         }
         
         
@@ -149,6 +168,8 @@ class barangController extends Controller
         $barang->ukuran = $request->ukuran;
         $barang->pathImg1 = $path1;
         $barang->pathImg2 = $path2;
+        $barang->fileName1 = $filename1;
+        $barang->fileName2 = $filename2;
         $barang->save();
 
         return redirect('/stok')->with('success', 'Barang berhasil ditambahkan!');
@@ -158,9 +179,9 @@ class barangController extends Controller
         $barang=StokBarang::where('id', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            Storage::delete($pathImg2);
+            Storage::disk('s3')->delete('images/' . $barang->fileName2);
         }
-        Storage::delete($barang->pathImg1);
+        Storage::disk('s3')->delete('images/' . $barang->fileName1);
         StokBarang::destroy($id);
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
@@ -170,9 +191,9 @@ class barangController extends Controller
         foreach($barang as $value){
         $pathImg2 = $value->pathImg2;
             if($pathImg2!=''){
-                Storage::delete($pathImg2);
+                Storage::disk('s3')->delete('images/' . $value->fileName2);
             }
-            Storage::delete($value->pathImg1);
+            Storage::disk('s3')->delete('images/' . $value->fileName1);
         }
         StokBarang::truncate();
         

@@ -16,10 +16,6 @@ use App\Http\Middleware;
 
 // Route untuk user terAuth()
 Route::middleware(['auth','verified'])->group(function () {
-    Route::get('/foo', function () {
-        Artisan::call('storage:link');
-        return redirect(route('stokBarang'));
-    });
     //Route Semua Role User
     Route::get('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
     Route::get('/stok/add', [barangController::class,'add'])->name('tambahStok');

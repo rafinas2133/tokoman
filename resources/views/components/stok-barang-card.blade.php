@@ -5,16 +5,16 @@
     <img class="w-full max-h-[350px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
     @else
     @if($barang->pathImg2=='')
-    <img class="w-full h-[350px] rounded-lg" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
+    <img class="w-full h-[350px] rounded-lg" src="{{asset('storage/'.$barang->pathImg1)}}" alt="Gambar {{ $barang->nama_barang }}">
     @else
     <div class="w-full h-[300px] rounded-lg">
     <!-- Slides -->
     <div class="mySlide hidden opacity-0 transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg1}}" class="w-full">
+        <img src="{{asset('storage/'.$barang->pathImg1)}}" class="w-full">
     </div>
 
     <div class="mySlide hidden opacity-0 transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg2}}" class="w-full">
+        <img src="{{asset('storage/'.$barang->pathImg2)}}" class="w-full">
     </div>
 </div>
 <script>

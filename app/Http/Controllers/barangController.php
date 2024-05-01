@@ -6,9 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StokBarang;
-use Intervention\Image\Image;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Drivers\Imagick\Driver;
+use Illuminate\Support\Facades\Storage;
 
 
 class barangController extends Controller
@@ -65,14 +63,12 @@ class barangController extends Controller
         $path1='';
         $path2='';
         if($request->file('gambar1') != null){
-            $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalName();
-            $path=$request->file('gambar1')->storeAs('images',$fileName1,'public');
-            $path1=public_path().'/storage'.'/'.$path;
+            $path=$request->file('gambar1')->store('image');
+            $path1=$path;
         }
         if($request->file('gambar2')!= null){
-            $fileName2 = time().'.'.$request->file('gambar2')->getClientOriginalName();
-            $path=$request->file('gambar2')->storeAs('images',$fileName2,'public');
-            $path2=public_path().'/storage'.'/'.$path;
+            $path=$request->file('gambar2')->store('image');
+            $path2=$path;
         }
         
         $barang = new StokBarang();
@@ -96,7 +92,7 @@ class barangController extends Controller
     }
     public function deleteImg($id){
         $barang = StokBarang::where('id_barang',$id)->first();
-        unlink($barang->pathImg2);
+        Storage::delete($barang->pathImg2);
         $barang->pathImg2 ='';
         $barang->save();
         return redirect('/stok')->with('success','');
@@ -105,7 +101,7 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg1 = $barang->pathImg1;
         if($pathImg1!=''){
-            unlink($pathImg1);
+            Storage::delete($pathImg1);
         }
         
     }
@@ -113,7 +109,7 @@ class barangController extends Controller
         $barang=StokBarang::where('id_barang', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            unlink($pathImg2);
+            Storage::delete($pathImg2);
         } 
     }
     public function editSave(Request $request, $id)
@@ -134,14 +130,14 @@ class barangController extends Controller
         $path1=$barang->pathImg1;
         $path2=$barang->pathImg2;;
         if($request->file('gambar1') != null){
-            $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalName();
-            $path=$request->file('gambar1')->storeAs('images',$fileName1,'public');
-            $path1=public_path().'/storage'.'/'.$path;
+            $this->timpaGambar1($id);
+            $path=$request->file('gambar1')->store('image');
+            $path1=$path;
         }
         if($request->file('gambar2')!= null){
-            $fileName2 = time().'.'.$request->file('gambar2')->getClientOriginalName();
-            $path=$request->file('gambar2')->storeAs('images',$fileName2,'public');
-            $path2=public_path().'/storage'.'/'.$path;
+            $this->timpaGambar2($id);
+            $path=$request->file('gambar2')->store('image');
+            $path2=$path;
         }
         
         
@@ -162,9 +158,9 @@ class barangController extends Controller
         $barang=StokBarang::where('id', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if($pathImg2!=''){
-            unlink($pathImg2);
+            Storage::delete($pathImg2);
         }
-        unlink($barang->pathImg1);
+        Storage::delete($barang->pathImg1);
         StokBarang::destroy($id);
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }
@@ -174,9 +170,9 @@ class barangController extends Controller
         foreach($barang as $value){
         $pathImg2 = $value->pathImg2;
             if($pathImg2!=''){
-                unlink($pathImg2);;
+                Storage::delete($pathImg2);
             }
-            unlink($value->pathImg1);
+            Storage::delete($value->pathImg1);
         }
         StokBarang::truncate();
         

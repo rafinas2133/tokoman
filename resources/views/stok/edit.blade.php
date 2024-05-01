@@ -45,13 +45,13 @@
     <div class="mb-4 flex gap-2">
     <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1:</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar1" name="gambar1" class="h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-    <img class="w-[100px] h-[100px]" src="{{$brg->pathImg1}}" alt="">
+    <img class="w-[100px] h-[100px]" src="{{asset('storage/'.$brg->pathImg1)}}" alt="">
     </div>
     <div class="mb-4 flex gap-2">
     <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2:</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2" class=" h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     @if($brg->pathImg2!='')
-    <img class="w-[100px] h-[100px]" src="{{$brg->pathImg2}}" alt="">
+    <img class="w-[100px] h-[100px]" src="{{asset('storage/'.$brg->pathImg2)}}" alt="">
     <a href="/deleteImg/{{$brg->id_barang}}" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block h-[45px]">Hapus</a>
     @endif
     </div>  

@@ -136,12 +136,12 @@ class barangController extends Controller
         if($request->file('gambar1') != null){
             $fileName1 = time().'.'.$request->file('gambar1')->getClientOriginalName();
             $path=$request->file('gambar1')->storeAs('images',$fileName1,'public');
-            $path1='storage'.'/'.$path;
+            $path1=public_path().'/storage'.'/'.$path;
         }
         if($request->file('gambar2')!= null){
             $fileName2 = time().'.'.$request->file('gambar2')->getClientOriginalName();
             $path=$request->file('gambar2')->storeAs('images',$fileName2,'public');
-            $path2='storage'.'/'.$path;
+            $path2=public_path().'/storage'.'/'.$path;
         }
         
         

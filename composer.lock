@@ -2347,6 +2347,7 @@
             "time": "2024-04-12T21:02:21+00:00"
         },
         {
+<<<<<<< HEAD
             "name": "mtdowling/jmespath.php",
             "version": "2.7.0",
             "source": {
@@ -2422,6 +2423,17 @@
             },
             "dist": {
                 "type": "zip",
+=======
+            "name": "nesbot/carbon",
+            "version": "3.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/briannesbitt/Carbon.git",
+                "reference": "8ff64b92c1b1ec84fcde9f8bb9ff2ca34cb8a77a"
+            },
+            "dist": {
+                "type": "zip",
+>>>>>>> ffa9bc0c737c114586ed836df42d93b7440983ab
                 "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/8ff64b92c1b1ec84fcde9f8bb9ff2ca34cb8a77a",
                 "reference": "8ff64b92c1b1ec84fcde9f8bb9ff2ca34cb8a77a",
                 "shasum": ""

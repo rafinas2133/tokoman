@@ -38,6 +38,7 @@ class barangController extends Controller
             'jenis' => 'required',
             'nama' => 'required',
             'stok' => 'required|integer',
+            'bal' => 'required|integer',
             'buy'=> 'required',
             'sell'=> 'required',
             'ukuran'=> 'required',
@@ -85,6 +86,7 @@ class barangController extends Controller
         $barang->id_barang = $id;
         $barang->nama_barang = $request->nama;
         $barang->stok = $request->stok;
+        $barang->bal = $request->bal;
         $barang->jenis_tutup = $request->jenis;
         $barang->harga_beli = $request->buy;
         $barang->harga_jual = $request->sell;
@@ -131,6 +133,7 @@ class barangController extends Controller
             'jenis' => 'required',
             'nama' => 'required',
             'stok' => 'required|integer',
+            'bal' => 'required|integer',
             'buy'=> 'required',
             'sell'=> 'required',
             'ukuran'=> 'required',
@@ -162,6 +165,7 @@ class barangController extends Controller
         
         $barang->nama_barang = $request->nama;
         $barang->stok = $request->stok;
+        $barang->bal = $request->bal;
         $barang->jenis_tutup = $request->jenis;
         $barang->harga_beli = $request->buy;
         $barang->harga_jual = $request->sell;

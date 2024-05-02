@@ -21,6 +21,10 @@
     <label for="stok" class="block text-sm font-bold mb-2">Stok:</label>
     <input type="number" id="stok" name="stok" required value="{{$brg->stok}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
+    <div class="mb-4">
+    <label for="bal" class="block text-sm font-bold mb-2">Isi Per Bal:</label>
+    <input type="number" id="bal" name="bal" required value="{{$brg->bal}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+    </div>
 
     <div class="mb-4">
     <label for="jenis" class="block text-sm font-bold mb-2">Jenis Tutup:</label>

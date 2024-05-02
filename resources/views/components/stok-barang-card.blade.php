@@ -65,6 +65,9 @@ setInterval(showNextImage, 3000); // Ganti gambar setiap 3 detik
             <strong>Stok:</strong> {{ $barang->stok }}
         </p>
         <p class="text-white text-base">
+            <strong>Isi per Bal:</strong> {{ $barang->bal }}
+        </p>
+        <p class="text-white text-base">
             <strong>Harga:</strong> {{ $barang->harga_jual }}
         </p>
         <div class="text-white text-base">

@@ -14,6 +14,7 @@ return new class extends Migration
             $table->string('jenis_tutup');
             $table->string('nama_barang');
             $table->integer('stok');
+            $table->integer('bal');
             $table->string('harga_beli');
             $table->string('harga_jual');
             $table->string('ukuran');

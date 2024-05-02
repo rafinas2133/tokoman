@@ -16,6 +16,7 @@
                         <th class="px-4 py-2">ID Barang</th>
                         <th class="px-4 py-2">Nama Barang</th>
                         <th class="px-4 py-2">Stok</th>
+                        <th class="px-4 py-2">Isi/bal</th>
                         <th class="px-4 py-2">Ukuran</th>
                         <th class="px-4 py-2">Jenis Tutup</th>
                         <th class="px-4 py-2">Harga Beli</th>
@@ -31,6 +32,7 @@
                         <td class="border px-4 py-2">{{ $usr->id_barang }}</td>
                         <td class="border px-4 py-2">{{ $usr->nama_barang }}</td>
                         <td class="border px-4 py-2">{{ $usr->stok }}</td>
+                        <td class="border px-4 py-2">{{ $usr->bal }}</td>
                         <td class="border px-4 py-2">{{ $usr->ukuran }}</td>
                         <td class="border px-4 py-2">{{ $usr->jenis_tutup }}</td>
                         <td class="border px-4 py-2 max-w-sm">{{ $usr->harga_beli }}</td>

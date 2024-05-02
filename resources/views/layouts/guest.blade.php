@@ -27,4 +27,16 @@
             </div>
         </div>
     </body>
+    <script>
+    window.addEventListener('pageshow', function(event) {
+        var historyTraversal = event.persisted || 
+                               (typeof window.performance != 'undefined' && 
+                                window.performance.navigation.type === 2);
+        if (historyTraversal) {
+            // Lakukan refresh atau request ke server di sini
+            location.reload(true);
+        }
+    });
+</script>
+
 </html>

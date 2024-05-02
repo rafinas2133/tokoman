@@ -84,7 +84,7 @@ echo "<script>
             <strong>Minat?</strong>
         </div>
         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">
-        <a href="https://wa.me/08231231412?text=Halo,%20Saya%20Ingin%20Order%20Botol%20{{$barang->nama_barang}}" class="mr-2">Order di sini</a>
+        <a href="https://wa.me/6281335760738?text=Halo,%20Saya%20Ingin%20Order%20Botol%20{{$barang->nama_barang}}" class="mr-2">Order di sini</a>
         <img class="max-w-[30px] max-h-[30px]" src="{{ $pathimage }}" alt="">
         </button>
         

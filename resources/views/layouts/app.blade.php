@@ -34,16 +34,12 @@
             </main>
         </div>
     </body>
-    <script>
-    window.addEventListener('pageshow', function(event) {
-        var historyTraversal = event.persisted || 
-                               (typeof window.performance != 'undefined' && 
-                                window.performance.navigation.type === 2);
-        if (historyTraversal) {
-            // Lakukan refresh atau request ke server di sini
+<!-- <script>
+    window.onload = function() {
+        if(performance.navigation.type == 2) {
             location.reload(true);
         }
-    });
-</script>
+    }
+</script> -->
 
 </html>

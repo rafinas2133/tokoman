@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['employee'=> \App\Http\Middleware\pegawai::class]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['noback'=> \App\Http\Middleware\noBack::class]);
+    })
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

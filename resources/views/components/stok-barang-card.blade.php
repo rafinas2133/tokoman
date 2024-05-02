@@ -1,62 +1,49 @@
 @if ($barang -> stok > 0)
 <?php $pathimage='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png'?>
-<div class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10">
+<div class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10 max-[400px]:scale-75">
     @if($barang->pathImg1=='')
     <img class="mx-auto w-[300px] h-[300px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
     @else
     @if($barang->pathImg2=='')
-    <img class="mx-auto w-[300px] h-[300px] rounded-lg" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
+    <img class=" rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">
     @else
-    <div class="mx-auto w-[300px] h-[300px] rounded-lg">
+    <div class="mx-auto w-[350px] h-[350px] rounded-lg">
     <!-- Slides -->
-    <div class="flex gap-2">
-    <?php echo"<button id='$barang->id' class='w-[30px] h-[30px] my-auto' onclick='showNextImage$barang->id()'><img src='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(3).png'></button>";?>
-    <div class="{{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg1}}" class="w-[250px] mx-auto h-[250px]">
-    </div>
+    <div class="relative h-[350px]">
+    <button onclick="showNextImage{{$barang->id_barang}}()"class="absolute z-10 inset-0 w-[30px] h-[30px] mt-[175px]"><img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(3).png"></button>
+    
+    <img src="{{$barang->pathImg1}}" class="rounded-xl mx-auto mt-[15px] w-[350px] h-[350px] {{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
 
-    <div class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg2}}" class="w-[250px] mx-auto h-[250px]">
-    </div>
-    
-   <?php echo"<button id='$barang->id' class='w-[30px] h-[30px] my-auto' onclick='showNextImage$barang->id()'><img src='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(2).png'></button>";?>
-    </div>
-    
-    
-    <?php 
-    
-$idimage2= $barang->nama_barang.'2';
-$nama_barang=$barang->nama_barang;
-$idelements1=$nama_barang.'img1';
-$idelements2=$nama_barang.'img2';
-echo "<script>
-    let $barang->nama_barang=0;
-    let $idelements1 = document.getElementsByClassName('$barang->nama_barang');
-    let $idelements2 = document.getElementsByClassName('$idimage2');
-    function showNextImage$barang->id() {
-            for (let i = 0; i < $idelements1.length; i++) {
-            if ($barang->nama_barang==0||$barang->nama_barang%2==0) {
-                $idelements1"."[i].classList.add('transition-opacity', 'opacity-0');
-                $idelements2"."[i].classList.remove('transition-opacity', 'opacity-0');
+    <img src="{{$barang->pathImg2}}" class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]">
+    <button onclick="showNextImage{{$barang->id_barang}}()"class="absolute inset-0 w-[30px] h-[30px] mt-[175px] ml-[320px]"><img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(2).png"></button>
+   <script>
+    let {{$barang->id_barang.'index'}}=0;
+    let {{$barang->id_barang}} = document.getElementsByClassName('{{$barang->nama_barang}}');
+    let {{$barang->id_barang.'2'}} = document.getElementsByClassName('{{$barang->nama_barang.'2'}}');
+    function showNextImage{{$barang->id_barang}}() {
+            for (let i = 0; i < {{$barang->id_barang}}.length; i++) {
+            if ({{$barang->id_barang.'index'}}==0||{{$barang->id_barang.'index'}}%2==0) {
+                {{$barang->id_barang}}[i].classList.add('transition-opacity', 'opacity-0');
+                {{$barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
                 setTimeout(() => {
-                    $idelements1"."[i].classList.add('hidden');
-                    $idelements2"."[i].classList.remove('hidden');
+                    {{$barang->id_barang}}[i].classList.add('hidden');
+                    {{$barang->id_barang.'2'}}[i].classList.remove('hidden');
                 }, 1000);
             }
             else{
-                $idelements1"."[i].classList.remove('transition-opacity', 'opacity-0');
-                $idelements2"."[i].classList.add('transition-opacity', 'opacity-0');
+                {{$barang->id_barang}}[i].classList.remove('transition-opacity', 'opacity-0');
+                {{$barang->id_barang.'2'}}[i].classList.add('transition-opacity', 'opacity-0');
                 setTimeout(() => {
-                $idelements2"."[i].classList.remove('transition-opacity', 'opacity-0');
-                $idelements1"."[i].classList.remove('hidden');
-                $idelements2"."[i].classList.add('hidden');
+                {{$barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
+                {{$barang->id_barang}}[i].classList.remove('hidden');
+                {{$barang->id_barang.'2'}}[i].classList.add('hidden');
                 }, 1000);
             }
-            $barang->nama_barang++
+            {{$barang->id_barang.'index'}}++
         }
     }
-</script>";
-?>
+</script>
+    </div>    
 </div>
 
 

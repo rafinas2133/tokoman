@@ -19,6 +19,7 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::get('/pelaporan', [LaporanController::class,'index'])->name('laporan');
         Route::get('/hitungProfit', [ProfitController::class,'index'])->name('profit');
         //Manipulasi Stok
+        Route::post('/tambahstok/{id}', [barangController::class,'tambahStok'])->name('tambahStok');
         Route::get('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
         Route::get('/stok/add', [barangController::class,'add'])->name('tambahStok');
         Route::post('/stok/addsave', [barangController::class,'addsave'])->name('stokSave');
@@ -55,7 +56,7 @@ Route::middleware(['auth','verified'])->group(function () {
 });
 //Route Guest unAuth()
 Route::get('/', [barangController::class,'index'])->name('stokBarang');
-
+Route::get('/wa/{id}', [barangController::class,'reqWa']);
 //RouteSearch
 Route::get('/search', [SearchController::class,'index'])->name('search');
 

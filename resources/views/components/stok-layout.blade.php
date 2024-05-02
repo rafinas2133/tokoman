@@ -1,4 +1,4 @@
-
+    
     <div class="p-6 text-gray-900 dark:text-gray-100 text-center mx-auto">
         <a href="/stok/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> + Tambah data barang</a>
         <a href="/stok/deleteAll" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> - Hapus semua data barang</a>
@@ -21,6 +21,7 @@
                         <th class="px-4 py-2">Jenis Tutup</th>
                         <th class="px-4 py-2">Harga Beli</th>
                         <th class="px-4 py-2">Harga Jual</th>
+                        <th class="px-4 py-2">Tambahkan Stok</th>
                         <th class="px-4 py-2">Opsi</th>
                     </tr>
                 </thead>
@@ -38,7 +39,15 @@
                         <td class="border px-4 py-2 max-w-sm">{{ $usr->harga_beli }}</td>
                         <td class="border px-4 py-2 max-w-sm">{{ $usr->harga_jual }}</td>
                         <td class="border px-4 py-2">
-                            <a href="/stok/edit/{{ $usr->id }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
+                        <form action="/tambahstok/{{$usr->id_barang}}" method="post">
+                        @csrf
+                        <Label for="stok">Masukkan stok: </Label>
+                        <input type="number" name="stok" id="stok" required>
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+                        </form>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <a href="/stok/edit/{{ $usr->id_barang }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
                             <a href="/stok/delete/{{ $usr->id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</a>
                         </td>
                     </tr> 

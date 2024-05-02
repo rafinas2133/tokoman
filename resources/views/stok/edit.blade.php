@@ -47,12 +47,12 @@
     <input type="text" id="sell" name="sell" required value="{{$brg->harga_jual}}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4 flex gap-2">
-    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1:</label>
+    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *maks 2MB</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar1" name="gambar1" class="h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     <img class="w-[100px] h-[100px]" src="{{$brg->pathImg1}}" alt="">
     </div>
     <div class="mb-4 flex gap-2">
-    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2:</label>
+    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2" class=" h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     @if($brg->pathImg2!='')
     <img class="w-[100px] h-[100px]" src="{{$brg->pathImg2}}" alt="">

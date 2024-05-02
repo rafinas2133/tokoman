@@ -46,11 +46,11 @@
     <input type="text" id="sell" name="sell" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib</label>
+    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib maks 2MB</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar1" name="gambar1" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
     <div class="mb-4">
-    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *tidak wajib</label>
+    <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>  
     <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan Data</button>

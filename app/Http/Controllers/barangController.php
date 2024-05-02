@@ -6,15 +6,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StokBarang;
+use App\Models\kontak;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Session;
 
 class barangController extends Controller
 {
     public function index(){
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(9);
+        
         return view("welcome", ["barangs" => $barang],compact('types'));
+    }
+    public function reqWa($name){
+        $phone =kontak::where('name', 'ZidanElek')->first();
+        return redirect("https://wa.me/$phone->noHp?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
     }
     public function employeeIndex(){
         $barang = StokBarang::paginate(9);
@@ -22,7 +28,11 @@ class barangController extends Controller
     }
     public function adminIndex(){
         $barang = StokBarang::paginate(9);
-        return view("stok.index", ["barangs" => $barang]);
+        if(session("error")=='true'){
+            return view("stok.index", ["barangs" => $barang,"error"=>"true"]);
+        }else{
+            return view("stok.index", ["barangs" => $barang,"error"=>"false"]);
+        }
     }
     public function add(){
         return view("stok.add");
@@ -32,6 +42,13 @@ class barangController extends Controller
         $url = 'https://'. env('AWS_BUCKET') .'.s3-'. env('AWS_DEFAULT_REGION') .'.amazonaws.com/images/';
         return $url . $value;
     }
+    public function tambahStok(Request $request,$id){
+    $inputanstok=$request->stok;
+    $barang=StokBarang::where('id_barang', $id)->first();
+    $barang->stok+=abs($inputanstok);
+    $barang->save();
+    return redirect('/stok')->with('success','Stok Berhasil Ditambahkan');
+    } 
     public function addSave(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -42,12 +59,15 @@ class barangController extends Controller
             'buy'=> 'required',
             'sell'=> 'required',
             'ukuran'=> 'required',
-            'gambar1'=>'required',
-            'gambar2'=>'nullable',
+            'gambar1'=>'required|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar2'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/stok')->withErrors($validator)->withInput();
+            if(Session::get('role_id')==1)
+            return redirect('/empdashboard')->with('error', true);
+            else
+            return redirect('/stok')->with('error', true);
         }
         
         $id = '';
@@ -85,8 +105,8 @@ class barangController extends Controller
         $barang = new StokBarang();
         $barang->id_barang = $id;
         $barang->nama_barang = $request->nama;
-        $barang->stok = $request->stok;
-        $barang->bal = $request->bal;
+        $barang->stok = abs($request->stok);
+        $barang->bal = abs($request->bal);
         $barang->jenis_tutup = $request->jenis;
         $barang->harga_beli = $request->buy;
         $barang->harga_jual = $request->sell;
@@ -137,10 +157,15 @@ class barangController extends Controller
             'buy'=> 'required',
             'sell'=> 'required',
             'ukuran'=> 'required',
+            'gambar1'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar2'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/stok')->withErrors($validator)->withInput();
+            if(Session::get('role_id')==1)
+            return redirect('/empdashboard')->with('error', true);
+            else
+            return redirect('/stok')->with('error', true);
         }
         $barang = StokBarang::where('id_barang', $id)->first();
         $path1=$barang->pathImg1;
@@ -164,8 +189,8 @@ class barangController extends Controller
         
         
         $barang->nama_barang = $request->nama;
-        $barang->stok = $request->stok;
-        $barang->bal = $request->bal;
+        $barang->stok = abs($request->stok);
+        $barang->bal = abs($request->bal);
         $barang->jenis_tutup = $request->jenis;
         $barang->harga_beli = $request->buy;
         $barang->harga_jual = $request->sell;

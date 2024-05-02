@@ -1,5 +1,5 @@
 @if ($barang -> stok > 0)
-<?php $pathimage='https://w7.pngwing.com/pngs/362/594/png-transparent-whatsapp-inc-business-whatsapp-text-logo-sign-thumbnail.png'?>
+<?php $pathimage='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png'?>
 <div class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10">
     @if($barang->pathImg1=='')
     <img class="mx-auto w-[300px] h-[300px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
@@ -9,48 +9,58 @@
     @else
     <div class="mx-auto w-[300px] h-[300px] rounded-lg">
     <!-- Slides -->
-    <div class="mySlide transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg1}}" class="w-[300px] mx-auto h-[300px]">
+    <div class="flex gap-2">
+    <?php echo"<button id='$barang->id' class='w-[30px] h-[30px] my-auto' onclick='showNextImage$barang->id()'><img src='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(3).png'></button>";?>
+    <div class="{{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
+        <img src="{{$barang->pathImg1}}" class="w-[250px] mx-auto h-[250px]">
     </div>
 
-    <div class="mySlide2 hidden transition-opacity duration-1000 ease-in-out">
-        <img src="{{$barang->pathImg2}}" class="w-[300px] mx-auto h-[300px]">
+    <div class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out">
+        <img src="{{$barang->pathImg2}}" class="w-[250px] mx-auto h-[250px]">
     </div>
-</div>
-
-<script>
-let images = ["{{$barang->pathImg1}}", "{{$barang->pathImg2}}"];
-let currentImageIndex = 0;
-let imgElements = document.getElementsByClassName('mySlide');
-let imgElements2 = document.getElementsByClassName('mySlide2');
-
-function showNextImage() {
-    for (let i = 0; i < imgElements.length; i++) {
-        if (currentImageIndex === 0) {
-            imgElements[i].classList.add('transition-opacity', 'opacity-0');
-            imgElements2[i].classList.remove('transition-opacity', 'opacity-0');
-            setTimeout(() => {
-                imgElements[i].classList.add('hidden');
-                imgElements2[i].classList.remove('hidden');
-            }, 1000);
-            
-        } else {
-            imgElements[i].classList.remove('transition-opacity', 'opacity-0');
-            imgElements2[i].classList.add('transition-opacity', 'opacity-0');
-            setTimeout(() => {
-                imgElements2[i].classList.remove('transition-opacity', 'opacity-0');
-                imgElements[i].classList.remove('hidden');
-                imgElements2[i].classList.add('hidden');
-            }, 1000);
-            
+    
+   <?php echo"<button id='$barang->id' class='w-[30px] h-[30px] my-auto' onclick='showNextImage$barang->id()'><img src='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(2).png'></button>";?>
+    </div>
+    
+    
+    <?php 
+    
+$idimage2= $barang->nama_barang.'2';
+$nama_barang=$barang->nama_barang;
+$idelements1=$nama_barang.'img1';
+$idelements2=$nama_barang.'img2';
+echo "<script>
+    let $barang->nama_barang=0;
+    let $idelements1 = document.getElementsByClassName('$barang->nama_barang');
+    let $idelements2 = document.getElementsByClassName('$idimage2');
+    function showNextImage$barang->id() {
+            for (let i = 0; i < $idelements1.length; i++) {
+            if ($barang->nama_barang==0||$barang->nama_barang%2==0) {
+                $idelements1"."[i].classList.add('transition-opacity', 'opacity-0');
+                $idelements2"."[i].classList.remove('transition-opacity', 'opacity-0');
+                setTimeout(() => {
+                    $idelements1"."[i].classList.add('hidden');
+                    $idelements2"."[i].classList.remove('hidden');
+                }, 1000);
+            }
+            else{
+                $idelements1"."[i].classList.remove('transition-opacity', 'opacity-0');
+                $idelements2"."[i].classList.add('transition-opacity', 'opacity-0');
+                setTimeout(() => {
+                $idelements2"."[i].classList.remove('transition-opacity', 'opacity-0');
+                $idelements1"."[i].classList.remove('hidden');
+                $idelements2"."[i].classList.add('hidden');
+                }, 1000);
+            }
+            $barang->nama_barang++
         }
     }
+</script>";
+?>
+</div>
 
-    currentImageIndex = (currentImageIndex + 1) % images.length;
-}
 
-setInterval(showNextImage, 3000); // Ganti gambar setiap 3 detik
-</script>
+
     @endif
     @endif
     <div class="px-6 py-4">

@@ -64,7 +64,7 @@ class barangController extends Controller
 
         $id .= $ukuran;
         $id .= $jenis_tutup;
-        $id .= $request->stok;
+        $id .= $request->bal;
         $path1='';
         $path2='';
         $filename1='';

@@ -9,42 +9,47 @@
     @else
     <div class="mx-auto w-[300px] h-[300px] rounded-lg">
     <!-- Slides -->
-    <div class="mySlide hidden opacity-0 transition-opacity duration-1000 ease-in-out">
+    <div class="mySlide transition-opacity duration-1000 ease-in-out">
         <img src="{{$barang->pathImg1}}" class="w-[300px] mx-auto h-[300px]">
     </div>
 
-    <div class="mySlide hidden opacity-0 transition-opacity duration-1000 ease-in-out">
+    <div class="mySlide2 hidden transition-opacity duration-1000 ease-in-out">
         <img src="{{$barang->pathImg2}}" class="w-[300px] mx-auto h-[300px]">
     </div>
 </div>
+
 <script>
-let slideIndex = 0; // Start from the first slide
-showSlides();
+let images = ["{{$barang->pathImg1}}", "{{$barang->pathImg2}}"];
+let currentImageIndex = 0;
+let imgElements = document.getElementsByClassName('mySlide');
+let imgElements2 = document.getElementsByClassName('mySlide2');
 
-function showSlides() {
-    let slides = document.getElementsByClassName("mySlide");
-    let currentSlide = slides[slideIndex];
+function showNextImage() {
+    for (let i = 0; i < imgElements.length; i++) {
+        if (currentImageIndex === 0) {
+            imgElements[i].classList.add('transition-opacity', 'opacity-0');
+            imgElements2[i].classList.remove('transition-opacity', 'opacity-0');
+            setTimeout(() => {
+                imgElements[i].classList.add('hidden');
+                imgElements2[i].classList.remove('hidden');
+            }, 1000);
+            
+        } else {
+            imgElements[i].classList.remove('transition-opacity', 'opacity-0');
+            imgElements2[i].classList.add('transition-opacity', 'opacity-0');
+            setTimeout(() => {
+                imgElements2[i].classList.remove('transition-opacity', 'opacity-0');
+                imgElements[i].classList.remove('hidden');
+                imgElements2[i].classList.add('hidden');
+            }, 1000);
+            
+        }
+    }
 
-    // Make the current slide visible and fully opaque
-    currentSlide.classList.remove("hidden");
-    currentSlide.style.opacity = "100";
-
-    // Fade out the current slide
-    setTimeout(() => {
-        let fadeEffect = setInterval(() => {
-            if (currentSlide.style.opacity > 0) {
-                currentSlide.style.opacity -= 30 ; // Decrease opacity
-            } else {
-                clearInterval(fadeEffect); // Stop the interval when fully transparent
-                currentSlide.classList.add("hidden"); // Hide the slide
-
-                // Move to the next slide
-                slideIndex = (slideIndex + 1) % slides.length; // Loop back to the first slide if at the end
-                showSlides(); // Recursive call to start showing the next slide
-            }
-        }, 500); // Adjust this value to control the speed of the fade out
-    }, 1200); // Start fading out after 3 seconds
+    currentImageIndex = (currentImageIndex + 1) % images.length;
 }
+
+setInterval(showNextImage, 3000); // Ganti gambar setiap 3 detik
 </script>
     @endif
     @endif

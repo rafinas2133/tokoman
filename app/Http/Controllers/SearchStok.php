@@ -20,8 +20,8 @@ class SearchStok extends Controller
 
         $barangs = $barangs->paginate(9);
         if ($roleId=='0') {
-            return view('stok.index', compact('barangs'));
+            return view('stok.index', compact('barangs'),['error'=>'false']);
         }
-        return view('dashboard', compact('barangs'));
+        return view('dashboard', compact('barangs'),['error'=>'false']);
     }
 }

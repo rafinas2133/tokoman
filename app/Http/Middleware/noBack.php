@@ -17,7 +17,6 @@ class noBack
     {
         $response=$next($request);
         $response->headers->set('Cache-control','nocache, no-store, max-age=0, must-revalidate');
-        $response->headers->set('Expires','Sat, 01 Jan 2000 00:00:00 GMT');
         return $response;
     }
 }

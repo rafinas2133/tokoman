@@ -70,11 +70,9 @@
         <div class="text-white text-base">
             <strong>Minat?</strong>
         </div>
-        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">
-        <a href="wa/{{$barang->nama_barang}}" class="mr-2">Order di sini</a>
-        <img class="max-w-[30px] max-h-[30px]" src="{{ $pathimage }}" alt="">
-        </button>
-        
+        <a href="wa/{{$barang->nama_barang}}" class="w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">Order di sini
+        <img class="max-w-[30px] max-h-[30px] ml-2" src="{{ $pathimage }}" alt="">
+        </a> 
     </div>
 </div>
 @endif

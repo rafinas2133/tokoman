@@ -32,7 +32,7 @@
 
     <div class="w-full flex justify-center items-center">
         <div class="container my-10">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 max-lg:gap-4">
                 @foreach ($barangs as $barang)
                     <x-stok-barang-card :barang="$barang" />
                 @endforeach

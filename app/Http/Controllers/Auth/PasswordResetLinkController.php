@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
 use Illuminate\View\View;
+use App\Rules\Recaptca;
 
 class PasswordResetLinkController extends Controller
 {
@@ -27,6 +28,7 @@ class PasswordResetLinkController extends Controller
     {
         $request->validate([
             'email' => ['required', 'email'],
+            'g-recaptcha-response'=>['required', new Recaptca]
         ]);
 
         // We will send the password reset link to this user. Once we have attempted

@@ -15,6 +15,8 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+        <div class="g-recaptcha mt-4" data-sitekey="{{env('RECAPTCHA_SITE_KEY')}}"></div>
+        <x-input-error :messages="$errors->first('g-recaptcha-response', 'Isi captcha dulu.')" class="mt-2" />
 
         <div class="flex items-center justify-end mt-4">
             <x-primary-button>

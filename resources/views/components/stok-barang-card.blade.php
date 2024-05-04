@@ -22,7 +22,7 @@
     let {{$barang->jenis_tutup . $barang->id_barang.'2'}} = document.getElementsByClassName('{{$barang->nama_barang.'2'}}');
     function showNextImage{{$barang->id_barang}}() {
             for (let i = 0; i < {{$barang->jenis_tutup . $barang->id_barang}}.length; i++) {
-            if ({{$barang->jenis_tutup . $barang->id_barang.'index'}}==0||{{$barang->id_barang.'index'}}%2==0) {
+            if ({{$barang->jenis_tutup . $barang->id_barang.'index'}}==0||{{$barang->jenis_tutup . $barang->id_barang.'index'}}%2==0) {
                 {{$barang->jenis_tutup . $barang->id_barang}}[i].classList.add('transition-opacity', 'opacity-0');
                 {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
                 setTimeout(() => {

@@ -17,29 +17,29 @@
     <img src="{{$barang->pathImg2}}" class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]">
     <button onclick="showNextImage{{$barang->id_barang}}()"class="absolute inset-0 w-[30px] h-[30px] mt-[175px] ml-[320px]"><img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(2).png"></button>
    <script>
-    let {{$barang->id_barang.'index'}}=0;
-    let {{$barang->id_barang}} = document.getElementsByClassName('{{$barang->nama_barang}}');
-    let {{$barang->id_barang.'2'}} = document.getElementsByClassName('{{$barang->nama_barang.'2'}}');
+    let {{$barang->jenis_tutup . $barang->id_barang.'index'}}=0;
+    let {{$barang->jenis_tutup . $barang->id_barang}} = document.getElementsByClassName('{{$barang->nama_barang}}');
+    let {{$barang->jenis_tutup . $barang->id_barang.'2'}} = document.getElementsByClassName('{{$barang->nama_barang.'2'}}');
     function showNextImage{{$barang->id_barang}}() {
-            for (let i = 0; i < {{$barang->id_barang}}.length; i++) {
-            if ({{$barang->id_barang.'index'}}==0||{{$barang->id_barang.'index'}}%2==0) {
-                {{$barang->id_barang}}[i].classList.add('transition-opacity', 'opacity-0');
-                {{$barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
+            for (let i = 0; i < {{$barang->jenis_tutup . $barang->id_barang}}.length; i++) {
+            if ({{$barang->jenis_tutup . $barang->id_barang.'index'}}==0||{{$barang->id_barang.'index'}}%2==0) {
+                {{$barang->jenis_tutup . $barang->id_barang}}[i].classList.add('transition-opacity', 'opacity-0');
+                {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
                 setTimeout(() => {
-                    {{$barang->id_barang}}[i].classList.add('hidden');
-                    {{$barang->id_barang.'2'}}[i].classList.remove('hidden');
+                    {{$barang->jenis_tutup . $barang->id_barang}}[i].classList.add('hidden');
+                    {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.remove('hidden');
                 }, 1000);
             }
             else{
-                {{$barang->id_barang}}[i].classList.remove('transition-opacity', 'opacity-0');
-                {{$barang->id_barang.'2'}}[i].classList.add('transition-opacity', 'opacity-0');
+                {{$barang->jenis_tutup . $barang->id_barang}}[i].classList.remove('transition-opacity', 'opacity-0');
+                {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.add('transition-opacity', 'opacity-0');
                 setTimeout(() => {
-                {{$barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
-                {{$barang->id_barang}}[i].classList.remove('hidden');
-                {{$barang->id_barang.'2'}}[i].classList.add('hidden');
+                {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.remove('transition-opacity', 'opacity-0');
+                {{$barang->jenis_tutup . $barang->id_barang}}[i].classList.remove('hidden');
+                {{$barang->jenis_tutup . $barang->id_barang.'2'}}[i].classList.add('hidden');
                 }, 1000);
             }
-            {{$barang->id_barang.'index'}}++
+            {{$barang->jenis_tutup . $barang->id_barang.'index'}}++
         }
     }
 </script>

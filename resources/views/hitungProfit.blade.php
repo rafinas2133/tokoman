@@ -1,3 +1,5 @@
-<div>
-    <!-- The only way to do great work is to love what you do. - Steve Jobs -->
-</div>
+<x-app-layout>
+    <div class="container mx-auto">
+        <h1 class="text-2xl font-bold">Hitung Profit</h1>
+    </div>
+</x-app-layout>

@@ -13,32 +13,34 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test Admin1',
             'email' => 'admin1@admin.admin',
-            'password' => 'testadmin1',
+            'password' => '12345678',
             'role_id'=>'0',
         ]);
         User::factory()->create([
             'name' => 'Test Admin2',
             'email' => 'admin2@admin.admin',
-            'password' => 'testadmin2',
+            'password' => '12345678',
             'role_id'=>'0',
         ]);
         User::factory()->create([
             'name' => 'Test Admin3',
             'email' => 'admin3@admin.admin',
-            'password' => 'testadmin3',
+            'password' => '12345678',
             'role_id'=>'0',
         ]);
         User::factory()->create([
             'name' => 'Test kary1',
             'email' => 'kary1@kary.kary',
-            'password' => 'testkary1',
+            'password' => '12345678',
             'role_id'=>'1',
         ]);
         User::factory()->create([
             'name' => 'Test kary2',
             'email' => 'kary2@kary.kary',
-            'password' => 'testkary2',
+            'password' => '12345678',
             'role_id'=>'1',
         ]);
+        $this ->call(BarangSeeder::class);
     }
 }
+

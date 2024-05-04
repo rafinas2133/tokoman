@@ -2,7 +2,7 @@
 <?php $pathimage='https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png'?>
 <div class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10 max-[400px]:scale-75">
     @if($barang->pathImg1=='')
-    <img class="mx-auto w-[300px] h-[300px] rounded-lg" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
+    <img class="rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]" src="https://placeholder.pics/svg/300" alt="Gambar {{ $barang->nama_barang }}">
     @else
     @if($barang->pathImg2=='')
     <img class=" rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]" src="{{$barang->pathImg1}}" alt="Gambar {{ $barang->nama_barang }}">

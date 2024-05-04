@@ -63,6 +63,7 @@
         </div>
     <!-- Pagination Links -->
     <div class="text-center mt-4, bg-blue-700, text-white">
-        {{ $barang->links('vendor.pagination.tailwind') }}
+    {{ $barang->appends(request()->query())->links('vendor.pagination.tailwind') }}
     </div>
     @endif
+

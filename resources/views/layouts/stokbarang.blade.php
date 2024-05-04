@@ -38,7 +38,7 @@
                 @endforeach
             </div>
             <div class="mt-8">
-                {{ $barangs->links('vendor.pagination.custom') }}
+            {{ $barangs->appends(request()->query())->links('vendor.pagination.custom') }}
             </div>
         </div>
     </div>

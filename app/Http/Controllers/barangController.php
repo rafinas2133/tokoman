@@ -22,7 +22,7 @@ class barangController extends Controller
             }
         }
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
-        $barang = StokBarang::paginate(9);
+        $barang = StokBarang::paginate(6);
         
         return view("welcome", ["barangs" => $barang],compact('types'));
     }

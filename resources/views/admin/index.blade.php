@@ -26,7 +26,7 @@
                 <thead class="bg-gray-800 text-white">
                     <tr>
                         <th class="px-4 py-2">Email</th>
-                        <th class="px-4 py-2">Password</th>
+                        <th class="px-4 py-2">Role</th>
                         <th class="px-4 py-2">Nama</th>
                         <th class="px-4 py-2">Dibuat pada</th>
                         <th class="px-4 py-2">Diupdate pada</th>
@@ -37,7 +37,7 @@
                     @foreach($users as $usr)
                     <tr class="bg-gray-100">
                         <td class="border px-4 py-2">{{ $usr->email }}</td>
-                        <td class="border px-4 py-2">{{ $usr->password }}</td>
+                        <td class="border px-4 py-2">{{ $usr->role_id==0?'admin':'pegawai' }}</td>
                         <td class="border px-4 py-2">{{ $usr->name }}</td>
                         <td class="border px-4 py-2">{{ $usr->created_at }}</td>
                         <td class="border px-4 py-2">{{ $usr->updated_at }}</td>

@@ -27,10 +27,10 @@ class SearchController extends Controller
             $barangs->where('jenis_tutup', $type);
         }
 
-        $barangs = $barangs->paginate(9);
-
+        $barangs = $barangs->paginate(6);
+        $barangs->appends(['search' => $query, 'stock' => $stock, 'type' => $type]);
         // Ambil 3 jenis barang acak yang berbeda
-        $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->take(3)->get();
+        $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
 
         return view('welcome', compact('barangs', 'types'));
     }

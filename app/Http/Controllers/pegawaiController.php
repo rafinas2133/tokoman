@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 class pegawaiController extends Controller
 {
     public function index(){
-        $user = DB::table("users")->Paginate(10);
+        $user = DB::table("users")->orderBy('role_id', 'asc')->Paginate(10);
         
         return view("admin.index",["users" => $user]);
     }

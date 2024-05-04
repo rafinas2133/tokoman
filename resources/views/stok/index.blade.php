@@ -88,6 +88,6 @@
     @endif
     <!-- Pagination Links -->
     <div class="text-center mt-4, bg-blue-700, text-white">
-        {{ $barangs->links('vendor.pagination.tailwind') }}
+        {{ $barangs->appends(request()->query())->links('vendor.pagination.custom') }}
     </div>
 </x-app-layout>

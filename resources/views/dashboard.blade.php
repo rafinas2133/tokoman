@@ -1,10 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard '. (session('role_id')==0?'Admin':'Pegawai')) }}
-        </h2>
-    </x-slot>
-    @if(session('role_id')==1)
+    <div class="flex h-screen">
+        <div class="w-64">
+            @include('layouts.navbarLeft') 
+        </div>
+        <div class="flex flex-col flex-1 w-full">
+        @include('layouts.homeContent')
+        </div>
+        
+    <!-- @if(session('role_id')==1)
     @if(session('error')=='true')
     <div class="error hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
     <strong class="font-bold">Error!</strong>
@@ -35,6 +38,10 @@
             </div>
         </div>
     </div>
-    @endif
+    @endif -->
+    </div>
+    
+
+    
 </x-app-layout>
 

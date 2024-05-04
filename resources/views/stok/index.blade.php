@@ -4,7 +4,7 @@
             {{ __('Manajemen Stok Barang') }}
         </h2>
     </x-slot>
-    @if($error=='true')
+    @if($error == 'true')
     <div class="error hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
     <strong class="font-bold">Error!</strong>
     <span class="block sm:inline">Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg</span>
@@ -24,8 +24,11 @@
     </div>
     <x-search-stok :route="'admin'" />
     <div class="p-6 text-gray-900 dark:text-gray-100 text-center mx-auto">
-        <a href="/stok/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> + Tambah data barangs</a>
-        <a href="/stok/deleteAll" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> - Hapus semua data barangs</a>
+        <a href="/stok/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded inline-block"> + Tambah data barang</a>
+        <form action="/stok/deleteAll" method="POST">
+    @csrf
+    <button type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">Hapus semua data barang</button>
+</form>
     </div>
     @if($barangs->isEmpty())
         <div class="text-center text-white text-info">
@@ -50,10 +53,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php $a=0;?>
+                    <?php    $a = 0;?>
                     @foreach($barangs as $usr)
                     <tr class="bg-gray-100">
-                        <td class="border px-4 py-2"><?php echo$a+=1?></td>
+                        <td class="border px-4 py-2"><?php echo $a += 1?></td>
                         <td class="border px-4 py-2">{{ $usr->id_barang }}</td>
                         <td class="border px-4 py-2">{{ $usr->nama_barang }}</td>
                         <td class="border px-4 py-2">{{ $usr->stok }}</td>
@@ -70,9 +73,12 @@
                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                         </form>
                         </td>
-                        <td class="border px-4 py-2">
+                        <td class="border px-4 py-2 flex">
                             <a href="/stok/edit/{{ $usr->id_barang }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
-                            <a href="/stok/delete/{{ $usr->id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</a>
+                            <form action="/stok/delete/{{ $usr->id }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</button>
+                            </form>
                         </td>
                     </tr> 
                     @endforeach

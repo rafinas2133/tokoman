@@ -1,7 +1,10 @@
     
     <div class="p-6 text-gray-900 dark:text-gray-100 text-center mx-auto">
-        <a href="/stok/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> + Tambah data barang</a>
-        <a href="/stok/deleteAll" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block"> - Hapus semua data barang</a>
+        <a href="/stok/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded inline-block"> + Tambah data barang</a>
+        <form action="/stok/deleteAll" method="POST">
+    @csrf
+    <button type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">Hapus semua data barang</button>
+</form>
     </div>
     @if($barang->isEmpty())
         <div class="text-center text-white text-info">
@@ -46,9 +49,12 @@
                         <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Submit</button>
                         </form>
                         </td>
-                        <td class="border px-4 py-2">
+                        <td class="border px-4 py-2 flex">
                             <a href="/stok/edit/{{ $usr->id_barang }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
-                            <a href="/stok/delete/{{ $usr->id }}" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</a>
+                            <form action="/stok/delete/{{ $usr->id }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</button>
+                            </form>
                         </td>
                     </tr> 
                     @endforeach

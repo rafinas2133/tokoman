@@ -20,13 +20,20 @@ Route::middleware(['auth','verified','noback'])->group(function () {
         Route::get('/hitungProfit', [ProfitController::class,'index'])->name('profit');
         //Manipulasi Stok
         Route::post('/tambahstok/{id}', [barangController::class,'tambahStok'])->name('tambahStok');
-        Route::get('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
-        Route::get('/stok/add', [barangController::class,'add'])->name('tambahStok');
+        Route::post('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
+        Route::get('/stok/add', [barangController::class,'add'])->name('tambahBarang');
         Route::post('/stok/addsave', [barangController::class,'addsave'])->name('stokSave');
         Route::get('/stok/edit/{id}', [barangController::class,'edit'])->name('editStok');
         Route::post('/stok/editsave/{id}', [barangController::class,'editsave'])->name('editSave');
-        Route::get('/stok/delete/{id}', [barangController::class,'delete'])->name('deleteStok');
-        Route::get('/stok/deleteAll', [barangController::class,'deleteAll'])->name('deleteStokAll');
+        Route::post('/stok/delete/{id}', [barangController::class,'delete'])->name('deleteStok');
+        Route::post('/stok/deleteAll', [barangController::class,'deleteAll'])->name('deleteStokAll');
+            //Mentalin Request Post saat direquest Get
+            Route::get('/tambahstok/{id}', function () {return redirect()->route('stokBarang');});
+            Route::get('/deleteImg/{id}', function () {return redirect()->route('stokBarang');});
+            Route::get('/stok/addsave', function () {return redirect()->route('stokBarang');});
+            Route::get('/stok/editsave/{id}', function () {return redirect()->route('stokBarang');});
+            Route::get('/stok/delete/{id}', function () {return redirect()->route('stokBarang');});
+            Route::get('/stok/deleteAll', function () {return redirect()->route('stokBarang');});
     //Route khusus Pegawai
     Route::middleware(['employee'])->group(function () {
         //Dashboard dan Search Pegawai isinya stok
@@ -44,8 +51,13 @@ Route::middleware(['auth','verified','noback'])->group(function () {
         Route::post('admin/addsave', [pegawaiController::class,'addSave'])->name('Tambahkan.Pegawai');
         Route::get('admin/edit/{id}', [pegawaiController::class,'edit'])->name('Edit.Pegawai');
         Route::post('admin/editsave', [pegawaiController::class,'editsave'])->name('Editkan.Pegawai');
-        Route::get('admin/delete/{id}', [pegawaiController::class,'delete'])->name('Hapus.Pegawai');
-        Route::get('admin/deleteAll', [pegawaiController::class,'deleteAll'])->name('Hapus.AllPegawai');
+        Route::post('admin/delete/{id}', [pegawaiController::class,'delete'])->name('Hapus.Pegawai');
+        Route::post('admin/deleteAll', [pegawaiController::class,'deleteAll'])->name('Hapus.AllPegawai');
+            //Mentalin Request Post saat direquest Get
+            Route::get('admin/editsave', function () {return redirect()->route('Manajemen.Admin');});
+            Route::get('admin/delete/{id}', function () {return redirect()->route('Manajemen.Admin');});
+            Route::get('admin/deleteAll', function () {return redirect()->route('Manajemen.Admin');});
+            Route::get('admin/addsave', function () {return redirect()->route('Manajemen.Admin');});
         //Dashboard admin
         Route::get('/dashboard', function () {
             return view('dashboard');
@@ -60,7 +72,7 @@ Route::get('/wa/{id}', [barangController::class,'reqWa']);
 //RouteSearch
 Route::get('/search', [SearchController::class,'index'])->name('search');
 
-Route::middleware('auth','noback')->group(function () {
+Route::middleware(['auth','noback'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

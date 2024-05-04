@@ -56,11 +56,19 @@
     <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2" class=" h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     @if($brg->pathImg2!='')
     <img class="w-[100px] h-[100px]" src="{{$brg->pathImg2}}" alt="">
-    <a href="/deleteImg/{{$brg->id_barang}}" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block h-[45px]">Hapus</a>
+    
     @endif
-    </div>  
-    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan Data</button>
+    </div>
+    <div class="flex gap-4">
+    <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 h-fit rounded">Simpan Data</button>
     </form>
+    @if($brg->pathImg2!='')
+    <form action="/deleteImg/{{$brg->id_barang}}" method="POST">
+        @csrf
+        <button type="submit" class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block h-fit">Hapus Gambar 2</button>
+    </form>
+    </div>
+    @endif
  
       
                 </div>

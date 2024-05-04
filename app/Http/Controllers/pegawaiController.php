@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\StokBarang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -80,9 +81,10 @@ class pegawaiController extends Controller
         return redirect('/admin');
     }
     public function delete($id){
-        
+        $userDelete=User::where('id', $id)->first();
+        $authUser=User::where('id', Auth::user()->id)->first();
         DB::table('users')->where('id', $id)->delete();;
-        if($id = Auth::user()->id){
+        if($userDelete->name==$authUser->name){
             Session::forget('role_id');
             return redirect('/');
         }

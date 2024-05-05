@@ -13,7 +13,7 @@ use App\Http\Controllers\riwayatController;
 
 
 // Route untuk user terAuth()
-Route::middleware(['auth','verified','noback'])->group(function () {
+Route::middleware(['auth','verified','noback','regen'])->group(function () {
     //Route Semua Role User
         //laporan dan profit
         Route::get('/pelaporan', [LaporanController::class,'index'])->name('laporan');
@@ -70,7 +70,7 @@ Route::get('/wa/{id}', [barangController::class,'reqWa']);
 //RouteSearch
 Route::get('/search', [SearchController::class,'index'])->name('search');
 
-Route::middleware(['auth','noback'])->group(function () {
+Route::middleware(['auth','noback','regen'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

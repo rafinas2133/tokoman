@@ -15,13 +15,6 @@ use Illuminate\Support\Facades\Auth;
 class barangController extends Controller
 {
     public function index(){
-        if(Auth::check()){
-            if(Auth::user()->role_id==0){
-                Session::put("role_id",0);
-            }else{
-                Session::put("role_id",1);
-            }
-        }
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(6);
         

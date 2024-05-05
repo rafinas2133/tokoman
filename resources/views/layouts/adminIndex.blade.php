@@ -1,7 +1,3 @@
-<div class="p-6 text-gray-900 dark:text-gray-100 text-center">
-       
-        <a href="/dashboard" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">Kembali</a>
-    </div>
     <div class="p-6 text-gray-900 dark:text-gray-100 text-center mx-auto">
         <a href="/admin/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 my-2 px-4 rounded inline-block"> + Tambah data pegawai</a>
         <form action="/admin/deleteAll" method="POST">

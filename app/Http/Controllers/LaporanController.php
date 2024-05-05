@@ -10,4 +10,7 @@ class LaporanController extends Controller
         //nak kene lek pengen modif2 ge ngirim data nak view
         return view("pelaporan");
     }
+    public function store(Request $request){
+        return response()->json($request->all());
+    }
 }

@@ -48,6 +48,12 @@ class barangController extends Controller
         return $url . $value;
     }
     public function tambahStok(Request $request,$id){
+    $validator = Validator::make($request->all(), [
+        'stok' => 'required|integer',
+    ]);
+    if($validator->fails()){
+        return redirect('/stok')->with('error', 'Stok harus angka');
+    }
     $inputanstok=$request->stok;
     $barang=StokBarang::where('id_barang', $id)->first();
     $riwayat=new Riwayat();
@@ -80,9 +86,9 @@ class barangController extends Controller
 
         if ($validator->fails()) {
             if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error', true);
+            return redirect('/empdashboard')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
             else
-            return redirect('/stok')->with('error', true);
+            return redirect('/stok')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
         }
         
         $id = '';
@@ -178,9 +184,9 @@ class barangController extends Controller
 
         if ($validator->fails()) {
             if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error', true);
+            return redirect('/empdashboard')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
             else
-            return redirect('/stok')->with('error', true);
+            return redirect('/stok')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
         }
         $barang = StokBarang::where('id_barang', $id)->first();
         $path1=$barang->pathImg1;

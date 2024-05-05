@@ -2,7 +2,7 @@
     @if($error == 'true')
     <div class="error hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
     <strong class="font-bold">Error!</strong>
-    <span class="block sm:inline">Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg</span>
+    <span class="block sm:inline">{{$error}}</span>
     </div>
     <script>
         var error = document.querySelector('.error');

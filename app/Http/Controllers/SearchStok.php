@@ -23,7 +23,7 @@ class SearchStok extends Controller
         }
         $barangs = $barangs->paginate(9)->appends(['search' => $query, 'type' => $type]);
         
-        return view('stok.index', compact('barangs'),['error'=>'false']);
+        return view('stok.index', compact('barangs'));
         
         
     }

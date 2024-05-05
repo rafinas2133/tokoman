@@ -33,11 +33,8 @@ class barangController extends Controller
     }
     public function adminIndex(){
         $barang = StokBarang::paginate(9);
-        if(session("error")=='true'){
-            return view("stok.index", ["barangs" => $barang,"error"=>"true"]);
-        }else{
-            return view("stok.index", ["barangs" => $barang,"error"=>"false"]);
-        }
+        return view("stok.index", ["barangs" => $barang]);
+        
     }
     public function add(){
         return view("stok.add");
@@ -82,13 +79,23 @@ class barangController extends Controller
             'ukuran'=> 'required',
             'gambar1'=>'required|image|mimes:jpeg,png,jpg|max:2048',
             'gambar2'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        ],[
+            'stok.integer' => 'Stok harus berupa angka.',
+            'bal.integer' => 'Jumlah bal harus berupa angka.',
+            'gambar1.image' => 'File harus berupa gambar.',
+            'gambar1.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
+            'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
+            'gambar2.image' => 'File harus berupa gambar.',
+            'gambar2.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
+            'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+        ]
+    );
 
         if ($validator->fails()) {
             if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
+            return redirect('/empdashboard')->with('error',$validator->errors()->first());
             else
-            return redirect('/stok')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
+            return redirect('/stok')->with('error',$validator->errors()->first());
         }
         
         $id = '';
@@ -180,13 +187,24 @@ class barangController extends Controller
             'ukuran'=> 'required',
             'gambar1'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'gambar2'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
+        ],[
+            'stok.integer' => 'Stok harus berupa angka.',
+            'bal.integer' => 'Jumlah bal harus berupa angka.',
+            'gambar1.image' => 'File harus berupa gambar.',
+            'gambar1.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
+            'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
+            'gambar2.image' => 'File harus berupa gambar.',
+            'gambar2.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
+            'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+        ]
+
+    );
 
         if ($validator->fails()) {
             if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
+            return redirect('/empdashboard')->with('error',$validator->errors()->first());
             else
-            return redirect('/stok')->with('error', 'Input Gambar Harus File Max 2MB dengan Ekstensi jpg,png,jpeg');
+            return redirect('/stok')->with('error',$validator->errors()->first());
         }
         $barang = StokBarang::where('id_barang', $id)->first();
         $path1=$barang->pathImg1;

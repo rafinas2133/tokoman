@@ -29,10 +29,9 @@
                    </tr>
                </thead>
                <tbody>
-                   <?php    $a = 0;?>
-                   @foreach($barangs as $usr)
+                   @foreach($barangs as $index => $usr)
                    <tr class="bg-gray-100">
-                       <td class="border px-4 py-2"><?php echo $a += 1?></td>
+                       <td class="border px-4 py-2">{{ $barangs->firstItem() + $index }}</td>
                        <td class="border px-4 py-2">{{ $usr->id_barang }}</td>
                        <td class="border px-4 py-2">{{ $usr->nama_barang }}</td>
                        <td class="border px-4 py-2">{{ $usr->stok }}</td>

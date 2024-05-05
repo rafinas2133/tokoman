@@ -19,6 +19,8 @@ Route::middleware(['auth','verified','noback'])->group(function () {
         Route::get('/pelaporan', [LaporanController::class,'index'])->name('laporan');
         Route::get('/hitungProfit', [ProfitController::class,'index'])->name('profit');
         //Manipulasi Stok
+        Route::get('/stok', [barangController::class,'adminIndex'])->name('stokIndex');
+        Route::get('/stok/search', [SearchStok::class,'index'])->name('searchStokadmin');
         Route::post('/tambahstok/{id}', [barangController::class,'tambahStok'])->name('tambahStok');
         Route::post('/deleteImg/{id}', [barangController::class,'deleteImg'])->name('deletegambar');
         Route::get('/stok/add', [barangController::class,'add'])->name('tambahBarang');
@@ -37,14 +39,13 @@ Route::middleware(['auth','verified','noback'])->group(function () {
     //Route khusus Pegawai
     Route::middleware(['employee'])->group(function () {
         //Dashboard dan Search Pegawai isinya stok
-        Route::get('/empdashboard', [barangController::class,'employeeIndex'])->name('dashboard');
-        Route::get('/empdashboard/search', [SearchStok::class,'index'])->name('searchStokemp');
+        Route::get('/empdashboard', function () {
+            return view('dashboard');
+        })->name('dashboard');
     });
     //Khusus Admin
     Route::middleware(['admin'])->group(function () {
-        //Indeks Manajemen Stok dan Search di dalam Stok
-        Route::get('/stok', [barangController::class,'adminIndex'])->name('stokIndex');
-        Route::get('/stok/search', [SearchStok::class,'index'])->name('searchStokadmin');
+
         //Manajemen Pegawai
         Route::get('/admin',[pegawaiController::class,'index'])->name('Manajemen.Admin');
         Route::get('admin/add', [pegawaiController::class,'add'])->name('Tambah.Pegawai');

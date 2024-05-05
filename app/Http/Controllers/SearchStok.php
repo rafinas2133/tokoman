@@ -22,9 +22,9 @@ class SearchStok extends Controller
             $barangs->where('jenis_tutup', $type);
         }
         $barangs = $barangs->paginate(9)->appends(['search' => $query, 'type' => $type]);
-        if ($roleId=='0') {
-            return view('stok.index', compact('barangs'),['error'=>'false']);
-        } 
-        return view('dashboard', compact('barangs'),['error'=>'false']);
+        
+        return view('stok.index', compact('barangs'),['error'=>'false']);
+        
+        
     }
 }

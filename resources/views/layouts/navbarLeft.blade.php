@@ -2,14 +2,14 @@
     <div class="p-5 text-xl font-semibold border-b border-gray-700">ANALYTICS</div>
     <ul class="space-y-2 p-5">
         <li>
-            <a href="#" class="flex items-center space-x-2 hover:text-gray-300">
+            <a href="{{ route('stokIndex') }}" class="{{ request()->routeIs('stokIndex','searchStokadmin','tambahBarang','editStok') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 hover:text-gray-300">
                 <span>📦</span>
                 <span>Manajemen Stok</span>
             </a>
         </li>
         @if(session('role_id')==0)
         <li>
-            <a href="#" class="flex items-center space-x-2 hover:text-gray-300">
+            <a href="{{ route('Manajemen.Admin') }}" class="{{ request()->routeIs('Manajemen.Admin','Tambah.Pegawai','Edit.Pegawai') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 hover:text-gray-300">
                 <span>👥</span>
                 <span>Manajemen Pegawai</span>
                 <span class="ml-auto px-2 py-0.5 text-xs font-semibold text-blue-800 bg-blue-200 rounded-full">NEW</span>

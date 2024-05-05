@@ -30,10 +30,6 @@ class barangController extends Controller
         $phone =kontak::where('name', 'ZidanElek')->first();
         return redirect("https://wa.me/$phone->noHp?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
     }
-    public function employeeIndex(){
-        $barang = StokBarang::paginate(9);
-        return view("dashboard", ["barangs" => $barang]);
-    }
     public function adminIndex(){
         $barang = StokBarang::paginate(9);
         if(session("error")=='true'){

@@ -66,9 +66,9 @@
         <ul class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat=='masuk'?'bg-red-100':'bg-green-100'}}">
             <li class="py-4 flex justify-between items-center ">
                 <div>
-                    <p class="text-sm text-gray-600">{{$riwayat->nama_barang}}</p>
-                    <p class="text-lg">Jumlah: {{$riwayat->jumlah}}</p>
-                    <p class="text-lg">{{$riwayat->jenis_riwayat=='masuk'?'Beli':'Jual'}} Rp: {{$riwayat->total_harga}}</p>
+                    <p class="text-md text-gray-600">{{$riwayat->nama_barang}}</p>
+                    <p class="text-sm">Jumlah: {{$riwayat->jumlah}}</p>
+                    <p class="text-sm">{{$riwayat->jenis_riwayat=='masuk'?'Beli':'Jual'}} Rp: {{$riwayat->total_harga}}</p>
                 </div>
                 <div class="text-sm text-gray-600">{{$riwayat->tanggal}} {{$riwayat->jam_dibuat}}<div class="text-sm text-gray-600">stok {{$riwayat->jenis_riwayat}}</div></div>
                 

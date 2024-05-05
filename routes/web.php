@@ -8,7 +8,7 @@ use App\Http\Controllers\pegawaiController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfitController;
-
+use App\Http\Controllers\riwayatController;
 
 
 
@@ -40,9 +40,7 @@ Route::middleware(['auth','verified','noback'])->group(function () {
     //Route khusus Pegawai
     Route::middleware(['employee'])->group(function () {
         //Dashboard dan Search Pegawai isinya stok
-        Route::get('/empdashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+        Route::get('/empdashboard', [riwayatController::class,'index'])->name('dashboardemp');
     });
     //Khusus Admin
     Route::middleware(['admin'])->group(function () {
@@ -61,9 +59,7 @@ Route::middleware(['auth','verified','noback'])->group(function () {
             Route::get('admin/deleteAll', function () {return redirect()->route('Manajemen.Admin');});
             Route::get('admin/addsave', function () {return redirect()->route('Manajemen.Admin');});
         //Dashboard admin
-        Route::get('/dashboard', function () {
-            return view('dashboard');
-        })->name('dashboard');
+        Route::get('/dashboard', [riwayatController::class,'index'])->name('dashboard');
         
     });
 

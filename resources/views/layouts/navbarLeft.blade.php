@@ -56,15 +56,20 @@
     <div class="p-4 text-xl font-semibold border-y border-gray-700">SETTINGS</div>
     <ul class="space-y-2 p-5">
         <li>
-            <a href="#" class="flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
-                <span>⚙️</span>
-                <span>Settings</span>
+            <a href="{{ route('profile.edit') }}" class="{{ request()->routeIs('profile.edit') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
+                <span>👤</span>
+                <span>Profile</span>
             </a>
         </li>
         <li>
-            <a href="#" class="flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
-                <span>🚪</span>
-                <span>Logout</span>
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                @method('post')
+                <button type="submit" class="flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow w-full">
+                    <span>🚪</span>
+                    <span>Logout</span>
+                </button>
+            </form>
             </a>
         </li>
     </ul>

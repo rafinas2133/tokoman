@@ -1,8 +1,15 @@
-<button class="sm:hidden p-4 text-white focus:outline-none mx-auto flex justify-center" onclick="toggleNavbar()">
-<svg class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
+<!-- Hamburger Button -->
+<button id="menuButton" class="md:hidden p-4 text-white focus:outline-none w-full flex justify-center bg-transparent" onclick="toggleNavbar()">
+    <!-- Hamburger Icon -->
+    <svg id="hamburgerIcon" class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 6h36M2 12h36M2 18h36"></path>
     </svg>
+    <!-- Cross Icon -->
+    <svg id="crossIcon" class="w-10 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
 </button>
+
 <div class="bg-gray-800 text-white h-full border-r border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300">
     <div class="p-4 text-xl font-semibold border-b border-gray-700">ANALYTICS</div>
     <ul class="space-y-2 p-5">
@@ -82,6 +89,11 @@
 <script>
     function toggleNavbar() {
         const navbar = document.querySelector('.bg-gray-800');
+        const hamburgerIcon = document.getElementById('hamburgerIcon');
+        const crossIcon = document.getElementById('crossIcon');
+        const menuButton = document.getElementById('menuButton');
+        hamburgerIcon.classList.toggle('hidden');
+        crossIcon.classList.toggle('hidden');
         if(navbar.classList.contains('max-[640px]:hidden')) {
             navbar.classList.remove('max-[640px]:hidden');
         } else {

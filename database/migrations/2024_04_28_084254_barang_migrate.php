@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('stok_barangs', function (Blueprint $table) {
             $table->id();
-            $table->string('id_barang') ;// ID barang, auto increment
+            $table->string('id_barang');// ID barang, auto increment
             $table->string('jenis_tutup');
             $table->string('nama_barang');
             $table->integer('stok');

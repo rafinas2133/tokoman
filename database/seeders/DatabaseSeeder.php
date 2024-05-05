@@ -4,7 +4,10 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use App\Models\kontak;
+use App\Models\tokenRegister;
 use Faker\Factory as Faker;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -39,6 +42,18 @@ class DatabaseSeeder extends Seeder
             'email' => 'kary2@kary.kary',
             'password' => '12345678',
             'role_id'=>'1',
+        ]);
+        tokenRegister::insert([
+            'role_id'=>'0',
+            'token'=>Hash::make('adminregis00'),
+        ]);
+        tokenRegister::insert([
+            'role_id'=>'1',
+            'token'=>Hash::make('karyregis11'),
+        ]);
+        kontak::insert([
+            'name'=>'ZidanElek',
+            'noHp'=>'6281335760738',
         ]);
         $this ->call(BarangSeeder::class);
     }

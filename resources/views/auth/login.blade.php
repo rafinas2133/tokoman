@@ -34,6 +34,9 @@
         
         <div class="g-recaptcha mt-4" data-sitekey="{{env('RECAPTCHA_SITE_KEY')}}"></div>
         <x-input-error :messages="$errors->first('g-recaptcha-response', 'Isi captcha dulu.')" class="mt-2" />
+        <div class="text-center mt-4 text-gray-600 dark:text-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+            not registered? <a href="{{ route('register') }}" class="hover:text-indigo-600">Register</a>
+        </div>
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
                 <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">

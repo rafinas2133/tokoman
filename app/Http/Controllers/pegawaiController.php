@@ -29,6 +29,7 @@ class pegawaiController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required',
             'email' => 'required|email',
+            'role_id' => 'required',
             'password' => 'required',
             'password_confirmation' => 'required|same:password',
         ]);
@@ -36,11 +37,12 @@ class pegawaiController extends Controller
         if ($validator->fails()) {
             return redirect('/admin')->withErrors($validator)->withInput();
         }
-
         $user = new User();
         $user->name = $request->nama;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
+        $user->email_verified_at = now();
+        $user->role_id = $request->role_id;
         $user->save();
 
         return redirect('/admin')->with('success', 'Data berhasil disimpan!');
@@ -56,7 +58,8 @@ class pegawaiController extends Controller
     }
     public function edit($id) {
         $user = DB::table("users")->where(['id' => $id])->first();
-        return view("admin.edit", ["user" => $user]);
+        $userauth = Auth::user();
+        return view("admin.edit", ["user" => $user,"userauth"=> $userauth]);
     }
     public function editsave(Request $request){
 
@@ -64,17 +67,22 @@ class pegawaiController extends Controller
             'nama' => 'required',
             'email'=> 'required',
             'password'=> 'nullable',
+            'role_id'=> 'nullable',
             'id'=>'required',
         ]);
         $dataToUpdate = [
             'name' => $request->nama,
             'email' => $request->email,
+            'updated_at' => now(),
         ];
     
         if ($request->filled('password')&&$request->filled('password_confirmation')) {
             if ($request->password==$request->password_confirmation) {
             $dataToUpdate['password'] = bcrypt($validatedData['password']);
             }
+        }
+        if ($request->filled('role_id')) {
+            $dataToUpdate['role_id'] = $request->role_id;
         }
         DB::table('users')->where('id', $validatedData['id'])->update($dataToUpdate);
         

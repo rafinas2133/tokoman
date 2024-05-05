@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\tokenRegister;
+use App\Rules\Recaptca;
+use App\Rules\TokenHashCheck;
 
 class RegisteredUserController extends Controller
 {
@@ -33,18 +36,30 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'g-recaptcha-response' => ['required', new Recaptca],
+            'token' => ['required', new TokenHashCheck],
         ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('verification.notice', absolute: false));
+        $tokenreq = $request->input('token');
+        $tokenadmin = tokenRegister::where('role_id', 0)->first();
+        $tokenemp = tokenRegister::where('role_id', 1)->first();
+       
+            if(Hash::check($tokenreq, $tokenadmin->token)) {
+                $role_id = 0;
+            }
+            if(Hash::check($tokenreq, $tokenemp->token)) {
+                $role_id = 1;
+            }
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'role_id' => $role_id,
+            ]);
+    
+            event(new Registered($user));
+    
+            Auth::login($user);
+    
+            return redirect(route('verification.notice', absolute: false));
     }
 }

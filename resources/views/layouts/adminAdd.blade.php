@@ -15,6 +15,14 @@
     <label for="email" class="block text-sm font-bold mb-2">Email:</label>
     <input type="email" id="email" name="email" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
     </div>
+    
+    <div class="mb-4">
+    <label for="role_id" class="block text-sm font-bold mb-2">Role:</label>
+    <select id="role_id" name="role_id" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        <option value="0">Admin</option>
+        <option value="1">Pegawai</option>
+    </select>
+    </div>
 
     <div class="mb-4">
     <label for="password" class="block text-sm font-bold mb-2">Password:</label>

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Models\StokBarang;
 use App\Models\kontak;
+use App\Models\Riwayat;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,18 @@ class barangController extends Controller
     public function tambahStok(Request $request,$id){
     $inputanstok=$request->stok;
     $barang=StokBarang::where('id_barang', $id)->first();
+    $riwayat=new Riwayat();
+    
+    $riwayat->nama_barang=$barang->nama_barang;
+    $riwayat->jenis_riwayat='masuk';
+    $riwayat->jumlah=abs($inputanstok);
+    $riwayat->tanggal=now();
+    $riwayat->id_barang=$barang->id;
+    $riwayat->save();
+
     $barang->stok+=abs($inputanstok);
     $barang->save();
+
     return redirect('/stok')->with('success','Stok Berhasil Ditambahkan');
     } 
     public function addSave(Request $request)

@@ -7,6 +7,7 @@ $line=1;
     <div class="flex items-center space-x-4 mb-2">
         <form action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
+            <input type="hidden" name="line" id="line" value="1">
             <div id="inputLines">
                 <div class="grid grid-cols-5 gap-4">
                 <div>
@@ -17,7 +18,7 @@ $line=1;
                     <label for="itemName1" class="block text-sm font-medium text-white">Item Name:</label>
                     <select id="itemName1" name="itemName1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                         @foreach($options as $options)
-                            <option value="{{ $options->id_barang }}" data-price="{{ $options->harga_jual }}">{{ $options->nama_barang }}</option>
+                            <option value="{{ $options->id }}" data-price="{{ $options->harga_jual }}">{{ $options->nama_barang }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -58,7 +59,7 @@ $line=1;
     function generateOptions() {
         let optionsHTML = '';
         @foreach($options2 as $option2)
-            optionsHTML += `<option value="{{ $option2->id_barang }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>`;
+            optionsHTML += `<option value="{{ $option2->id }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>`;
         @endforeach
         return optionsHTML;
     }
@@ -72,7 +73,6 @@ $line=1;
         const newLineDiv = document.createElement('div');
         newLineDiv.className = 'grid grid-cols-5 gap-4 mt-4';
         newLineDiv.innerHTML = `
-            <input type="hidden" id="itemId${line}" name="itemId${line}">
             <div>
                 <label for="reportDate${line}" class="block text-sm font-medium text-white">Report Date:</label>
                 <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
@@ -117,12 +117,11 @@ $line=1;
     handleItemNameChange(line);
 
     // Initial event listener for the first line
-    document.getElementById(`itemName${line}`).addEventListener('change', function() {
+    document.getElementById(`itemName1`).addEventListener('change', function() {
         var selectedOption = this.options[this.selectedIndex];
-        var itemPriceInput = document.getElementById(`itemPrice${line}`);
+        var itemPriceInput = document.getElementById(`itemPrice1`);
         itemPriceInput.value = selectedOption.getAttribute('data-price');
     });
-
 
 </script>
 

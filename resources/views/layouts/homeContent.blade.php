@@ -11,28 +11,27 @@
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">PENJUALAN PER HARI INI</div>
-            <div class="text-3xl font-semibold">Rp. 13.650.00</div>
-            <div class="text-green-500">+36%</div>
+            <div class="text-3xl font-semibold">Rp. {{$totalToday}}</div>
+            <div class="{{$differencePercentage>0?'text-green-500':'text-red-500'}}">{{$differencePercentage>0?'+':''}}{{$differencePercentage}}%</div>
         </div>
 
    
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
-            <div class="text-gray-600">TOTAL PENJUALAN</div>
-            <div class="text-3xl font-semibold">Rp. 59.231.00</div>
-            <div class="text-green-500">+14%</div>
+            <div class="text-gray-600">TOTAL PENJUALAN PER BULAN</div>
+            <div class="text-3xl font-semibold">Rp. {{$dataThisMonth}}</div>
+            <div class="{{$percentageThisMonth>=0?'text-green-500':'text-red-500'}}">{{$percentageThisMonth>=0?'+':''}}{{$percentageThisMonth}}%</div>
         </div>
  
    
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
-            <div class="text-gray-600">TOTAL PEMBELIAN BARANG</div>
-            <div class="text-3xl font-semibold">125</div>
-            <div class="text-green-500">+36%</div>
+            <div class="text-gray-600">TOTAL PENJUALAN BARANG</div>
+            <div class="text-3xl font-semibold">{{$barangPenjualan}}</div>
         </div>
 
     
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
-            <div class="text-gray-600">TOTAL PEMBELI</div>
-            <div class="text-3xl font-semibold">38</div>
+            <div class="text-gray-600">TOTAL PENGHASILAN</div>
+            <div class="text-3xl font-semibold">Rp. 13.650.00</div>
             <div class="text-green-500">+36%</div>
         </div>
   

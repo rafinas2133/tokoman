@@ -12,11 +12,11 @@ $line=1;
                 <div class="grid grid-cols-5 gap-4">
                 <div>
                     <label for="reportDate1" class="block text-sm font-medium text-white">Report Date:</label>
-                    <input type="date" id="reportDate1" name="reportDate1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <input type="date" id="reportDate1" name="reportDate1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                 </div>
                 <div>
                     <label for="itemName1" class="block text-sm font-medium text-white">Item Name:</label>
-                    <select id="itemName1" name="itemName1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <select id="itemName1" name="itemName1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                         @foreach($options as $options)
                             <option value="{{ $options->id }}" data-price="{{ $options->harga_jual }}">{{ $options->nama_barang }}</option>
                         @endforeach
@@ -24,11 +24,11 @@ $line=1;
                 </div>
                 <div>
                     <label for="itemQuantity1" class="block text-sm font-medium text-white">Item Quantity:</label>
-                    <input type="number" id="itemQuantity1" name="itemQuantity1" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                    <input type="number" id="itemQuantity1" name="itemQuantity1" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
                 </div>
                 <div>
                     <label for="itemPrice1" class="block text-sm font-medium text-white">Item Price:</label>
-                    <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly>
+                    <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly required>
                 </div>
                 </div>
             </div>
@@ -45,7 +45,6 @@ $line=1;
     <script>
     let line = 1;
 
-    // Function to handle changes in item name select
     function handleItemNameChange(line) {
         const itemNameSelect = document.getElementById(`itemName${line}`);
         itemNameSelect.addEventListener('change', function() {
@@ -55,7 +54,13 @@ $line=1;
         });
     }
 
-    // Function to generate options HTML for the second set of options
+    function setInitialItemPrice(line) {
+        const itemNameSelect = document.getElementById(`itemName${line}`);
+        const selectedOption = itemNameSelect.options[itemNameSelect.selectedIndex];
+        const itemPriceInput = document.getElementById(`itemPrice${line}`);
+        itemPriceInput.value = selectedOption.getAttribute('data-price');
+    }
+
     function generateOptions() {
         let optionsHTML = '';
         @foreach($options2 as $option2)
@@ -64,7 +69,11 @@ $line=1;
         return optionsHTML;
     }
 
-    // Add event listener to the "Add Another Line" button
+    document.addEventListener('DOMContentLoaded', function() {
+        setInitialItemPrice(line); // Set initial price for the first line
+        handleItemNameChange(line); // Attach event listener to the first line
+    });
+
     addLineBtn.addEventListener('click', () => {
         line++;
         const hitungLine = document.getElementById('line');
@@ -75,21 +84,21 @@ $line=1;
         newLineDiv.innerHTML = `
             <div>
                 <label for="reportDate${line}" class="block text-sm font-medium text-white">Report Date:</label>
-                <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
             </div>
             <div>
                 <label for="itemName${line}" class="block text-sm font-medium text-white">Item Name:</label>
-                <select id="itemName${line}" name="itemName${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                    ${generateOptions()} <!-- Use the generateOptions function here -->
+                <select id="itemName${line}" name="itemName${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                    ${generateOptions()}
                 </select>
             </div>
             <div>
                 <label for="itemQuantity${line}" class="block text-sm font-medium text-white">Item Quantity:</label>
-                <input type="number" id="itemQuantity${line}" name="itemQuantity${line}" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <input type="number" id="itemQuantity${line}" name="itemQuantity${line}" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
             </div>
             <div>
                 <label for="itemPrice${line}" class="block text-sm font-medium text-white">Item Price:</label>
-                <input type="number" id="itemPrice${line}" name="itemPrice${line}" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly>
+                <input type="number" id="itemPrice${line}" name="itemPrice${line}" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly required>
             </div>
             <div>
                 <label class="block text-red-700 text-sm font-medium">delete</label>
@@ -110,6 +119,7 @@ $line=1;
             inputLinesDiv.removeChild(newLineDiv);
         });
         inputLinesDiv.appendChild(newLineDiv);
+        setInitialItemPrice(line); // Set initial price for the new line
         handleItemNameChange(line); // Attach event listener to the new line
     });
 
@@ -125,4 +135,5 @@ $line=1;
 
 </script>
 
+</div>
 </div>

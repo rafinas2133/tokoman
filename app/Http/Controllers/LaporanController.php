@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\StokBarang;
 use App\Models\Laporan;
 use App\Models\Riwayat;
+use Illuminate\Support\Facades\Validator;
 
 class LaporanController extends Controller
 {
@@ -18,9 +19,21 @@ class LaporanController extends Controller
         return view("pelaporan", compact('options', 'options2'));
     }
     public function laporanPost(Request $request){
-    
+
         for ($i = 1; $i <= $request->line; $i++) {
-    
+            $validator = Validator::make($request->all(), [
+                'reportDate'.$i => 'required|date',
+                'itemName'.$i => 'required|integer',
+                'itemQuantity'.$i => 'required|integer',
+            ],
+            [
+                'required' => 'Data tidak boleh kosong',
+                'integer' => 'Data harus angka',
+            ]);
+            
+            if ($validator->fails()) {
+                return redirect('/pelaporan')->with('messages', $validator->errors()->first())->with('error', 'true');
+            }
             // Ambil data barang berdasarkan id_barang
             $namabarang = StokBarang::where('id', $request->{"itemName".$i})->first();
     
@@ -28,9 +41,9 @@ class LaporanController extends Controller
             $laporan = new Laporan();
             $laporan->nama_barang = $namabarang->nama_barang;
             $laporan->tanggal_laporan = $request->{"reportDate".$i};
-            $laporan->harga_barang = $request->{"itemPrice".$i};
+            $laporan->harga_barang = $namabarang->harga_jual;
             $laporan->jumlah_barang = abs($request->{"itemQuantity".$i});
-            $laporan->total = intval($request->{"itemPrice".$i}) * intval($request->{"itemQuantity".$i});
+            $laporan->total = intval($namabarang->harga_jual) * intval($request->{"itemQuantity".$i});
             $laporan->id_barang = $request->{"itemName".$i};
             $laporan->save();
 
@@ -47,7 +60,7 @@ class LaporanController extends Controller
         }
         
         // Redirect atau lakukan tindakan lain setelah menyimpan data
-        return redirect()->back()->with('success', 'Data berhasil disimpan');
+        return redirect('/pelaporan')->with('messages', 'Data berhasil disimpan')->with('error', 'false');
     }
     
 

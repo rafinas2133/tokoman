@@ -32,9 +32,9 @@
     <div class="p-4 text-xl font-semibold border-y border-gray-700">SHOP</div>
     <ul class="space-y-2 p-5">
         <li>
-            <a href="#" class="flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
-                <span>📦</span>
-                <span>Products</span>
+            <a href="/riwayat" class="{{ request()->routeIs('riwayat','riwayatFilter') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
+                <span>⏰</span>
+                <span>History</span>
             </a>
         </li>
         <li>

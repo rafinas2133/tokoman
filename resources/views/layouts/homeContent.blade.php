@@ -60,7 +60,7 @@
     <div class="mt-8 bg-white p-4 rounded-lg shadow">
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold">Recent Transactions</h2>
-            <a href="#" class="hover:text-blue-500">Show all ></a>
+            <a href="/riwayat" class="hover:text-blue-500">Show all ></a>
         </div>
         @foreach ($riwayatTerbaru as $riwayat )
         <ul class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat=='masuk'?'bg-red-100':'bg-green-100'}}">

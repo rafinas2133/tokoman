@@ -4,13 +4,9 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                 <a href="/admin" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block">Kembali</a>
     
- <form action="/admin/editsave" method="post" class="text-white">
+ <form action="/admin/editsave/{{$user->id}}" method="post" class="text-white">
     @csrf
     <p class="text-red-500 text-xs italic">Kosongkan jika tidak ingin mengedit.</p>
-    <div class="mb-4">
-        <label for="id" class="block text-white text-sm font-bold mb-2">ID:</label>
-        <input type="text" id="id" name="id" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly value="{{$user->id}}">
-    </div>
     <div class="mb-4">
         <label for="nama" class="block text-white text-sm font-bold mb-2">Nama:</label>
         <input type="text" id="nama" name="nama" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="{{$user->name}}" required>

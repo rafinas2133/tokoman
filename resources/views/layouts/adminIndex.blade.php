@@ -1,9 +1,5 @@
     <div class="p-6 text-gray-900 dark:text-gray-100 text-center mx-auto">
         <a href="/admin/add" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 my-2 px-4 rounded inline-block"> + Tambah data pegawai</a>
-        <form action="/admin/deleteAll" method="POST">
-    @csrf
-    <button type="submit" class="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block">Hapus semua data pegawai</button>
-</form>
     </div>
     @if($users->isEmpty())
         <div class="text-center text-white text-info">
@@ -25,12 +21,12 @@
                 <tbody>
                     @foreach($users as $usr)
                     <tr class="bg-gray-100">
-                        <td class="border px-4 py-2">{{ $usr->email }}</td>
-                        <td class="border px-4 py-2">{{ $usr->role_id==0?'admin':'pegawai' }}</td>
-                        <td class="border px-4 py-2">{{ $usr->name }}</td>
-                        <td class="border px-4 py-2">{{ $usr->created_at }}</td>
-                        <td class="border px-4 py-2">{{ $usr->updated_at }}</td>
-                        <td class="border px-4 py-2 flex">
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2">{{ $usr->email }}</td>
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2">{{ $usr->role_id==0?'admin':'pegawai' }}</td>
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2">{{ $usr->name }}</td>
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2">{{ $usr->created_at }}</td>
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2">{{ $usr->updated_at }}</td>
+                        <td class="{{$usr->id==Auth::user()->id?'bg-green-200':''}} border px-4 py-2 flex">
                             <a href="/admin/edit/{{ $usr->id }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
                             <form action="/admin/delete/{{ $usr->id }}" method="POST">
     @csrf

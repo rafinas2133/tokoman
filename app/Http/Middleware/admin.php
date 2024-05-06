@@ -19,7 +19,7 @@ class admin
         $roleId = $request->session()->get('role_id');
         switch ($roleId) {
             case '0': return $next($request);
-            case '1': return redirect('/empdashboard');
+            case '1': return redirect('/dashboard');
             default : return redirect('/');
         }
     }

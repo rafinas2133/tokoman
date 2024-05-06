@@ -85,9 +85,6 @@ class barangController extends Controller
     );
 
         if ($validator->fails()) {
-            if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error',$validator->errors()->first());
-            else
             return redirect('/stok')->with('error',$validator->errors()->first());
         }
         
@@ -143,7 +140,11 @@ class barangController extends Controller
 
     public function edit($id) {
         $barang = StokBarang::where('id_barang', $id)->first();
-        return view("stok.edit", ["brg" => $barang]);
+        if($barang){
+            return view("stok.edit", ["brg" => $barang]);
+        }else{
+            return redirect("/stok")->with("error","Data tidak ditemukan");
+        }
     }
     public function deleteImg($id){
         $barang = StokBarang::where('id_barang',$id)->first();
@@ -194,9 +195,6 @@ class barangController extends Controller
     );
 
         if ($validator->fails()) {
-            if(Session::get('role_id')==1)
-            return redirect('/empdashboard')->with('error',$validator->errors()->first());
-            else
             return redirect('/stok')->with('error',$validator->errors()->first());
         }
         $barang = StokBarang::where('id_barang', $id)->first();

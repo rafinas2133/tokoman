@@ -32,10 +32,12 @@ class pegawaiController extends Controller
             'role_id' => 'required',
             'password' => 'required',
             'password_confirmation' => 'required|same:password',
+        ],[
+            'password_confirmation.same' => 'Password tidak sesuai',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/admin')->withErrors($validator)->withInput();
+            return redirect('/admin')->with('error',$validator->errors()->first());
         }
         $user = new User();
         $user->name = $request->nama;
@@ -59,17 +61,41 @@ class pegawaiController extends Controller
     public function edit($id) {
         $user = DB::table("users")->where(['id' => $id])->first();
         $userauth = Auth::user();
+        if($user){
+        if($user->role_id ==0 && $userauth->id!=$user->id){
+            return redirect('/admin')->with('error','Anda tidak memiliki hak akses untuk mengedit data ini');
+        }
+        else{
         return view("admin.edit", ["user" => $user,"userauth"=> $userauth]);
+        }
+        }else{
+            return redirect("/admin")->with("error","Data tidak ditemukan");
+        }
     }
-    public function editsave(Request $request){
+    public function editsave(Request $request ,$id) {
+        $validator = Validator::make($request->all(), [
+            'nama' => 'required',
+            'email' => 'required|email',
+            'role_id' => 'required',
+            'password' => 'nullable',
+            'password_confirmation' => 'nullable|same:password',
+        ],[
+            'password_confirmation.same' => 'Password tidak sesuai',
+        ]);
 
+        if ($validator->fails()) {
+            return redirect('/admin')->with('error',$validator->errors()->first());
+        }
         $validatedData = $request->validate([
             'nama' => 'required',
             'email'=> 'required',
             'password'=> 'nullable',
+            'password_confirmation' => 'nullable|same:password',
             'role_id'=> 'nullable',
-            'id'=>'required',
+        ],[
+            'password_confirmation.same' => 'Password tidak sesuai',
         ]);
+        
         $dataToUpdate = [
             'name' => $request->nama,
             'email' => $request->email,
@@ -84,13 +110,16 @@ class pegawaiController extends Controller
         if ($request->filled('role_id')) {
             $dataToUpdate['role_id'] = $request->role_id;
         }
-        DB::table('users')->where('id', $validatedData['id'])->update($dataToUpdate);
+        DB::table('users')->where('id', $id)->update($dataToUpdate);
         
         return redirect('/admin');
     }
     public function delete($id){
         $userDelete=User::where('id', $id)->first();
         $authUser=User::where('id', Auth::user()->id)->first();
+        if ($userDelete->role_id==0 && $authUser->id!=$userDelete->id) {
+            return redirect('/admin')->with('error','Anda tidak memiliki hak akses untuk menghapus data ini');
+        }
         DB::table('users')->where('id', $id)->delete();;
         if($userDelete->name==$authUser->name){
             Session::forget('role_id');

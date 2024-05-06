@@ -15,6 +15,7 @@ use App\Http\Controllers\riwayatController;
 // Route untuk user terAuth()
 Route::middleware(['auth','verified','noback','regen'])->group(function () {
     //Route Semua Role User
+        Route::get('/dashboard', [riwayatController::class,'index'])->name('dashboard');
         //laporan dan profit
         Route::get('/pelaporan', [LaporanController::class,'index'])->name('laporan');
         Route::get('/hitungProfit', [ProfitController::class,'index'])->name('profit');
@@ -37,11 +38,6 @@ Route::middleware(['auth','verified','noback','regen'])->group(function () {
             Route::get('/stok/editsave/{id}', function () {return redirect()->route('stokBarang');});
             Route::get('/stok/delete/{id}', function () {return redirect()->route('stokBarang');});
             Route::get('/stok/deleteAll', function () {return redirect()->route('stokBarang');});
-    //Route khusus Pegawai
-    Route::middleware(['employee'])->group(function () {
-        //Dashboard dan Search Pegawai isinya stok
-        Route::get('/empdashboard', [riwayatController::class,'index'])->name('dashboardemp');
-    });
     //Khusus Admin
     Route::middleware(['admin'])->group(function () {
 
@@ -50,17 +46,14 @@ Route::middleware(['auth','verified','noback','regen'])->group(function () {
         Route::get('admin/add', [pegawaiController::class,'add'])->name('Tambah.Pegawai');
         Route::post('admin/addsave', [pegawaiController::class,'addSave'])->name('Tambahkan.Pegawai');
         Route::get('admin/edit/{id}', [pegawaiController::class,'edit'])->name('Edit.Pegawai');
-        Route::post('admin/editsave', [pegawaiController::class,'editsave'])->name('Editkan.Pegawai');
+        Route::post('admin/editsave/{id}', [pegawaiController::class,'editsave'])->name('Editkan.Pegawai');
         Route::post('admin/delete/{id}', [pegawaiController::class,'delete'])->name('Hapus.Pegawai');
         Route::post('admin/deleteAll', [pegawaiController::class,'deleteAll'])->name('Hapus.AllPegawai');
             //Mentalin Request Post saat direquest Get
-            Route::get('admin/editsave', function () {return redirect()->route('Manajemen.Admin');});
+            Route::get('admin/editsave/{id}', function () {return redirect()->route('Manajemen.Admin');});
             Route::get('admin/delete/{id}', function () {return redirect()->route('Manajemen.Admin');});
             Route::get('admin/deleteAll', function () {return redirect()->route('Manajemen.Admin');});
             Route::get('admin/addsave', function () {return redirect()->route('Manajemen.Admin');});
-        //Dashboard admin
-        Route::get('/dashboard', [riwayatController::class,'index'])->name('dashboard');
-        
     });
 
 });

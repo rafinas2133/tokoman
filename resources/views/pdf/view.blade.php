@@ -76,9 +76,9 @@
             <tr>
                 <td>{{ $item->id_barang }}</td>
                 <td>{{ $item->nama_barang }}</td>
-                <td>{{ $item->jenis_riwayat }}</td>
+                <td>{{ 'Keluar' }}</td>
                 <td>{{ $item->total }}</td>
-                <td>{{ $item->tanggal }}</td>
+                <td>{{ $item->tanggal_laporan }}</td>
             </tr>
             @endforeach
         </tbody>

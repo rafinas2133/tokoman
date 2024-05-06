@@ -18,7 +18,7 @@ class riwayatController extends Controller
         $imageData = str_replace('data:image/png;base64,', '', $imageData);
         $imageData = str_replace(' ', '+', $imageData);
         $decodedImageData = base64_decode($imageData);
-    
+
         // Menyimpan gambar ke dalam storage
         Storage::disk('s3')->put('chart.png', $decodedImageData);
         $dataIn = Riwayat::select('tanggal', 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
@@ -26,52 +26,44 @@ class riwayatController extends Controller
             ->groupBy('tanggal', 'jenis_riwayat', 'id_barang', 'nama_barang')
             ->orderBy('tanggal', 'asc')
             ->get();
-        $dataOut = riwayat::select('tanggal', 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
-            ->where('jenis_riwayat', 'keluar') // Filter hanya untuk jenis riwayat 'keluar'
-            ->groupBy('tanggal', 'jenis_riwayat', 'id_barang', 'nama_barang')
-            ->orderBy('tanggal', 'asc')
-            ->get();
-        $selectedItems = Riwayat::select('id_barang')->distinct()->pluck('id_barang');
-
-        $dataMasuk = Riwayat::whereIn('id_barang', $selectedItems)
-            ->where('jenis_riwayat', 'masuk')
-            ->groupBy(\DB::raw('DATE(tanggal)'))
-            ->orderBy('tanggal', 'asc')
-            ->get([
-                \DB::raw('DATE(tanggal) as tanggal'),
-                \DB::raw('SUM(jumlah) as total')
-            ]);
-
-        $dataKeluar = Laporan::whereIn('id_barang', $selectedItems)
-            ->groupBy(\DB::raw('DATE(tanggal_laporan)'))
+        $dataOut = Laporan::select('tanggal_laporan', 'id_barang', \DB::raw('SUM(jumlah_barang) as total'), 'nama_barang')
+            ->groupBy('tanggal_laporan', 'id_barang', 'nama_barang')
             ->orderBy('tanggal_laporan', 'asc')
-            ->get([
-                \DB::raw('DATE(tanggal_laporan) as tanggal'),
-                \DB::raw('SUM(jumlah_barang) as total')
-            ]);
-        $pdf = PDF::loadView('pdf.view', compact('dataIn', 'dataOut', 'dataMasuk', 'dataKeluar'));
+            ->get();
+        $pdf = PDF::loadView('pdf.view', compact('dataIn', 'dataOut'));
         return $pdf->download('riwayatTraficTokoman-' . now() . '.pdf');
     }
     public function index()
     {
-        $selectedItems = Riwayat::select('id_barang')->distinct()->pluck('id_barang');
-
-        $dataMasuk = Riwayat::whereIn('id_barang', $selectedItems)
-            ->where('jenis_riwayat', 'masuk')
-            ->groupBy(\DB::raw('DATE(tanggal)'))
-            ->orderBy('tanggal', 'asc')
-            ->get([
+        // Query untuk mengambil data masuk dari Riwayat
+        $dataMasuk = \DB::table('riwayat')
+            ->select(
                 \DB::raw('DATE(tanggal) as tanggal'),
-                \DB::raw('SUM(jumlah) as total')
-            ]);
+                \DB::raw('SUM(jumlah) as totalMasuk'),
+                \DB::raw('0 as totalKeluar')  // Kolom dummy untuk totalKeluar
+            )
+            ->where('jenis_riwayat', 'masuk')
+            ->groupBy(\DB::raw('DATE(tanggal)'));
 
-        $dataKeluar = Laporan::whereIn('id_barang', $selectedItems)
-            ->groupBy(\DB::raw('DATE(tanggal_laporan)'))
-            ->orderBy('tanggal_laporan', 'asc')
-            ->get([
+        // Query untuk mengambil data keluar dari Laporan
+        $dataKeluar = \DB::table('laporan')
+            ->select(
                 \DB::raw('DATE(tanggal_laporan) as tanggal'),
-                \DB::raw('SUM(jumlah_barang) as total')
-            ]);
+                \DB::raw('0 as totalMasuk'),  // Kolom dummy untuk totalMasuk
+                \DB::raw('SUM(jumlah_barang) as totalKeluar')
+            )
+            ->groupBy(\DB::raw('DATE(tanggal_laporan)'));
+
+        // Menggabungkan kedua query dengan UNION ALL dan menghitung total masuk dan keluar
+        $combinedData = \DB::query()
+            ->select('tanggal', \DB::raw('SUM(totalMasuk) as totalMasuk'), \DB::raw('SUM(totalKeluar) as totalKeluar'))
+            ->fromSub(function ($query) use ($dataMasuk, $dataKeluar) {
+                $query->fromSub($dataMasuk, 'masuk')
+                    ->unionAll($dataKeluar);
+            }, 'combined')
+            ->groupBy('tanggal')
+            ->orderBy('tanggal', 'asc')
+            ->get();
         // Total penjualan hari ini untuk barang keluar
         $totalToday = Laporan::whereDate('laporan.tanggal_laporan', Carbon::today())
             ->sum(\DB::raw('laporan.total'));
@@ -117,8 +109,7 @@ class riwayatController extends Controller
                 'dataThisMonth' => $dataThisMonth,
                 'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),
                 'barangPenjualan' => $barangPenjualan,
-                'dataMasuk' => $dataMasuk,
-                'dataKeluar' => $dataKeluar
+                'combinedData' => $combinedData
             ]
         );
     }

@@ -18,7 +18,7 @@ Route::middleware(['auth','verified','noback','regen'])->group(function () {
         //laporan dan profit
         Route::get('/pelaporan', [LaporanController::class,'index'])->name('laporan');
         Route::get('/hitungProfit', [ProfitController::class,'index'])->name('profit');
-        Route::post('/pelaporan', [LaporanController::class,'store'])->name('pelaporan.store');
+        Route::post('/pelaporan', [LaporanController::class,'laporanPost'])->name('pelaporan.postData');
         //Manipulasi Stok
         Route::get('/stok', [barangController::class,'adminIndex'])->name('stokIndex');
         Route::get('/stok/search', [SearchStok::class,'index'])->name('searchStokadmin');

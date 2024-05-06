@@ -14,7 +14,8 @@ use App\Http\Controllers\riwayatController;
 
 // Route untuk user terAuth()
 Route::middleware(['auth','verified','noback','regen'])->group(function () {
-    //Route Semua Role User
+        Route::post('/export-pdf', [riwayatController::class,'exportPDF'])->name('exportPDF');
+        //Route Semua Role User
         Route::get('/riwayat', [riwayatController::class,'tampilkan'])->name('riwayat');
         Route::get('/riwayat/filter', [riwayatController::class,'filterResults'])->name('riwayatFilter');
         Route::get('/dashboard', [riwayatController::class,'index'])->name('dashboard');

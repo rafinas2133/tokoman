@@ -11,27 +11,27 @@
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">PENJUALAN PER HARI INI</div>
-            <div class="text-3xl font-semibold">Rp. {{$totalToday}}</div>
+            <div class="text-xl font-semibold">Rp. {{$totalToday}}</div>
             <div class="{{$differencePercentage>0?'text-green-500':'text-red-500'}}">{{$differencePercentage>0?'+':''}}{{$differencePercentage}}%</div>
         </div>
 
    
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENJUALAN PER BULAN</div>
-            <div class="text-3xl font-semibold">Rp. {{$dataThisMonth}}</div>
+            <div class="text-xl font-semibold">Rp. {{$dataThisMonth}}</div>
             <div class="{{$percentageThisMonth>=0?'text-green-500':'text-red-500'}}">{{$percentageThisMonth>=0?'+':''}}{{$percentageThisMonth}}%</div>
         </div>
  
    
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENJUALAN BARANG</div>
-            <div class="text-3xl font-semibold">{{$barangPenjualan}}</div>
+            <div class="text-xl font-semibold">{{$barangPenjualan}}</div>
         </div>
 
     
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENGHASILAN</div>
-            <div class="text-3xl font-semibold">Rp. 13.650.00</div>
+            <div class="text-xl font-semibold">Rp. 13.650.00</div>
             <div class="text-green-500">+36%</div>
         </div>
   
@@ -50,9 +50,71 @@
 
     <!-- Traffic Sources -->
     <div class="mt-8 bg-white p-4 rounded-lg shadow">
-        <h2 class="text-xl font-semibold">Traffic Sources</h2>
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold">Traffic Sources</h2>
+            <button onclick="exportToPDF()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
+        </div>
         <!-- Placeholder for traffic sources -->
-        <div class="h-32 bg-gray-200 rounded-lg mt-4"></div>
+        <canvas id="barangChart"></canvas>
+    </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+function exportToPDF() {
+    var canvas = document.getElementById('barangChart');
+    var canvasImg = canvas.toDataURL("image/png", 1.0);
+
+    var form = new FormData();
+    form.append('chart_image', canvasImg);
+
+    fetch('/export-pdf', {
+        method: 'POST',
+        body: form,
+        headers: {
+            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Pastikan CSRF token disertakan untuk keamanan
+        }
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        var url = window.URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'riwayatTraficTokoman-'+Date.now()+'.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    });
+}
+</script>
+<script>
+var ctx = document.getElementById('barangChart').getContext('2d');
+var barangChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {!! json_encode($dataMasuk->pluck('tanggal')) !!},
+        datasets: [{
+            label: 'Barang Masuk',
+            data: {!! json_encode($dataMasuk->pluck('total')) !!},
+            borderColor: 'blue',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            fill: false
+        }, {
+            label: 'Barang Keluar',
+            data: {!! json_encode($dataKeluar->pluck('total')) !!},
+            borderColor: 'green',
+            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+            fill: false
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
     </div>
 
     <!-- Recent Transactions -->

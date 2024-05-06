@@ -6,15 +6,72 @@ use App\Models\Laporan;
 use Illuminate\Http\Request;
 use App\Models\Riwayat;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class riwayatController extends Controller
 {
-    public function getSalesComparison()
+    public function exportPDF(Request $request)
     {
+        $imageData = $request->chart_image;
+        // Menghapus bagian awal dari string base64 yang tidak diperlukan untuk konversi
+        $imageData = str_replace('data:image/png;base64,', '', $imageData);
+        $imageData = str_replace(' ', '+', $imageData);
+        $decodedImageData = base64_decode($imageData);
+    
+        // Menyimpan gambar ke dalam storage
+        Storage::disk('s3')->put('chart.png', $decodedImageData);
+        $dataIn = Riwayat::select('tanggal', 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
+            ->where('jenis_riwayat', 'masuk') // Filter hanya untuk jenis riwayat 'masuk'
+            ->groupBy('tanggal', 'jenis_riwayat', 'id_barang', 'nama_barang')
+            ->orderBy('tanggal', 'asc')
+            ->get();
+        $dataOut = riwayat::select('tanggal', 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
+            ->where('jenis_riwayat', 'keluar') // Filter hanya untuk jenis riwayat 'keluar'
+            ->groupBy('tanggal', 'jenis_riwayat', 'id_barang', 'nama_barang')
+            ->orderBy('tanggal', 'asc')
+            ->get();
+        $selectedItems = Riwayat::select('id_barang')->distinct()->pluck('id_barang');
 
+        $dataMasuk = Riwayat::whereIn('id_barang', $selectedItems)
+            ->where('jenis_riwayat', 'masuk')
+            ->groupBy(\DB::raw('DATE(tanggal)'))
+            ->orderBy('tanggal', 'asc')
+            ->get([
+                \DB::raw('DATE(tanggal) as tanggal'),
+                \DB::raw('SUM(jumlah) as total')
+            ]);
+
+        $dataKeluar = Laporan::whereIn('id_barang', $selectedItems)
+            ->groupBy(\DB::raw('DATE(tanggal_laporan)'))
+            ->orderBy('tanggal_laporan', 'asc')
+            ->get([
+                \DB::raw('DATE(tanggal_laporan) as tanggal'),
+                \DB::raw('SUM(jumlah_barang) as total')
+            ]);
+        $pdf = PDF::loadView('pdf.view', compact('dataIn', 'dataOut', 'dataMasuk', 'dataKeluar'));
+        return $pdf->download('riwayatTraficTokoman-' . now() . '.pdf');
     }
     public function index()
     {
+        $selectedItems = Riwayat::select('id_barang')->distinct()->pluck('id_barang');
+
+        $dataMasuk = Riwayat::whereIn('id_barang', $selectedItems)
+            ->where('jenis_riwayat', 'masuk')
+            ->groupBy(\DB::raw('DATE(tanggal)'))
+            ->orderBy('tanggal', 'asc')
+            ->get([
+                \DB::raw('DATE(tanggal) as tanggal'),
+                \DB::raw('SUM(jumlah) as total')
+            ]);
+
+        $dataKeluar = Laporan::whereIn('id_barang', $selectedItems)
+            ->groupBy(\DB::raw('DATE(tanggal_laporan)'))
+            ->orderBy('tanggal_laporan', 'asc')
+            ->get([
+                \DB::raw('DATE(tanggal_laporan) as tanggal'),
+                \DB::raw('SUM(jumlah_barang) as total')
+            ]);
         // Total penjualan hari ini untuk barang keluar
         $totalToday = Laporan::whereDate('laporan.tanggal_laporan', Carbon::today())
             ->sum(\DB::raw('laporan.total'));
@@ -28,7 +85,7 @@ class riwayatController extends Controller
         $dataLastMonth = Laporan::whereMonth('laporan.tanggal_laporan', '=', Carbon::now()->month - 1)
             ->whereYear('laporan.tanggal_laporan', '=', Carbon::now()->year)
             ->sum(\DB::raw('laporan.total'));
-        $percentageThisMonth =0;
+        $percentageThisMonth = 0;
         if ($dataLastMonth != 0) {
             $percentageThisMonth = ($dataThisMonth - $dataLastMonth) / $dataLastMonth * 100;
         }
@@ -51,9 +108,19 @@ class riwayatController extends Controller
             ->take(5)
             ->get();
 
-        return view("dashboard", ['riwayatTerbaru' => $riwayatTerbaru, 'totalToday' => $totalToday, 'differencePercentage' => number_format($differencePercentage, 2, '.', ','),
-        'dataThisMonth' => $dataThisMonth,'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','), 'barangPenjualan' => $barangPenjualan]
-    );
+        return view(
+            "dashboard",
+            [
+                'riwayatTerbaru' => $riwayatTerbaru,
+                'totalToday' => $totalToday,
+                'differencePercentage' => number_format($differencePercentage, 2, '.', ','),
+                'dataThisMonth' => $dataThisMonth,
+                'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),
+                'barangPenjualan' => $barangPenjualan,
+                'dataMasuk' => $dataMasuk,
+                'dataKeluar' => $dataKeluar
+            ]
+        );
     }
     public function tampilkan()
     {

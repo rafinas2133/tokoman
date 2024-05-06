@@ -32,6 +32,7 @@
     <div class="header">
         <img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/logo.png" alt="Logo">
         <h1>Tokoman</h1>
+        <h2>{{now()->format('d/m/Y').' '.now()->format('H:i')}}</h2>
     </div>
     <div class="chart">
         <img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/chart.png" alt="Chart" style="width: 100%; height: 40%;">

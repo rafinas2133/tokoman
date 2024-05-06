@@ -51,7 +51,7 @@
             <p class="text-center text-gray-500">No data found</p>
         @endif
         @foreach ($riwayatTerbaru as $riwayat)
-        <ul class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat == 'masuk' ? 'bg-red-100' : 'bg-green-100'}}">
+        <ul class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat == 'masuk' ? 'bg-blue-100' : 'bg-green-100'}}">
             <li class="py-4 flex justify-between items-center ">
                 <div>
                     <p class="text-md text-gray-600">{{$riwayat->nama_barang}}</p>

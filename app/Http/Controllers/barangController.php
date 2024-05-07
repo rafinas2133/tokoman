@@ -135,6 +135,16 @@ class barangController extends Controller
         $barang->fileName2 = $filename2;
         $barang->save();
 
+        $barang=StokBarang::where('id_barang', $id)->first();
+        $riwayat=new Riwayat();
+        
+        $riwayat->nama_barang=$barang->nama_barang;
+        $riwayat->jenis_riwayat='masuk';
+        $riwayat->jumlah=abs($request->stok);
+        $riwayat->tanggal=now();
+        $riwayat->id_barang=$barang->id;
+        $riwayat->save();
+
         return redirect('/stok')->with('success', 'Barang berhasil ditambahkan!');
     }
 

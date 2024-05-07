@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var dataKeluar = combinedData.map(data => data.totalKeluar);
 
     var barangChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
             labels: labels,
             datasets: [{

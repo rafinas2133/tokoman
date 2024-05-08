@@ -12,7 +12,7 @@ $line=1;
                 <div class="grid grid-cols-5 gap-4">
                 <div>
                     <label for="reportDate1" class="block text-sm font-medium text-white">Report Date:</label>
-                    <input type="date" id="reportDate1" name="reportDate1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}">
+                    <input type="date" id="reportDate1" name="reportDate1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-3000 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}" value="{{ now()->toDateString() }}">
                 </div>
                 <div>
                     <label for="itemName1" class="block text-sm font-medium text-white">Item Name:</label>
@@ -84,7 +84,7 @@ $line=1;
         newLineDiv.innerHTML = `
             <div>
                 <label for="reportDate${line}" class="block text-sm font-medium text-white">Report Date:</label>
-                <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}">
+                <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}" value="{{ now()->toDateString() }}">
             </div>
             <div>
                 <label for="itemName${line}" class="block text-sm font-medium text-white">Item Name:</label>

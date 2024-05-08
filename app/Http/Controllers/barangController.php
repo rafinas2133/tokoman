@@ -70,7 +70,7 @@ class barangController extends Controller
             'buy'=> 'required',
             'sell'=> 'required',
             'ukuran'=> 'required',
-            'gambar1'=>'required|image|mimes:jpeg,png,jpg|max:2048',
+            'gambar1'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'gambar2'=>'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ],[
             'stok.integer' => 'Stok harus berupa angka.',
@@ -263,8 +263,9 @@ class barangController extends Controller
                 Storage::disk('s3')->delete('images/' . $value->fileName2);
             }
             Storage::disk('s3')->delete('images/' . $value->fileName1);
+            $value->delete();
         }
-        StokBarang::truncate();
+        
         
         return redirect('/stok')->with('success', 'Barang berhasil dihapus!');
     }

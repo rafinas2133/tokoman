@@ -13,6 +13,23 @@ class riwayatController extends Controller
 {
     public function exportPDF(Request $request)
     {
+        if (isset($request)) {
+            $period = $request->input('timeFilter'); // Default to monthly if not specified
+        }
+        switch ($period) {
+            case 'weekly':
+                $dateFormat = '%Y-%u'; // Year and week number
+                break;
+            case 'monthly':
+                $dateFormat = '%Y-%m'; // Year and month
+                break;
+            case 'yearly':
+                $dateFormat = '%Y'; // Year only
+                break;
+            default:
+                $dateFormat = '%Y-%m-%d'; // Default to Daily
+                break;
+        }
         $imageData = $request->chart_image;
         // Menghapus bagian awal dari string base64 yang tidak diperlukan untuk konversi
         $imageData = str_replace('data:image/png;base64,', '', $imageData);
@@ -21,40 +38,55 @@ class riwayatController extends Controller
 
         // Menyimpan gambar ke dalam storage
         Storage::disk('s3')->put('chart.png', $decodedImageData);
-        $dataIn = Riwayat::select('tanggal', 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
+        $dataIn = Riwayat::select(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat') as tanggal"), 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
             ->where('jenis_riwayat', 'masuk') // Filter hanya untuk jenis riwayat 'masuk'
-            ->groupBy('tanggal', 'jenis_riwayat', 'id_barang', 'nama_barang')
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"), 'jenis_riwayat', 'id_barang', 'nama_barang')
             ->orderBy('tanggal', 'asc')
             ->get();
-        $dataOut = Laporan::select('tanggal_laporan', 'id_barang', \DB::raw('SUM(jumlah_barang) as total'), 'nama_barang')
-            ->groupBy('tanggal_laporan', 'id_barang', 'nama_barang')
-            ->orderBy('tanggal_laporan', 'asc')
+        $dataOut = Laporan::select(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat') as tanggal"), 'id_barang', \DB::raw('SUM(jumlah_barang) as total'), 'nama_barang')
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat')"), 'id_barang', 'nama_barang')
+            ->orderBy('tanggal', 'asc')
             ->get();
         $pdf = PDF::loadView('pdf.view', compact('dataIn', 'dataOut'));
         return $pdf->download('riwayatTraficTokoman-' . now() . '.pdf');
     }
-    public function index()
-    {
-        // Query untuk mengambil data masuk dari Riwayat
+    public function index(Request $request)
+    {   
+        if (isset($request)) {
+        $period = $request->input('timeFilter'); // Default to monthly if not specified
+        }
+        switch ($period) {
+            case 'weekly':
+                $dateFormat = '%Y-%u'; // Year and week number
+                break;
+            case 'monthly':
+                $dateFormat = '%Y-%m'; // Year and month
+                break;
+            case 'yearly':
+                $dateFormat = '%Y'; // Year only
+                break;
+            default:
+                $dateFormat = '%Y-%m-%d'; // Default to Daily
+                break;
+        }
+
         $dataMasuk = \DB::table('riwayat')
             ->select(
-                \DB::raw('DATE(tanggal) as tanggal'),
+                \DB::raw("DATE_FORMAT(tanggal, '$dateFormat') as tanggal"),
                 \DB::raw('SUM(jumlah) as totalMasuk'),
                 \DB::raw('0 as totalKeluar')  // Kolom dummy untuk totalKeluar
             )
             ->where('jenis_riwayat', 'masuk')
-            ->groupBy(\DB::raw('DATE(tanggal)'));
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"));
 
-        // Query untuk mengambil data keluar dari Laporan
         $dataKeluar = \DB::table('laporan')
             ->select(
-                \DB::raw('DATE(tanggal_laporan) as tanggal'),
+                \DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat') as tanggal"),
                 \DB::raw('0 as totalMasuk'),  // Kolom dummy untuk totalMasuk
                 \DB::raw('SUM(jumlah_barang) as totalKeluar')
             )
-            ->groupBy(\DB::raw('DATE(tanggal_laporan)'));
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat')"));
 
-        // Menggabungkan kedua query dengan UNION ALL dan menghitung total masuk dan keluar
         $combinedData = \DB::query()
             ->select('tanggal', \DB::raw('SUM(totalMasuk) as totalMasuk'), \DB::raw('SUM(totalKeluar) as totalKeluar'))
             ->fromSub(function ($query) use ($dataMasuk, $dataKeluar) {
@@ -109,7 +141,8 @@ class riwayatController extends Controller
                 'dataThisMonth' => $dataThisMonth,
                 'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),
                 'barangPenjualan' => $barangPenjualan,
-                'combinedData' => $combinedData
+                'combinedData' => $combinedData,
+                'choosenPeriod' => $period
             ]
         );
     }

@@ -49,11 +49,22 @@
 
     <!-- Traffic Sources -->
     <div class="mt-8 bg-white p-4 rounded-t-lg shadow overflow-auto">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-semibold">Traffic Sources</h2>
             <button onclick="exportToPDF()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
         <!-- Placeholder for traffic sources -->
+        <div class="flex gap-4">    
+                <form action="/dashboard" method="get">
+                <select id="timeFilter" name="timeFilter" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
+                    <option value="daily" {{$choosenPeriod == 'daily' ? 'selected' : ''}}>Harian</option>
+                    <option value="weekly" {{$choosenPeriod == 'weekly' ? 'selected' : ''}}>Mingguan</option>
+                    <option value="monthly" {{$choosenPeriod == 'monthly' ? 'selected' : ''}}>Bulanan</option>
+                    <option value="yearly" {{$choosenPeriod == 'yearly' ? 'selected' : ''}}>Tahunan</option>
+                </select>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Load Data</button>
+                </form>
+        </div>
         <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Open Chart in New Tab</button>
     </div>
     <div class="w-full overflow-auto bg-gray-200 rounded-b-lg">
@@ -70,6 +81,7 @@ function exportToPDF() {
 
     var form = new FormData();
     form.append('chart_image', canvasImg);
+    form.append('timeFilter', '{{$choosenPeriod}}');
 
     fetch('/export-pdf', {
         method: 'POST',
@@ -92,7 +104,7 @@ function exportToPDF() {
 
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
+function fetchChartData() {
     var canvas = document.getElementById('barangChart');
     var ctx = canvas.getContext('2d');
     var combinedData = @json($combinedData);
@@ -129,6 +141,9 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     });
+}
+document.addEventListener('DOMContentLoaded', function () {
+    fetchChartData();
     document.getElementById('openChart').addEventListener('click', function() {
         var canvasImg = ctx.canvas.toDataURL("image/png");
         var win = window.open();

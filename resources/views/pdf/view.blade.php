@@ -79,7 +79,7 @@
                 <td>{{ $item->nama_barang }}</td>
                 <td>{{ 'Keluar' }}</td>
                 <td>{{ $item->total }}</td>
-                <td>{{ $item->tanggal_laporan }}</td>
+                <td>{{ $item->tanggal }}</td>
             </tr>
             @endforeach
         </tbody>

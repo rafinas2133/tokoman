@@ -11,7 +11,17 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+    $middleware->alias(['admin'=> \App\Http\Middleware\admin::class]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['employee'=> \App\Http\Middleware\pegawai::class]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['noback'=> \App\Http\Middleware\noBack::class]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['regen'=> \App\Http\Middleware\regenSession::class]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

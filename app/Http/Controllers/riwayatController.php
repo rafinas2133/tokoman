@@ -18,7 +18,7 @@ class riwayatController extends Controller
         }
         switch ($period) {
             case 'weekly':
-                $dateFormat = '%Y-%u'; // Year and week number
+                $dateFormat = '%Y-%m-%u'; // Year and week number
                 break;
             case 'monthly':
                 $dateFormat = '%Y-%m'; // Year and month
@@ -57,7 +57,7 @@ class riwayatController extends Controller
         }
         switch ($period) {
             case 'weekly':
-                $dateFormat = '%Y-%u'; // Year and week number
+                $dateFormat = '%Y-%m-%u'; // Year and week number
                 break;
             case 'monthly':
                 $dateFormat = '%Y-%m'; // Year and month

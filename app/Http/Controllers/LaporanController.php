@@ -15,8 +15,8 @@ class LaporanController extends Controller
     {
         //nak kene lek pengen modif2 ge ngirim data nak view
         //show option
-        $options = StokBarang::all();
-        $options2 = StokBarang::all();
+        $options = StokBarang::orderBy("nama_barang","asc")->get();
+        $options2 = StokBarang::orderBy("nama_barang","asc")->get();
 
         return view("pelaporan", compact('options', 'options2'));
     }
@@ -32,7 +32,7 @@ class LaporanController extends Controller
             ];
 
             $validator = Validator::make($data[$i - 1], [
-                'reportDate' => 'required|date|before_or_equal:' . Carbon::now()->toDateString() . '|after_or_equal:' . Carbon::now()->subWeek()->toDateString(),
+                // 'reportDate' => 'required|date|before_or_equal:' . Carbon::now()->toDateString() . '|after_or_equal:' . Carbon::now()->subWeek()->toDateString(),
                 'itemName' => 'required|integer',
                 'itemQuantity' => 'required|integer',
             ], [

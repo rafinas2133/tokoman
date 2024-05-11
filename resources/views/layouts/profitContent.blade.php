@@ -13,7 +13,7 @@
             <label for="to_date">To Date:</label>
             <input class="text-black" type="date" id="to_date" name="to_date" value="{{ $toDate }}">
         </form>
-        <div id="profitChartContainer" class="h-full mt-4 w-[1200px] m-4 rounded-lg">
+        <div id="profitChartContainer" class="h-full mt-4 w-[1100px] m-4 rounded-lg">
             <div class="w-full h-[600px] bg-white p-8 rounded-lg">
                 <canvas id="profitChart"></canvas>
             </div>

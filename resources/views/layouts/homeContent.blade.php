@@ -1,41 +1,45 @@
 <div id="content" class="w-full">
-<style>
-    .colflex{
-        @media screen and (max-width: 1024px) {
-            display: grid;
+    <style>
+        .colflex {
+            @media screen and (max-width: 1024px) {
+                display: grid;
+            }
         }
-    }
-</style>
-<div class="flex colflex gap-4 grid-cols-2">
-    <!-- Sales Metrics -->
+    </style>
+    <div class="flex colflex gap-4 grid-cols-2">
+        <!-- Sales Metrics -->
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">PENJUALAN PER HARI INI</div>
             <div class="text-xl font-semibold">Rp. {{$totalToday}}</div>
-            <div class="{{$differencePercentage > 0 ? 'text-green-500' : 'text-red-500'}}">{{$differencePercentage > 0 ? '+' : ''}}{{$differencePercentage}}%</div>
+            <div class="{{$differencePercentage > 0 ? 'text-green-500' : 'text-red-500'}}">
+                {{$differencePercentage > 0 ? '+' : ''}}{{$differencePercentage}}%
+            </div>
         </div>
 
-   
+
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENJUALAN PER BULAN</div>
             <div class="text-xl font-semibold">Rp. {{$dataThisMonth}}</div>
-            <div class="{{$percentageThisMonth >= 0 ? 'text-green-500' : 'text-red-500'}}">{{$percentageThisMonth >= 0 ? '+' : ''}}{{$percentageThisMonth}}%</div>
+            <div class="{{$percentageThisMonth >= 0 ? 'text-green-500' : 'text-red-500'}}">
+                {{$percentageThisMonth >= 0 ? '+' : ''}}{{$percentageThisMonth}}%
+            </div>
         </div>
- 
-   
+
+
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENJUALAN BARANG</div>
             <div class="text-xl font-semibold">{{$barangPenjualan}}</div>
         </div>
 
-    
+
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENGHASILAN</div>
             <div class="text-xl font-semibold">Rp. 13.650.00</div>
             <div class="text-green-500">+36%</div>
         </div>
-  
-</div>
+
+    </div>
 
     <!-- Profit Chart -->
     <div class="mt-8 bg-white p-4 rounded-lg shadow">
@@ -43,138 +47,172 @@
             <h2 class="text-xl font-semibold">Profit</h2>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
-        <!-- Placeholder for chart -->
-        <div class="h-64 bg-gray-200 rounded-lg mt-4"></div>
+        <div class="h-full w-full p-2 bg-gray-200 rounded-lg mt-4">
+            @include('layouts.profitHomeContent')
+        </div>
     </div>
 
     <!-- Traffic Sources -->
     <div class="mt-8 bg-white p-4 rounded-t-lg shadow overflow-auto">
         <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-semibold">Traffic Sources</h2>
-            <button onclick="exportToPDF()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
+            <button onclick="exportToPDF()"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
         <!-- Placeholder for traffic sources -->
-        <div class="flex gap-4">    
-                <form action="/dashboard" method="get">
+        <div class="flex gap-4">
+            <form action="/dashboard" method="get">
                 <select id="timeFilter" name="timeFilter" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
                     <option value="daily" {{$choosenPeriod == 'daily' ? 'selected' : ''}}>Harian</option>
                     <option value="weekly" {{$choosenPeriod == 'weekly' ? 'selected' : ''}}>Mingguan</option>
                     <option value="monthly" {{$choosenPeriod == 'monthly' ? 'selected' : ''}}>Bulanan</option>
                     <option value="yearly" {{$choosenPeriod == 'yearly' ? 'selected' : ''}}>Tahunan</option>
                 </select>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Load Data</button>
-                </form>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Load
+                    Data</button>
+            </form>
         </div>
-        <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Open Chart in New Tab</button>
+        <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Open
+            Chart in New Tab</button>
     </div>
     <div class="w-full overflow-auto bg-gray-200 rounded-b-lg">
-    <div class="h-[600px] rounded-lg mt-4 w-[1000px] sm:w-full">
-        <canvas id="barangChart"></canvas>
-    </div>
-    </div>
-    
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-function exportToPDF() {
-    var canvas = document.getElementById('barangChart');
-    var canvasImg = canvas.toDataURL("image/png", 1.0);
-
-    var form = new FormData();
-    form.append('chart_image', canvasImg);
-    form.append('timeFilter', '{{$choosenPeriod}}');
-
-    fetch('/export-pdf', {
-        method: 'POST',
-        body: form,
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Pastikan CSRF token disertakan untuk keamanan
-        }
-    })
-    .then(response => response.blob())
-    .then(blob => {
-        var url = window.URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'riwayatTraficTokoman-'+Date.now()+'.pdf';
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-    });
-}
-
-</script>
-<script>
-function fetchChartData() {
-    var canvas = document.getElementById('barangChart');
-    var ctx = canvas.getContext('2d');
-    var combinedData = @json($combinedData);
-
-    var labels = combinedData.map(data => data.tanggal);
-    var dataMasuk = combinedData.map(data => data.totalMasuk);
-    var dataKeluar = combinedData.map(data => data.totalKeluar);
-
-    var barangChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Total Masuk',
-                data: dataMasuk,
-                borderColor: 'blue',
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                fill: false
-            }, {
-                label: 'Total Keluar',
-                data: dataKeluar,
-                borderColor: 'green',
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-}
-document.addEventListener('DOMContentLoaded', function () {
-    fetchChartData();
-    document.getElementById('openChart').addEventListener('click', function() {
-        var canvasImg = ctx.canvas.toDataURL("image/png");
-        var win = window.open();
-        win.document.write('<img src="' + canvasImg + '" />');
-    });
-    
-});
-</script>
-    </div>
-
-    <!-- Recent Transactions -->
-    <div class="mt-8 bg-white p-4 rounded-lg shadow">
-        <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold">Recent Transactions</h2>
-            <a href="/riwayat" class="hover:text-blue-500">Show all ></a>
+        <div class="h-[600px] rounded-lg mt-4 w-[1000px] sm:w-full">
+            <canvas id="barangChart"></canvas>
         </div>
-        @foreach ($riwayatTerbaru as $riwayat)
-        <ul class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat == 'masuk' ? 'bg-blue-100' : 'bg-green-100'}}">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function exportToPDF() {
+            var canvas = document.getElementById('barangChart');
+            var canvasImg = canvas.toDataURL("image/png", 1.0);
+
+            var form = new FormData();
+            form.append('chart_image', canvasImg);
+            form.append('timeFilter', '{{$choosenPeriod}}');
+
+            fetch('/export-pdf', {
+                method: 'POST',
+                body: form,
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Pastikan CSRF token disertakan untuk keamanan
+                }
+            })
+                .then(response => response.blob())
+                .then(blob => {
+                    var url = window.URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'riwayatTraficTokoman-' + Date.now() + '.pdf';
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                });
+        }
+
+    </script>
+    <script>
+        function fetchChartData() {
+            var canvas = document.getElementById('barangChart');
+            var ctx = canvas.getContext('2d');
+            var combinedData = @json($combinedData);
+
+            var labels = combinedData.map(data => data.tanggal);
+            var dataMasuk = combinedData.map(data => data.totalMasuk);
+            var dataKeluar = combinedData.map(data => data.totalKeluar);
+
+            var barangChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Total Masuk',
+                        data: dataMasuk,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                        fill: false
+                    }, {
+                        label: 'Total Keluar',
+                        data: dataKeluar,
+                        borderColor: 'green',
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        fill: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchChartData();
+            document.getElementById('openChart').addEventListener('click', function () {
+                var canvasImg = ctx.canvas.toDataURL("image/png");
+                var win = window.open();
+                win.document.write('<img src="' + canvasImg + '" />');
+            });
+
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            fetchProfitChartData(); // Panggil fungsi untuk mengambil data keuntungan
+
+            function fetchProfitChartData() {
+                fetch('/profit') // Panggil rute ke metode kontroler untuk mengambil data keuntungan
+                    .then(response => response.json())
+                    .then(data => {
+                        // Ambil data yang diperlukan dari respons JSON
+                        var fromDate = data.fromDate;
+                        var toDate = data.toDate;
+                        var profit = data.profit;
+
+                        // Tentukan elemen tempat Anda ingin menampilkan data
+                        var profitTextElement = document.getElementById('profitText');
+
+                        // Atur teks untuk menampilkan periode dan keuntungan
+                        profitTextElement.innerHTML = `Profit from ${fromDate} to ${toDate}: $${profit}`;
+
+                        // Lanjutkan dengan menambahkan logika Anda untuk menggambar grafik (jika perlu)
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+        });
+    </script>
+</div>
+
+<!-- Recent Transactions -->
+<div class="mt-8 bg-white p-4 rounded-lg shadow">
+    <div class="flex justify-between items-center">
+        <h2 class="text-xl font-semibold">Recent Transactions</h2>
+        <a href="/riwayat" class="hover:text-blue-500">Show all ></a>
+    </div>
+    @foreach ($riwayatTerbaru as $riwayat)
+        <ul
+            class="divide-y divide-gray-200 px-2 py-2 rounded-lg my-2 {{$riwayat->jenis_riwayat == 'masuk' ? 'bg-blue-100' : 'bg-green-100'}}">
             <li class="py-4 flex justify-between items-center ">
                 <div>
                     <p class="text-md text-gray-600">{{$riwayat->nama_barang}}</p>
                     <p class="text-sm">Jumlah: {{$riwayat->jumlah}}</p>
-                    <p class="text-sm">{{$riwayat->jenis_riwayat == 'masuk' ? 'Beli' : 'Jual'}} Rp: {{$riwayat->total_harga}}</p>
+                    <p class="text-sm">{{$riwayat->jenis_riwayat == 'masuk' ? 'Beli' : 'Jual'}} Rp:
+                        {{$riwayat->total_harga}}
+                    </p>
                 </div>
-                <div class="text-sm text-gray-600">{{$riwayat->tanggal}} {{$riwayat->jam_dibuat}}<div class="text-sm text-gray-600">stok {{$riwayat->jenis_riwayat}}</div></div>
-                
+                <div class="text-sm text-gray-600">{{$riwayat->tanggal}} {{$riwayat->jam_dibuat}}
+                    <div class="text-sm text-gray-600">stok {{$riwayat->jenis_riwayat}}</div>
+                </div>
+
             </li>
             <!-- More transactions here -->
         </ul>
-        @endforeach
-    </div>
+    @endforeach
+</div>
 
-    
+
 </div>

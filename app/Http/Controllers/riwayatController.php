@@ -51,9 +51,14 @@ class riwayatController extends Controller
         return $pdf->download('riwayatTraficTokoman-' . now() . '.pdf');
     }
     public function index(Request $request)
-    {   
+    {
+        $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
+            $request->input('period', 'day'),
+            $request->input('from_date', Carbon::now()->subWeek()->toDateString()),
+            $request->input('to_date', Carbon::now()->toDateString())
+        );
         if (isset($request)) {
-        $period = $request->input('timeFilter'); // Default to monthly if not specified
+            $period = $request->input('timeFilter'); // Default to monthly if not specified
         }
         switch ($period) {
             case 'weekly':
@@ -134,6 +139,7 @@ class riwayatController extends Controller
 
         return view(
             "dashboard",
+            $profitData,
             [
                 'riwayatTerbaru' => $riwayatTerbaru,
                 'totalToday' => $totalToday,

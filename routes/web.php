@@ -36,17 +36,23 @@ Route::middleware(['auth', 'verified', 'noback', 'regen'])->group(function () {
     Route::post('/stok/deleteAll', [barangController::class, 'deleteAll'])->name('deleteStokAll');
     //Mentalin Request Post saat direquest Get
     Route::get('/tambahstok/{id}', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     Route::get('/deleteImg/{id}', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     Route::get('/stok/addsave', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     Route::get('/stok/editsave/{id}', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     Route::get('/stok/delete/{id}', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     Route::get('/stok/deleteAll', function () {
-        return redirect()->route('stokBarang'); });
+        return redirect()->route('stokBarang');
+    });
     //Khusus Admin
     Route::middleware(['admin'])->group(function () {
 
@@ -60,13 +66,17 @@ Route::middleware(['auth', 'verified', 'noback', 'regen'])->group(function () {
         Route::post('admin/deleteAll', [pegawaiController::class, 'deleteAll'])->name('Hapus.AllPegawai');
         //Mentalin Request Post saat direquest Get
         Route::get('admin/editsave/{id}', function () {
-            return redirect()->route('Manajemen.Admin'); });
+            return redirect()->route('Manajemen.Admin');
+        });
         Route::get('admin/delete/{id}', function () {
-            return redirect()->route('Manajemen.Admin'); });
+            return redirect()->route('Manajemen.Admin');
+        });
         Route::get('admin/deleteAll', function () {
-            return redirect()->route('Manajemen.Admin'); });
+            return redirect()->route('Manajemen.Admin');
+        });
         Route::get('admin/addsave', function () {
-            return redirect()->route('Manajemen.Admin'); });
+            return redirect()->route('Manajemen.Admin');
+        });
     });
 
 });

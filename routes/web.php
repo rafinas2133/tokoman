@@ -11,7 +11,7 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
 
-Route::post('/testingAPI123', [barangController::class,'addsave'])->name('stokSavetest');
+
 // Route untuk user terAuth()
 Route::middleware(['auth', 'verified', 'noback', 'regen'])->group(function () {
     Route::post('/export-profit', [dashboardController::class,'exportPDF'])->name('exportProfit');

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\dashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\SearchStok;
@@ -10,15 +11,15 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
 
-
-
+Route::post('/testingAPI123', [barangController::class,'addsave'])->name('stokSavetest');
 // Route untuk user terAuth()
 Route::middleware(['auth', 'verified', 'noback', 'regen'])->group(function () {
+    Route::post('/export-profit', [dashboardController::class,'exportPDF'])->name('exportProfit');
     Route::post('/export-pdf', [riwayatController::class, 'exportPDF'])->name('exportPDF');
     //Route Semua Role User
     Route::get('/riwayat', [riwayatController::class, 'tampilkan'])->name('riwayat');
     Route::get('/riwayat/filter', [riwayatController::class, 'filterResults'])->name('riwayatFilter');
-    Route::get('/dashboard', [riwayatController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
     //laporan dan profit
     Route::get('/pelaporan', [LaporanController::class, 'index'])->name('laporan');
     Route::get('/hitungProfit', [ProfitController::class, 'index'])->name('profit.index');

@@ -34,9 +34,11 @@
 
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
-            <div class="text-gray-600">TOTAL PENGHASILAN</div>
-            <div class="text-xl font-semibold">Rp. 13.650.00</div>
-            <div class="text-green-500">+36%</div>
+            <div class="text-gray-600">TOTAL PENGHASILAN MINGGUAN</div>
+            <div class="text-xl font-semibold">Rp. {{$profit}}</div>
+            <div class="{{$precentageProfit >= 0 ? 'text-green-500' : 'text-red-500'}}">
+                {{$precentageProfit >= 0 ? '+' : ''}}{{$precentageProfit}}%
+            </div>
         </div>
 
     </div>
@@ -45,15 +47,16 @@
     <div class="mt-8 bg-white p-4 rounded-lg shadow">
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold">Profit</h2>
-            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
+            <button onclick="exportProfit()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
-        <div class="h-full w-full p-2 bg-gray-200 rounded-lg mt-4">
+        <button id="openProfit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
+            Chart in New Tab</button>
             @include('layouts.profitHomeContent')
-        </div>
+        
     </div>
 
     <!-- Traffic Sources -->
-    <div class="mt-8 bg-white p-4 rounded-t-lg shadow overflow-auto">
+    <div class="mt-8 bg-white p-4 rounded-lg shadow overflow-auto">
         <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-semibold">Traffic Sources</h2>
             <button onclick="exportToPDF()"
@@ -62,24 +65,25 @@
         <!-- Placeholder for traffic sources -->
         <div class="flex gap-4">
             <form action="/dashboard" method="get">
-                <select id="timeFilter" name="timeFilter" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">
+                <select id="timeFilter" name="timeFilter" class="bg-blue-500 text-white font-bold py-2 px-4 w-full my-2 rounded">
                     <option value="daily" {{$choosenPeriod == 'daily' ? 'selected' : ''}}>Harian</option>
                     <option value="weekly" {{$choosenPeriod == 'weekly' ? 'selected' : ''}}>Mingguan</option>
                     <option value="monthly" {{$choosenPeriod == 'monthly' ? 'selected' : ''}}>Bulanan</option>
                     <option value="yearly" {{$choosenPeriod == 'yearly' ? 'selected' : ''}}>Tahunan</option>
                 </select>
-                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Load
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Load
                     Data</button>
             </form>
         </div>
-        <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Open
+        <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
             Chart in New Tab</button>
-    </div>
-    <div class="w-full overflow-auto bg-gray-200 rounded-b-lg">
-        <div class="h-[600px] rounded-lg mt-4 w-[1000px] sm:w-full">
-            <canvas id="barangChart"></canvas>
+        <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
+            <div class="h-[600px] rounded-lg mt-4 w-[1000px] sm:w-full">
+                <canvas id="barangChart"></canvas>
+            </div>
         </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -112,9 +116,11 @@
 
     </script>
     <script>
+        var canvas = document.getElementById('barangChart');
+        var ctx = canvas.getContext('2d');
+        var canvas2 = document.getElementById('profitChart');
+        var ctx2 = canvas2.getContext('2d');
         function fetchChartData() {
-            var canvas = document.getElementById('barangChart');
-            var ctx = canvas.getContext('2d');
             var combinedData = @json($combinedData);
 
             var labels = combinedData.map(data => data.tanggal);
@@ -157,34 +163,15 @@
                 var win = window.open();
                 win.document.write('<img src="' + canvasImg + '" />');
             });
+            document.getElementById('openProfit').addEventListener('click', function () {
+                var canvasImg = ctx2.canvas.toDataURL("image/png");
+                var win = window.open();
+                win.document.write('<img src="' + canvasImg + '" />');
+            });
 
         });
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchProfitChartData(); // Panggil fungsi untuk mengambil data keuntungan
 
-            function fetchProfitChartData() {
-                fetch('/profit') // Panggil rute ke metode kontroler untuk mengambil data keuntungan
-                    .then(response => response.json())
-                    .then(data => {
-                        // Ambil data yang diperlukan dari respons JSON
-                        var fromDate = data.fromDate;
-                        var toDate = data.toDate;
-                        var profit = data.profit;
-
-                        // Tentukan elemen tempat Anda ingin menampilkan data
-                        var profitTextElement = document.getElementById('profitText');
-
-                        // Atur teks untuk menampilkan periode dan keuntungan
-                        profitTextElement.innerHTML = `Profit from ${fromDate} to ${toDate}: $${profit}`;
-
-                        // Lanjutkan dengan menambahkan logika Anda untuk menggambar grafik (jika perlu)
-                    })
-                    .catch(error => console.error('Error:', error));
-            }
-        });
-    </script>
 </div>
 
 <!-- Recent Transactions -->

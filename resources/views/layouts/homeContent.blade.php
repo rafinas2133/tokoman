@@ -1,4 +1,4 @@
-<div id="content" class="w-full">
+<div id="content">
     <style>
         .colflex {
             @media screen and (max-width: 1024px) {
@@ -44,7 +44,7 @@
     </div>
 
     <!-- Profit Chart -->
-    <div class="mt-8 bg-white p-4 rounded-lg shadow">
+    <div class="mt-8 bg-white p-4 rounded-lg shadow w-full">
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold">Profit</h2>
             <button onclick="exportProfit()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
@@ -56,7 +56,7 @@
     </div>
 
     <!-- Traffic Sources -->
-    <div class="mt-8 bg-white p-4 rounded-lg shadow overflow-auto">
+    <div class="mt-8 bg-white p-4 rounded-lg shadow w-full">
         <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-semibold">Traffic Sources</h2>
             <button onclick="exportToPDF()"

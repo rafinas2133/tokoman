@@ -1,5 +1,5 @@
 <!-- Hamburger Button -->
-<button id="menuButton" class="md:hidden p-4 text-white focus:outline-none w-full flex justify-center bg-transparent"
+<button id="menuButton" class="sm:hidden p-4 text-white focus:outline-none w-full flex justify-center bg-transparent"
     onclick="toggleNavbar()">
     <!-- Hamburger Icon -->
     <svg id="hamburgerIcon" class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24"

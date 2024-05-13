@@ -26,13 +26,12 @@
                 </form>
             </div>
         </div>
-        <!--tambah data-->
-        <div class="absolute top-[180px] right-4">
+    </div>
+    <div class="text-center">
             <div class="p-6 text-gray-900 dark:text-gray-100 start-0 ">
                 <a href="/stok/add"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mb-2 px-4 rounded justify-end">
                     + Tambah data barang</a>
             </div>
         </div>
-    </div>
 </div>

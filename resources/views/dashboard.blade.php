@@ -3,7 +3,7 @@
         <div class=" w-full sm:w-64 dark:bg-gray-800">
             @include('layouts.navbarLeft') 
         </div>
-        <aside class="w-full px-4 py-2 dark:bg-gray-800">
+        <aside class="overflow-auto w-full px-4 py-2 dark:bg-gray-800">
             @include('layouts.homeContent')
         </aside>
     </div>

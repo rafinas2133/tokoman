@@ -78,7 +78,7 @@
         <button id="openChart" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
             Chart in New Tab</button>
         <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
-            <div class="h-[600px] rounded-lg mt-4 w-[1000px] sm:w-full">
+            <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
                 <canvas id="barangChart"></canvas>
             </div>
         </div>

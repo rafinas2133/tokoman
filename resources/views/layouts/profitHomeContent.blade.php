@@ -1,6 +1,6 @@
 <div>
     <div id="profitChartContainer" class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
-        <div class="h-[400px] rounded-lg mt-4 w-[1000px] sm:w-full">
+        <div class="h-[400px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
             <canvas id="profitChart"></canvas>
         </div>
     </div>

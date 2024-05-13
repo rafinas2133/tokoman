@@ -1,20 +1,29 @@
-<div class="flex">
-    <div class="container mx-10 text-white flex flex-col justify-center items-center">
-        <h1 class="text-3xl my-8 font-bold">Hitung Profit</h1>
-        <form id="profitForm" action="{{ route('profit.index') }}" method="GET">
+<div class="flex flex-col">
+    <div class="container text-white flex flex-col justify-center items-center">
+        <h1 class="text-3x text-center my-8 font-bold">Hitung Profit</h1>
+        <form id="profitForm" action="{{ route('profit.index') }}" method="GET" class="">
+            <div class="flex">
+            <div>
             <label for="period">Select Period:</label>
             <select class="text-black" name="period" id="period">
                 <option value="day">Day</option>
                 <option value="week">Week</option>
                 <option value="year">Year</option>
             </select>
+            </div>
+            <div>
             <label for="from_date">From Date:</label>
             <input class="text-black" type="date" id="from_date" name="from_date" value="{{ $fromDate }}">
+            </div>
+            <div>
             <label for="to_date">To Date:</label>
             <input class="text-black" type="date" id="to_date" name="to_date" value="{{ $toDate }}">
+            </div>
+            </div>
         </form>
-        <div id="profitChartContainer" class="h-full mt-4 w-[1100px] m-4 rounded-lg">
-            <div class="w-full h-[600px] bg-white p-8 rounded-lg">
+        </div>
+        <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
+            <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
                 <canvas id="profitChart"></canvas>
             </div>
         </div>

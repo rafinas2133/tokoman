@@ -10,52 +10,52 @@ $line = 1;
             <input type="hidden" name="line" id="line" value="1">
             <div>
                 <div id="inputLines" class="flex flex-col">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div class="">
-                        <label for="reportDate1" class="block text-sm font-medium text-white">Date:</label>
-                        <input type="date" id="reportDate1" name="reportDate1"
-                            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-3000 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            required value="{{ now()->toDateString() }}" readonly>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="">
+                            <label for="reportDate1" class="block text-sm font-medium text-white">Date:</label>
+                            <input type="date" id="reportDate1" name="reportDate1"
+                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-3000 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                required value="{{ now()->toDateString() }}" readonly>
+                        </div>
+                        <div class="">
+                            <label for="itemName1" class="block text-sm font-medium text-white">Name:</label>
+                            <select id="itemName1" name="itemName1"
+                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                required>
+                                @foreach($options as $options)
+                                    <option value="{{ $options->id }}" data-price="{{ $options->harga_jual }}">
+                                        {{ $options->nama_barang }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label for="itemQuantity1" class="block text-sm font-medium text-white">Quantity:</label>
+                            <input type="number" id="itemQuantity1" name="itemQuantity1" min="1"
+                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                required>
+                        </div>
+                        <div>
+                            <label for="itemPrice1" class="block text-sm font-medium text-white">Price:</label>
+                            <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01"
+                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                readonly required>
+                        </div>
                     </div>
-                    <div class="">
-                        <label for="itemName1" class="block text-sm font-medium text-white">Name:</label>
-                        <select id="itemName1" name="itemName1"
-                            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            required>
-                            @foreach($options as $options)
-                                <option value="{{ $options->id }}" data-price="{{ $options->harga_jual }}">
-                                    {{ $options->nama_barang }}
-                                </option>
-                            @endforeach
-                        </select>
+                    <div class="flex justify-center gap-2">
+                        <div class="mt-4">
+                            <button type="button" id="addLineBtn"
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add
+                                Another Line</button>
+                        </div>
+                        <div class="mt-4">
+                            <button type="Submit"
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
+                        </div>
                     </div>
-                    <div>
-                        <label for="itemQuantity1" class="block text-sm font-medium text-white">Quantity:</label>
-                        <input type="number" id="itemQuantity1" name="itemQuantity1" min="1"
-                            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            required>
-                    </div>
-                    <div>
-                        <label for="itemPrice1" class="block text-sm font-medium text-white">Price:</label>
-                        <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01"
-                            class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            readonly required>
-                    </div>
+
                 </div>
-                <div class="flex justify-center gap-2">
-                <div class="mt-4">
-                    <button type="button" id="addLineBtn"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add
-                        Another Line</button>
-                </div>
-                <div class="mt-4">
-                    <button type="Submit"
-                        class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
-                </div>
-                </div>
-                
-                </div>
-                
+
             </div>
         </form>
     </div>
@@ -81,10 +81,11 @@ $line = 1;
         }
 
         function generateOptions() {
-            let optionsHTML = '';
-            @foreach($options2 as $option2)
-                optionsHTML += `<option value="{{ $option2->id }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>`;
+            let optionsHTML = 
+            `@foreach($options2 as $option2)
+                <option value="{{ $option2->id }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>
             @endforeach
+            `
             return optionsHTML;
         }
 
@@ -151,7 +152,6 @@ $line = 1;
             var itemPriceInput = document.getElementById(`itemPrice1`);
             itemPriceInput.value = selectedOption.getAttribute('data-price');
         });
-
     </script>
 
 </div>

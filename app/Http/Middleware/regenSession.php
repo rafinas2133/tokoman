@@ -17,6 +17,7 @@ class regenSession
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check()){
+            Session::forget("role_id");
             Session::put("role_id", Auth::user()->role_id);
         }
         return $next($request);

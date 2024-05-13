@@ -27,7 +27,7 @@
                 <canvas id="profitChart"></canvas>
             </div>
         </div>
-        <h1 id="profitText">Profit from {{ $fromDate }} to {{ $toDate }}: ${{ $profit }}</h1>
+        <h1 id="profitText" class="dark:text-white text-black text-center">Profit from {{ $fromDate }} to {{ $toDate }}: ${{ $profit }}</h1>
     </div>
 </div>
 
@@ -74,7 +74,7 @@
         }
 
         // Panggil fungsi createChart saat halaman dimuat
-        createChart('{{ $fromDate }}', '{{ $toDate }}', {{ $profit }});
+        createChart('{{ $fromDate }}', '{{ $toDate }}', '{{ $profit }}');
 
         var form = document.getElementById('profitForm');
 

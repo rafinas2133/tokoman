@@ -8,8 +8,8 @@ $line = 1;
         <form action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
             <input type="hidden" name="line" id="line" value="1">
-            <div id="inputLines" >
-                <div class="flex flex-col">
+            <div>
+                <div id="inputLines" class="flex flex-col">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                     <div class="">
                         <label for="reportDate1" class="block text-sm font-medium text-white">Date:</label>
@@ -99,7 +99,7 @@ $line = 1;
             hitungLine.value = line;
             const inputLinesDiv = document.getElementById('inputLines');
             const newLineDiv = document.createElement('div');
-            newLineDiv.className = 'grid grid-cols-5 gap-4 mt-4';
+            newLineDiv.className = 'grid grid-cols-2 md:grid-cols-4 gap-4 mt-4';
             newLineDiv.innerHTML = `
             <div>
                 <label for="reportDate${line}" class="block text-sm font-medium text-white">Report Date:</label>

@@ -3,6 +3,10 @@
         <div class="h-[400px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
             <canvas id="profitChart"></canvas>
         </div>
+        <form id="hiddenFormProfit" action="/export-profit" method="post">
+            @csrf
+            <input type="hidden" id="hiddenImageProfit" name="profit_image" accept="image/*">
+        </form>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -48,27 +52,8 @@
         function exportProfit() {
             var canvas = document.getElementById('profitChart');
             var canvasImg = canvas.toDataURL("image/png", 1.0);
-
-            var form = new FormData();
-            form.append('profit_image', canvasImg);
-
-            fetch('/export-profit', {
-                method: 'POST',
-                body: form,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Pastikan CSRF token disertakan untuk keamanan
-                }
-            })
-                .then(response => response.blob())
-                .then(blob => {
-                    var url = window.URL.createObjectURL(blob);
-                    var a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'profitTraficTokoman-' + Date.now() + '.pdf';
-                    document.body.appendChild(a);
-                    a.click();
-                    a.remove();
-                });
+            document.getElementById('hiddenImageProfit').value = canvasImg;
+            document.getElementById('hiddenFormProfit').submit();
         }
 
     </script>

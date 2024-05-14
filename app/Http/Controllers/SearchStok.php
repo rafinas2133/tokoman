@@ -9,7 +9,6 @@ class SearchStok extends Controller
 {
     public function index(Request $request)
     {
-        $roleId = $request->session()->get('role_id');
         $query = $request->input('search');
         $type = $request->input('type');
 

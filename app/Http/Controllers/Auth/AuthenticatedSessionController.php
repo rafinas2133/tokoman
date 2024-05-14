@@ -37,7 +37,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {   
-        Session::forget('role_id');
 
         Auth::guard('web')->logout();
 

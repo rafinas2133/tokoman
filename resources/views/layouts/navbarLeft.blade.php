@@ -24,7 +24,7 @@
                 <span>Manajemen Stok</span>
             </a>
         </li>
-        @if(session('role_id') == 0)
+        @if(Auth::user()->role_id == 0)
             <li>
                 <a href="{{ route('Manajemen.Admin') }}"
                     class="{{ request()->routeIs('Manajemen.Admin', 'Tambah.Pegawai', 'Edit.Pegawai') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">

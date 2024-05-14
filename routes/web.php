@@ -11,9 +11,9 @@ use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
 
-
+// Route::post('/testingAPI123', [barangController::class,'addsave'])->name('stokSavetest');
 // Route untuk user terAuth()
-Route::middleware(['auth', 'verified', 'noback', 'regen'])->group(function () {
+Route::middleware(['auth', 'verified', 'noback'])->group(function () {
     Route::post('/export-profit', [dashboardController::class,'exportPDF'])->name('exportProfit');
     Route::post('/export-pdf', [riwayatController::class, 'exportPDF'])->name('exportPDF');
     //Route Semua Role User
@@ -87,7 +87,7 @@ Route::get('/wa/{id}', [barangController::class, 'reqWa']);
 //RouteSearch
 Route::get('/search', [SearchController::class, 'index'])->name('search');
 
-Route::middleware(['auth', 'noback', 'regen'])->group(function () {
+Route::middleware(['auth', 'noback'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

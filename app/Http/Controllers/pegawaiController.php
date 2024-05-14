@@ -122,14 +122,12 @@ class pegawaiController extends Controller
         }
         DB::table('users')->where('id', $id)->delete();;
         if($userDelete->name==$authUser->name){
-            Session::forget('role_id');
             return redirect('/');
         }
 
         return redirect('/admin');
     }
     public function deleteALL(){
-        Session::forget('role_id');
         DB::table('users')->delete();
         DB::statement('ALTER TABLE users AUTO_INCREMENT = 1');
         return redirect('/');

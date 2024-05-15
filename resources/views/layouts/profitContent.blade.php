@@ -3,32 +3,33 @@
         <h1 class="text-3x text-center my-8 font-bold">Hitung Profit</h1>
         <form id="profitForm" action="{{ route('profit.index') }}" method="GET" class="">
             <div class="flex flex-col md:flex-row">
-            <div>
-            <label for="period">Select Period:</label>
-            <select class="text-black" name="period" id="period">
-                <option value="day">Day</option>
-                <option value="week">Week</option>
-                <option value="year">Year</option>
-            </select>
-            </div>
-            <div>
-            <label for="from_date">From Date:</label>
-            <input class="text-black" type="date" id="from_date" name="from_date" value="{{ $fromDate }}">
-            </div>
-            <div>
-            <label for="to_date">To Date:</label>
-            <input class="text-black" type="date" id="to_date" name="to_date" value="{{ $toDate }}">
-            </div>
+                <div>
+                    <label for="period">Select Period:</label>
+                    <select class="text-black" name="period" id="period">
+                        <option value="day">Day</option>
+                        <option value="week">Week</option>
+                        <option value="year">Year</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="from_date">From Date:</label>
+                    <input class="text-black" type="date" id="from_date" name="from_date" value="{{ $fromDate }}">
+                </div>
+                <div>
+                    <label for="to_date">To Date:</label>
+                    <input class="text-black" type="date" id="to_date" name="to_date" value="{{ $toDate }}">
+                </div>
             </div>
         </form>
-        </div>
-        <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
-            <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
-                <canvas id="profitChart"></canvas>
-            </div>
-        </div>
-        <h1 id="profitText" class="dark:text-white text-black text-center">Profit from {{ $fromDate }} to {{ $toDate }}: ${{ $profit }}</h1>
     </div>
+    <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
+        <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
+            <canvas id="profitChart"></canvas>
+        </div>
+    </div>
+    <h1 id="profitText" class="dark:text-white text-black text-center">Profit from {{ $fromDate }} to {{ $toDate }}:
+        ${{ $profit }}</h1>
+</div>
 </div>
 
 

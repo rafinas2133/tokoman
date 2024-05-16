@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\agentController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\mitraController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\barangController;
 use App\Http\Controllers\SearchStok;
@@ -14,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::post("/testingAPI123", [barangController::class, 'addSave'])->name('testingAPI');
 // Route untuk user terAuth()
 Route::middleware(['auth', 'verified','noback'])->group(function () {
+    //Agents Mitra
+    Route::get('/agent', [agentController::class,'index'])->name('agent');
+    Route::get('/mitra', [mitraController::class,'index'])->name('mitra');
     Route::post('/export-profit', [dashboardController::class, 'exportPDF'])->name('exportProfit');
     Route::post('/export-pdf', [riwayatController::class, 'exportPDF'])->name('exportPDF');
 

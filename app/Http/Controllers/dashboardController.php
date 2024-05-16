@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\LoginNotification;
 use App\Models\Laporan;
 use App\Models\Riwayat;
+use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Mail;
 use Storage;
 
 class dashboardController extends Controller
@@ -26,11 +29,18 @@ class dashboardController extends Controller
 
         // Menyimpan gambar ke dalam storage
         Storage::disk('s3')->put('profit.png', $decodedImageData);
-        $pdf = PDF::loadView('pdf.profit',$profitData);
+        $pdf = PDF::loadView('pdf.profit', $profitData);
         return $pdf->download('ProfitTraficTokoman-' . now() . '.pdf');
     }
     public function index(Request $request)
     {
+        if (session()->get('login') == 'true') {
+            $user = Auth::user();
+            $sessionId = session()->getId();
+            $sessionData = \DB::table('sessions')->where('id', $sessionId)->first();
+            Mail::to($user->email)->send(new LoginNotification($user, $sessionData));
+        }
+
         $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
             $request->input('period', 'day'),
             $request->input('from_date', Carbon::now()->subWeek()->toDateString()),
@@ -45,7 +55,7 @@ class dashboardController extends Controller
         if ($profitDataRecent['profit'] != 0) {    // Pastikan pembagi tidak nol
             $percentageProfit = (abs($profitData['profit'] - abs($profitDataRecent['profit'])) / abs($profitDataRecent['profit'])) * 100;
         }
-    
+
         if (isset($request)) {
             $period = $request->input('timeFilter'); // Default to monthly if not specified
         }

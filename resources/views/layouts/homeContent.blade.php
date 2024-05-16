@@ -61,7 +61,7 @@
     <div class="mt-8 bg-white p-4 rounded-lg shadow w-full">
         <div class="flex justify-between items-center mb-2">
             <h2 class="text-xl font-semibold">Traffic Sources</h2>
-            <form id="hiddenForm" action="/export-pdf" method="post">
+            <form target="_blank" id="hiddenForm" action="/export-pdf" method="post">
                 @csrf
                 <input type="hidden" id="hiddenImage" name="chart_image" accept="image/*">
                 <input type="hidden" id="hiddenInput" name="timeFilter" value="{{$choosenPeriod}}">

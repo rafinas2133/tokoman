@@ -49,15 +49,6 @@ class pegawaiController extends Controller
 
         return redirect('/admin')->with('success', 'Data berhasil disimpan!');
     }
-    public function store(Request $request){
-        DB::table('users')->insert([
-            'name' => $request->nama,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
-
-        return view("admin.index", ["added" => true]);
-    }
     public function edit($id) {
         $user = DB::table("users")->where(['id' => $id])->first();
         $userauth = Auth::user();
@@ -112,7 +103,7 @@ class pegawaiController extends Controller
         }
         DB::table('users')->where('id', $id)->update($dataToUpdate);
         
-        return redirect('/admin');
+        return redirect('/admin/edit/'.$id)->with('success', 'Data berhasil diubah!');
     }
     public function delete($id){
         $userDelete=User::where('id', $id)->first();
@@ -125,11 +116,6 @@ class pegawaiController extends Controller
             return redirect('/');
         }
 
-        return redirect('/admin');
-    }
-    public function deleteALL(){
-        DB::table('users')->delete();
-        DB::statement('ALTER TABLE users AUTO_INCREMENT = 1');
-        return redirect('/');
+        return redirect('/admin')->with('success', 'Data berhasil dihapus!');
     }
 }

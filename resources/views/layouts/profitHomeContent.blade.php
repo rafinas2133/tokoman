@@ -3,7 +3,7 @@
         <div class="h-[400px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
             <canvas id="profitChart"></canvas>
         </div>
-        <form id="hiddenFormProfit" action="/export-profit" method="post">
+        <form id="hiddenFormProfit" action="/export-profit" method="post" target="_blank">
             @csrf
             <input type="hidden" id="hiddenImageProfit" name="profit_image" accept="image/*">
         </form>

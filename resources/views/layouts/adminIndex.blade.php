@@ -31,6 +31,7 @@
                                 <a href="/admin/edit/{{ $usr->id }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">Edit</a>
                                 <form action="/admin/delete/{{ $usr->id }}" method="POST">
                                     @csrf
+                                    @method('delete')
                                     <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</button>
                                 </form>
                             </div>
@@ -42,6 +43,7 @@
         </div>
     @endif
     <!-- Pagination Links -->
-    <div class="text-center mt-4, bg-blue-700, text-white">
-        {{ $users->links('vendor.pagination.tailwind') }}
+    <div class="mt-8 flex sm:justify-center mx-auto overflow-auto">
+        {{ $users->appends(request()->query())->onEachSide(1)->links() }}
     </div>
+

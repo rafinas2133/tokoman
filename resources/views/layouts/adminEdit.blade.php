@@ -6,6 +6,7 @@
     
  <form action="/admin/editsave/{{$user->id}}" method="post" class="text-white">
     @csrf
+    @method('put')
     <p class="text-red-500 text-xs italic">Kosongkan jika tidak ingin mengedit.</p>
     <div class="mb-4">
         <label for="nama" class="block text-white text-sm font-bold mb-2">Nama:</label>

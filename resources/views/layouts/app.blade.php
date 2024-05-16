@@ -17,7 +17,13 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
+    <div id="mainApp" class="min-h-screen bg-gray-100 dark:bg-gray-800">
+        @if(session('error'))
+            @include('layouts.modal', ['message' => session('error')])
+        @endif
+        @if(session('success'))
+            @include('layouts.modalSucces', ['message' => session('success')])
+        @endif
         @include('layouts.navigation')
 
         <!-- Page Heading -->
@@ -35,6 +41,7 @@
         </main>
     </div>
 </body>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/TokomanScript.js"></script>
 <!-- <script>
     window.onload = function() {
         if(performance.navigation.type == 2) {

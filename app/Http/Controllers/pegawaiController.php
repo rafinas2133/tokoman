@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Pusher\Pusher;
 
 
 
@@ -37,7 +38,7 @@ class pegawaiController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/admin')->with('error',$validator->errors()->first());
+            return redirect('/admin/add')->with('error',$validator->errors()->first());
         }
         $user = new User();
         $user->name = $request->nama;
@@ -47,6 +48,8 @@ class pegawaiController extends Controller
         $user->role_id = $request->role_id;
         $user->save();
 
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('user-channel', 'my-event', $request->role_id==0?'Admin ':'Pegawai '.$user->name .' Berhasil Ditambahkan oleh Admin '.Auth::user()->name);
         return redirect('/admin')->with('success', 'Data berhasil disimpan!');
     }
     public function edit($id) {
@@ -75,7 +78,7 @@ class pegawaiController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/admin')->with('error',$validator->errors()->first());
+            return redirect('/admin/edit/'.$id)->with('error',$validator->errors()->first());
         }
         $validatedData = $request->validate([
             'nama' => 'required',
@@ -102,7 +105,8 @@ class pegawaiController extends Controller
             $dataToUpdate['role_id'] = $request->role_id;
         }
         DB::table('users')->where('id', $id)->update($dataToUpdate);
-        
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('user-channel', 'my-event', 'User '.$dataToUpdate['name'] .' Berhasil Diubah oleh Admin '.Auth::user()->name);
         return redirect('/admin/edit/'.$id)->with('success', 'Data berhasil diubah!');
     }
     public function delete($id){
@@ -115,7 +119,8 @@ class pegawaiController extends Controller
         if($userDelete->name==$authUser->name){
             return redirect('/');
         }
-
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('user-channel', 'my-event', 'User '.$userDelete->name .' Berhasil Dihapus oleh Admin '.Auth::user()->name);
         return redirect('/admin')->with('success', 'Data berhasil dihapus!');
     }
 }

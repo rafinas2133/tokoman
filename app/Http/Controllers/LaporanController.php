@@ -8,6 +8,7 @@ use App\Models\StokBarang;
 use App\Models\Laporan;
 use App\Models\Riwayat;
 use Illuminate\Support\Facades\Validator;
+use Pusher\Pusher;
 
 class LaporanController extends Controller
 {
@@ -43,13 +44,15 @@ class LaporanController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/pelaporan')->with('messages', $validator->errors()->first())->with('error', 'true');
+                return redirect('/pelaporan')->with('error', $validator->errors()->first());
             }
         }
-
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $sale=0;
         // Jika semua data valid, lanjutkan ke penyimpanan
         foreach ($data as $item) {
             $namabarang = StokBarang::where('id', $item['itemName'])->first();
+            $sale += abs($item['itemQuantity']);
 
             $laporan = new Laporan();
             $laporan->nama_barang = $namabarang->nama_barang;
@@ -70,9 +73,11 @@ class LaporanController extends Controller
 
             $namabarang->stok -= abs($item['itemQuantity']);
             $namabarang->save();
+            
         }
-
-        return redirect('/pelaporan')->with('messages', 'Data berhasil disimpan')->with('error', 'false');
+        $pusher->trigger('my-channel', 'my-event', 'Terdeksi Penjualan Barang Sebanyak '. abs($sale));
+        $pusher->trigger('report-channel', 'my-event', 'Ada perubahan traffic transaksi barang');
+        return redirect('/pelaporan')->with('success', 'Data berhasil disimpan');
     }
 
 

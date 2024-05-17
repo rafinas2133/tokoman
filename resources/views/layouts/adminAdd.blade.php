@@ -9,13 +9,13 @@
                     @csrf
                     <div class="mb-4">
                         <label for="nama" class="block text-sm font-bold mb-2">Nama:</label>
-                        <input type="text" id="nama" name="nama" required
+                        <input type="text" id="nama" name="nama" value="{{old('nama')}}" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <p class="text-red-500 text-xs italic">Nama wajib diisi.</p>
                     </div>
                     <div class="mb-4">
                         <label for="email" class="block text-sm font-bold mb-2">Email:</label>
-                        <input type="email" id="email" name="email" required
+                        <input type="email" id="email" name="email" value="{{old('email')}}" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
 
@@ -24,7 +24,7 @@
                         <select id="role_id" name="role_id" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                             <option value="0">Admin</option>
-                            <option value="1">Pegawai</option>
+                            <option value="1" selected>Pegawai</option>
                         </select>
                     </div>
 

@@ -7,7 +7,6 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/logo.png">
     <title>{{ config('app.name', 'Tokoman') }}</title>
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -19,8 +18,10 @@
 <body class="font-sans antialiased">
     <div id="mainApp" class=" bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
+        <div class="bg-slate-300 dark:bg-gray-900">
         @include('layouts.toko')
         @include('layouts.stokbarang')
+        </div>
         @include('layouts.footer')
     </div>
 </body>

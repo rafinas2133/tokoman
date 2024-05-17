@@ -3,8 +3,8 @@ $line = 1;
 ?>
 </style>
 <div class="flex flex-col items-center justify-center mt-10">
-    <h1 class="text-3xl text-white font-semibold mb-4">Reporting Form</h1>
-    <div class="flex items-center space-x-4 mb-2 ">
+    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Reporting Form</h1>
+    <div class="flex items-center justify-center space-x-4 mb-2 ">
         <form action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
             <input type="hidden" name="line" id="line" value="1">
@@ -12,31 +12,35 @@ $line = 1;
                 <div id="inputLines" class="flex flex-col">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="">
-                            <label for="reportDate1" class="block text-sm font-medium text-white">Date:</label>
+                            <label for="reportDate1"
+                                class="block text-sm font-medium text-black dark:text-white">Item Date:</label>
                             <input type="date" id="reportDate1" name="reportDate1"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-3000 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required value="{{ now()->toDateString() }}" readonly>
                         </div>
                         <div class="">
-                            <label for="itemName1" class="block text-sm font-medium text-white">Name:</label>
+                            <label for="itemName1"
+                                class="block text-sm font-medium text-black dark:text-white">Item Name:</label>
                             <select id="itemName1" name="itemName1"
-                                class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                class="mt-1 p-2 pr-8 w-full rounded-md truncate border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required>
                                 @foreach($options as $options)
-                                    <option value="{{ $options->id }}" data-price="{{ $options->harga_jual }}">
+                                    <option value="{{ $options->id }}" class="truncate" data-price="{{ $options->harga_jual }}">
                                         {{ $options->nama_barang }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div>
-                            <label for="itemQuantity1" class="block text-sm font-medium text-white">Quantity:</label>
+                            <label for="itemQuantity1"
+                                class="block text-sm font-medium text-black dark:text-white">Item Quantity:</label>
                             <input type="number" id="itemQuantity1" name="itemQuantity1" min="1"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required>
                         </div>
                         <div>
-                            <label for="itemPrice1" class="block text-sm font-medium text-white">Price:</label>
+                            <label for="itemPrice1"
+                                class="block text-sm font-medium text-black dark:text-white">Item Price:</label>
                             <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 readonly required>
@@ -63,7 +67,7 @@ $line = 1;
     <!-- JavaScript to handle adding new input lines -->
     <script>
         let line = 1;
-
+        
         function handleItemNameChange(line) {
             const itemNameSelect = document.getElementById(`itemName${line}`);
             itemNameSelect.addEventListener('change', function () {
@@ -81,10 +85,10 @@ $line = 1;
         }
 
         function generateOptions() {
-            let optionsHTML = 
-            `@foreach($options2 as $option2)
-                <option value="{{ $option2->id }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>
-            @endforeach
+            let optionsHTML =
+                `@foreach($options2 as $option2)
+                    <option class="truncate" value="{{ $option2->id }}" data-price="{{ $option2->harga_jual }}">{{ $option2->nama_barang }}</option>
+                @endforeach
             `
             return optionsHTML;
         }
@@ -100,24 +104,24 @@ $line = 1;
             hitungLine.value = line;
             const inputLinesDiv = document.getElementById('inputLines');
             const newLineDiv = document.createElement('div');
-            newLineDiv.className = 'grid grid-cols-2 md:grid-cols-4 gap-4 mt-4';
+            newLineDiv.className = 'grid grid-cols-2 md:grid-cols-5 gap-4 mt-4';
             newLineDiv.innerHTML = `
             <div>
-                <label for="reportDate${line}" class="block text-sm font-medium text-white">Report Date:</label>
+                <label for="reportDate${line}" class="block text-sm font-medium text-black dark:text-white">Report Date:</label>
                 <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}" value="{{ now()->toDateString() }}">
             </div>
             <div>
-                <label for="itemName${line}" class="block text-sm font-medium text-white">Item Name:</label>
-                <select id="itemName${line}" name="itemName${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                <label for="itemName${line}" class="block text-sm font-medium text-black dark:text-white">Item Name:</label>
+                <select id="itemName${line}" name="itemName${line}" class="mt-1 p-2 pr-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 truncate" required>
                     ${generateOptions()}
                 </select>
             </div>
             <div>
-                <label for="itemQuantity${line}" class="block text-sm font-medium text-white">Item Quantity:</label>
+                <label for="itemQuantity${line}" class="block text-sm font-medium text-black dark:text-white">Item Quantity:</label>
                 <input type="number" id="itemQuantity${line}" name="itemQuantity${line}" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
             </div>
             <div>
-                <label for="itemPrice${line}" class="block text-sm font-medium text-white">Item Price:</label>
+                <label for="itemPrice${line}" class="block text-sm font-medium text-black dark:text-white">Item Price:</label>
                 <input type="number" id="itemPrice${line}" name="itemPrice${line}" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly required>
             </div>
             <div>

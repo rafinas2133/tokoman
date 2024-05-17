@@ -1,22 +1,26 @@
 <!-- Hamburger Button -->
-<button id="menuButton" class="sm:hidden p-4 text-white focus:outline-none w-full flex justify-center bg-transparent"
-    onclick="toggleNavbar()">
-    <!-- Hamburger Icon -->
-    <svg id="hamburgerIcon" class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24"
-        xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 6h36M2 12h36M2 18h36"></path>
-    </svg>
-    <!-- Cross Icon -->
-    <svg id="crossIcon" class="w-10 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-        xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-    </svg>
-</button>
+<div class="flex items-center justify-center space-x-4">
+    <button id="menuButton"
+        class="sm:hidden p-4 focus:outline-none flex justify-center bg-transparent text-black dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 rounded-md"
+        onclick="toggleNavbar()">
+        <!-- Hamburger Icon -->
+        <svg id="hamburgerIcon" class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 6h36M2 12h36M2 18h36"></path>
+        </svg>
+        <!-- Cross Icon -->
+        <svg id="crossIcon" class="w-10 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+    </button>
+
+</div>
 
 <div
-    class="bg-gray-800 text-white h-full border-r border-t border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300">
+    class=" dark:text-white text-black h-full border-r border-t dark:border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300 this">
     @if (Auth::user()->email_verified_at != null)
-        <div class="p-4 text-xl font-semibold border-b border-gray-700">Manajemen</div>
+        <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">Manajemen</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="{{ route('stokIndex') }}"
@@ -35,7 +39,7 @@
                 </li>
             @endif
         </ul>
-        <div class="p-4 text-xl font-semibold border-y border-gray-700">ANALYTICS</div>
+        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">ANALYTICS</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="{{ route('profit.index') }}"
@@ -59,7 +63,7 @@
                 </a>
             </li>
         </ul>
-        <div class="p-4 text-xl font-semibold border-y border-gray-700">SUPPORT</div>
+        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">SUPPORT</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="/agent"
@@ -77,7 +81,7 @@
             </li>
         </ul>
     @endif
-    <div class="p-4 text-xl font-semibold border-y border-gray-700">SETTINGS</div>
+    <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">SETTINGS</div>
     <ul class="space-y-2 p-5">
         <li>
             <a href="{{ route('profile.edit') }}"
@@ -102,7 +106,7 @@
 </div>
 <script>
     function toggleNavbar() {
-        const navbar = document.querySelector('.bg-gray-800');
+        const navbar = document.querySelector('.this');
         const hamburgerIcon = document.getElementById('hamburgerIcon');
         const crossIcon = document.getElementById('crossIcon');
         const menuButton = document.getElementById('menuButton');

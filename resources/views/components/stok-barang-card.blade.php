@@ -1,29 +1,29 @@
 @if ($barang->stok > 0)
-    <?php    $pathimage = 'https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png'?>
+    <?php $pathimage = 'https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png'?>
     <div
-        class="mx-auto w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10 max-[400px]:scale-75">
+        class="mx-auto min-[400px]:w-[380px] rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 bg-gray-100 dark:bg-gray-700 mb-10 w-full">
         @if($barang->pathImg1 == '')
-            <img class="rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]" src="https://placeholder.pics/svg/300"
+            <img class="rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px]  w-[350px] h-[350px]" src="https://placeholder.pics/svg/300"
                 alt="Gambar {{ $barang->nama_barang }}">
         @else
             @if($barang->pathImg2 == '')
-                <img class=" rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]" src="{{$barang->pathImg1}}"
+                <img class=" rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]" src="{{$barang->pathImg1}}"
                     alt="Gambar {{ $barang->nama_barang }}">
             @else
                 <div class="mx-auto w-[350px] h-[350px] rounded-lg">
                     <!-- Slides -->
                     <div class="relative h-[350px]">
                         <button onclick="showNextImage{{$barang->id_barang}}()"
-                            class="absolute z-10 inset-0 w-[30px] h-[30px] mt-[175px]"><img
+                            class="absolute z-10 inset-0 w-[30px] h-[30px] mt-[175px] max-[400px]:translate-x-7"><img
                                 src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(3).png"></button>
 
                         <img src="{{$barang->pathImg1}}"
-                            class="rounded-xl mx-auto mt-[15px] w-[350px] h-[350px] {{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
+                            class="rounded-xl mx-auto max-[400px]:w-[300px] mt-[15px] w-[350px] h-[350px] {{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
 
                         <img src="{{$barang->pathImg2}}"
-                            class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out rounded-xl mx-auto mt-[15px] w-[350px] h-[350px]">
+                            class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]">
                         <button onclick="showNextImage{{$barang->id_barang}}()"
-                            class="absolute inset-0 w-[30px] h-[30px] mt-[175px] ml-[320px]"><img
+                            class="absolute inset-0 w-[30px] h-[30px] mt-[175px] ml-[320px] max-[400px]:-translate-x-7"><img
                                 src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(2).png"></button>
                         <script>
                             let {{$barang->jenis_tutup . $barang->id_barang . 'index'}}=0;
@@ -61,22 +61,22 @@
         @endif
         <div class="px-6 py-4">
             <div class="font-bold text-xl mb-2 text-blue-800">{{ $barang->nama_barang }}</div>
-            <p class="text-white text-base">
+            <p class="text-black text-base dark:text-white">
                 <strong>Jenis Tutup:</strong> {{ $barang->jenis_tutup }}<br>
             </p>
-            <p class="text-white text-base">
+            <p class="text-black text-base dark:text-white">
                 <strong>Ukuran:</strong> {{ $barang->ukuran }}
             </p>
-            <p class="text-white text-base">
+            <p class="text-black text-base dark:text-white">
                 <strong>Stok:</strong> {{ $barang->stok }}
             </p>
-            <p class="text-white text-base">
+            <p class="text-black text-base dark:text-white">
                 <strong>Isi per Bal:</strong> {{ $barang->bal }}
             </p>
-            <p class="text-white text-base">
+            <p class="text-black text-base dark:text-white">
                 <strong>Harga:</strong> {{ $barang->harga_jual }}
             </p>
-            <div class="text-white text-base">
+            <div class="text-black text-base dark:text-white">
                 <strong>Minat?</strong>
             </div>
             <button onclick="openWhatsapp()"

@@ -43,7 +43,7 @@
         </div>
     @endif
     <!-- Pagination Links -->
-    <div class="mt-8 flex sm:justify-center mx-auto overflow-auto">
+    <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto">
         {{ $users->appends(request()->query())->onEachSide(1)->links() }}
     </div>
 

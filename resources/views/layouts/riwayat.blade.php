@@ -74,7 +74,7 @@
         </ul>
     @endforeach
 </div>
-<div class="mt-8 flex sm:justify-center mx-auto overflow-auto">
+<div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto">
     {{ $riwayatTerbaru->appends(request()->query())->onEachSide(1)->links() }}
 </div>
 

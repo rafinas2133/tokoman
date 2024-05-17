@@ -3,14 +3,14 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <a href="/stok"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block">Kembali</a>
+                    class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-3 inline-block">Kembali</a>
 
                 <form action="{{url('/stok/editsave/' . $brg->id_barang)}}" method="post"
-                    class="needs-validation text-white" enctype="multipart/form-data">
+                    class="needs-validation" enctype="multipart/form-data">
                     @csrf
                     @method('put')
                     <div class="mb-4">
-                        <label for="nama" class="block text-white text-sm font-bold mb-2">Nama Barang:</label>
+                        <label for="nama" class="block text-sm font-bold mb-2">Nama Barang:</label>
                         <input type="text" id="nama" name="nama" value="{{$brg->nama_barang}}" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>

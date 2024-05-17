@@ -1,4 +1,4 @@
-<div class="gap-6 ">
+<div class="gap-6">
     <div class="flex justify-center mt-6">
 
         <form action="{{ route('search') }}" method="GET" class="w-full max-w-xl">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="mt-8 flex sm:justify-center mx-auto overflow-auto">
+    <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto mb-2">
         {{ $barangs->appends(request()->query())->onEachSide(1)->links() }}
     </div>
 </div>

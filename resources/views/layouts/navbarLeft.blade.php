@@ -66,7 +66,7 @@
         <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">SUPPORT</div>
         <ul class="space-y-2 p-5">
             <li>
-                <a href="/agent"
+                <a href="/agents"
                     class="{{ request()->routeIs('agent') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>👤</span>
                     <span>Agents</span>

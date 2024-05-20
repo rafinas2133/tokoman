@@ -10,5 +10,5 @@ class Agents extends Model
     use HasFactory;
 
     protected $table = 'agents';
-    protected $fillable = ['name', 'address', 'image', 'noTelp'];
+    protected $fillable = ['name', 'address', 'images', 'noTelp'];
 }

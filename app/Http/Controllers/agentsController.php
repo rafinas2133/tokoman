@@ -30,7 +30,7 @@ class agentsController extends Controller
         $agents = new Agents([
             'name' => $request->get('name'),
             'address' => $request->get('address'),
-            'images' => json_encode($request->get('images')),
+            'images' => $request->get('images'),
             'noTelp' => $request->get('noTelp'),
         ]);
 
@@ -61,7 +61,7 @@ class agentsController extends Controller
         $agents->update([
             'name' => $request->get('name'),
             'address' => $request->get('address'),
-            'images' => json_encode($request->get('images')),
+            'images' => $request->get('images'),
             'noTelp' => $request->get('noTelp'),
         ]);
 

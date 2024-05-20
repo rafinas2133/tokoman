@@ -4,7 +4,6 @@
     'maxWidth' => '2xl'
 ])
 @php
-dd($parrent);
 $maxWidth = [
     'sm' => 'sm:max-w-sm',
     'md' => 'sm:max-w-md',
@@ -36,9 +35,9 @@ $maxWidth = [
             {{ $attributes->has('focusable') ? 'setTimeout(() => firstFocusable().focus(), 100)' : '' }}
         } else {
             document.body.classList.remove('overflow-y-hidden');
-            if(document.getElementById('{{$parrent}}')){
+            if(document.getElementById('{{ $name }}')){
                 setTimeout(() => show = true, 500); // Reset show state after close
-                setTimeout(() => document.getElementById('{{$parrent}}').classList.add('hidden'), 500);
+                setTimeout(() => document.getElementById('{{ $name }}').classList.add('hidden'), 500);
             }
             
         }

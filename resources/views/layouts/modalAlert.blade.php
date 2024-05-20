@@ -2,7 +2,7 @@
 
 ?>
 @if($message)
-    <x-custom-modal name="confirm-user-deletion" :show="true" focusable :parrent="$parrent">
+    <x-custom-modal name="{{$parrent}}" :show="true" focusable :parrent="$parrent">
         <div class="space-y-6 p-6">
             <h2 class="text-lg font-medium text-red-500 ">
                 {{ __('Tunggu Dulu!') }}

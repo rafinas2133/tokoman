@@ -3,7 +3,7 @@
     'show' => false,
     'maxWidth' => '2xl'
 ])
-<?php$parrent??''?>
+<?php $parrent??''; ?>
 @php
 $maxWidth = [
     'sm' => 'sm:max-w-sm',

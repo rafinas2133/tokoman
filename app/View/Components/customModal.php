@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class modalCustom extends Component
+class customModal extends Component
 {
     /**
      * Create a new component instance.
@@ -22,6 +22,6 @@ class modalCustom extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modalCustom',['parrent'->$this->parrent]);
+        return view('components.custom-modal');
     }
 }

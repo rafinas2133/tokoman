@@ -22,6 +22,6 @@ class modalCustom extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.modalCustom');
+        return view('components.modalCustom',['parrent'->$this->parrent]);
     }
 }

@@ -19,5 +19,5 @@
             </div>
         </div>
 
-    </x-custom-modal>
+    </x-custom-modal :parrent="$parrent">
 @endif

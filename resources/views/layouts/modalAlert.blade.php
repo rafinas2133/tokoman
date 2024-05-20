@@ -18,6 +18,5 @@
                 </x-secondary-button>
             </div>
         </div>
-
-    </x-custom-modal :parrent="$parrent">
+    </x-custom-modal>
 @endif

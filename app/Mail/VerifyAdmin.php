@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -9,21 +10,25 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class newUserVerified extends Mailable
+class VerifyAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $user;
-    public function __construct($user)
+    public $token;
+
+    public function __construct($user,$token)
     {
         $this->user = $user;
+        $this->token = $token;
     }
 
     public function build()
     {
-        return $this->view('email.newUserVerified')
+        return $this->view('email.admin')
             ->with([
-                'user' => $this->user,
+                'user',$this->user,
+                'token'=>($this->token),
             ]);
     }
 }

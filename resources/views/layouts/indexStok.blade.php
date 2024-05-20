@@ -82,15 +82,16 @@
                                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded ">
                                             Edit
                                         </a>
-                                        <form action="/stok/delete/{{ $usr->id }}" method="POST">
+                                        <form action="/stok/delete/{{ $usr->id }}" method="POST" id="deleteForm{{$usr->id}}">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit"
+                                            <button type="button" onclick="validasiForm{{$usr->id}}()"
                                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded ml-2">Hapus</button>
                                         </form>
                                     </div>
                                 </td>
                             </tr>
+                            @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus Barang '.$usr->nama_barang, 'form' => 'deleteForm'.$usr->id,'theVal'=>$usr->id])
                         @endforeach
                     </tbody>
                 </table>

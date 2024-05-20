@@ -5,7 +5,7 @@
                 <a href="/stok"
                     class="bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded mb-3 inline-block">Kembali</a>
 
-                <form action="{{url('/stok/editsave/' . $brg->id_barang)}}" method="post"
+                <form action="{{url('/stok/editsave/' . $brg->id_barang)}}" method="post" id="formEdit"
                     class="needs-validation" enctype="multipart/form-data">
                     @csrf
                     @method('put')
@@ -65,24 +65,25 @@
                         @endif
                     </div>
                     <div class="flex gap-4">
-                        <button type="submit"
+                        <button type="button" onclick ="validasiForm()"
                             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 h-fit rounded">Simpan
                             Data</button>
                 </form>
                 @if($brg->pathImg2 != '')
-                        <form action="/deleteImg/{{$brg->id_barang}}" method="POST">
+                        <form action="/deleteImg/{{$brg->id_barang}}" method="POST" id="deleteForm{{$brg->id}}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit"
+                            <button type="button" onclick="validasiForm{{$brg->id}}()"
                                 class="bg-blue-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block h-fit">Hapus
                                 Gambar 2</button>
                         </form>
                     </div>
+                    @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus Gambar 2?', 'form' => 'deleteForm'.$brg->id,'theVal'=>$brg->id])
                 @endif
-
-
         </div>
     </div>
 </div>
 </div>
 </div>
+@include('modalCustom.themodal', ['message' => 'Yakin Mau Edit Data?', 'form' => 'formEdit'])
+

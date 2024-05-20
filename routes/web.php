@@ -13,12 +13,17 @@ use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
 use Illuminate\Support\Facades\Route;
 
-Route::post("/testingAPI123", [barangController::class, 'addSave'])->name('testingAPI');
+// Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');
 // Route untuk user terAuth()
-Route::middleware(['auth', 'verified', 'noback'])->group(function () {
+
+
+Route::middleware(['auth','auth.session','verifypls','noback','verifyEdit'])->group(function () {
     //Agents Mitra
+    Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
+    Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');
     Route::get('/agents', [agentsController::class, 'index'])->name('agents');
     Route::get('/mitra', [mitraController::class, 'index'])->name('mitra');
+
     Route::post('/export-profit', [dashboardController::class, 'exportPDF'])->name('exportProfit');
     Route::post('/export-pdf', [riwayatController::class, 'exportPDF'])->name('exportPDF');
 
@@ -89,13 +94,13 @@ Route::middleware(['auth', 'verified', 'noback'])->group(function () {
 });
 
 // Route Guest unAuth()
-Route::get('/', [barangController::class, 'index'])->middleware('noback')->name('stokBarang');
+Route::get('/', [barangController::class, 'index'])->middleware(['noback','verifyEdit'])->name('stokBarang');
 Route::get('/wa/{id}', [barangController::class, 'reqWa']);
-
+Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth')->name('theAPI');
 // RouteSearch
-Route::get('/search', [SearchController::class, 'index'])->name('search');
+Route::get('/search', [SearchController::class, 'index'])->name('search')->middleware('verifyEdit');
 
-Route::middleware(['auth', 'noback'])->group(function () {
+Route::middleware(['auth','auth.session', 'noback','verifyEdit'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\StokBarang;
@@ -47,7 +48,6 @@ class LaporanController extends Controller
                 return redirect('/pelaporan')->with('error', $validator->errors()->first());
             }
         }
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $sale=0;
         // Jika semua data valid, lanjutkan ke penyimpanan
         foreach ($data as $item) {
@@ -75,8 +75,13 @@ class LaporanController extends Controller
             $namabarang->save();
             
         }
-        $pusher->trigger('my-channel', 'my-event', 'Terdeksi Penjualan Barang Sebanyak '. abs($sale));
-        $pusher->trigger('report-channel', 'my-event', 'Ada perubahan traffic transaksi barang');
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('my-channel', 'my-event', [
+            'massage' => 'Toko ' . 'Berhasil Menjual Barang Sebanyak ' . $sale,
+            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+            'id' => 'non',
+            'excepturl' => ''
+        ]);
         return redirect('/pelaporan')->with('success', 'Data berhasil disimpan');
     }
 

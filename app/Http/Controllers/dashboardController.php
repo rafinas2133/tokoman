@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\emailVerifyController as verifying;
+use Egulias\EmailValidator\EmailValidator;
+use Egulias\EmailValidator\Validation\RFCValidation;
 use App\Mail\LoginNotification;
 use App\Models\Laporan;
 use App\Models\Riwayat;
@@ -12,8 +15,10 @@ use Illuminate\Http\Request;
 use Mail;
 use Storage;
 
+
 class dashboardController extends Controller
 {
+
     public function exportPDF(Request $request)
     {
         $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
@@ -39,8 +44,8 @@ class dashboardController extends Controller
             $sessionId = session()->getId();
             $sessionData = \DB::table('sessions')->where('id', $sessionId)->first();
             Mail::to($user->email)->send(new LoginNotification($user, $sessionData));
-        }
 
+        }
         $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
             $request->input('period', 'day'),
             $request->input('from_date', Carbon::now()->subWeek()->toDateString()),

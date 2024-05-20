@@ -2,6 +2,7 @@
 
 namespace App\View\Components;
 
+use Illuminate\Routing\Contracts\ControllerDispatcher;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 

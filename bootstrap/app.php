@@ -6,25 +6,30 @@ use Illuminate\Foundation\Configuration\Middleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
-        web: __DIR__.'/../routes/web.php',
-        commands: __DIR__.'/../routes/console.php',
+        web: __DIR__ . '/../routes/web.php',
+        commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-    $middleware->alias(['admin'=> \App\Http\Middleware\admin::class]);
+        $middleware->alias(['admin' => \App\Http\Middleware\admin::class]);
     })
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['employee'=> \App\Http\Middleware\pegawai::class]);
+        $middleware->alias(['employee' => \App\Http\Middleware\pegawai::class]);
     })
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['noback'=> \App\Http\Middleware\noBack::class]);
+        $middleware->alias(['noback' => \App\Http\Middleware\noBack::class]);
     })->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies(at: '*');
-    // })->withMiddleware(function (Middleware $middleware) {
-    //     $middleware->validateCsrfTokens(except: [
-    //         '/testingAPI123',
-    //     ]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->validateCsrfTokens(except: [
+            '/testingAPI123',
+        ]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['verifyEdit' => \App\Http\Middleware\mustLoginAfterEdit::class]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['verifypls' => \App\Http\Middleware\verifypls::class]);
     })
+    
     ->withExceptions(function (Exceptions $exceptions) {
         //
     })->create();

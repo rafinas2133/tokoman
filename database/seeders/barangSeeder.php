@@ -3,14 +3,21 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Faker\Factory as Faker;
+use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Session;
 
 class barangSeeder extends Seeder
 {
     public function run()
     {
+        $csrfToken = csrf_token();
         $faker = Faker::create('id_ID');
+        $client = new Client([
+            'base_uri' => 'http://127.0.0.1:8000/', // Ganti dengan URL aplikasi Laravel Anda
+            'timeout'  => 10.0,
+            'cookies' => true ,
+        ]);
 
         for ($i = 0; $i < 50; $i++) {
             $nama_barang = $faker->word;
@@ -18,32 +25,24 @@ class barangSeeder extends Seeder
             $jenis_tutup = $faker->randomElement(['tinggi', 'rendah']);
             $bal = $faker->numberBetween(1, 20);
 
-            $id = '';
-            if (strlen($nama_barang) >= 3) {
-                $id .= strtoupper(substr($nama_barang, 0, 2)); // 2 huruf depan
-                $id .= strtoupper(substr($nama_barang, -1)); // 1 huruf belakang
-            } else {
-                $id .= strtoupper(substr($nama_barang, 0, 1)); // 1 huruf depan jika nama kurang dari 3 huruf
+            try {
+                $response = $client->request('POST', '/testingAPI123', [
+                    'headers' => [
+                        'X-CSRF-TOKEN' => $csrfToken,
+                    ],
+                    'form_params' => [
+                        'nama' => $nama_barang,
+                        'bal' => $bal,
+                        'stok' => $faker->numberBetween(10, 100),
+                        'buy' => $faker->numberBetween(1000, 10000),
+                        'sell' => $faker->numberBetween(10000, 20000),
+                        'jenis' => $jenis_tutup,
+                        'ukuran' => $ukuran,
+                    ]
+                ]);
+            } catch (\GuzzleHttp\Exception\GuzzleException $e) {
+                echo 'Request failed: ' . $e->getMessage();
             }
-
-            $id .= preg_replace('/\D/', '', $ukuran); // Hanya angka dari ukuran
-            $id .= $jenis_tutup == 'tinggi' ? 'H' : 'L';
-            $id .= $bal;
-
-            DB::table('stok_barangs')->insert([
-                'id_barang' => $id,
-                'nama_barang' => $nama_barang,
-                'bal'=> $bal,
-                'stok' => $faker->numberBetween(10, 100),
-                'harga_beli' => $faker->numberBetween(1000, 10000),
-                'harga_jual' => $faker->numberBetween(10000, 20000),
-                'jenis_tutup' => $jenis_tutup,
-                'ukuran' => $ukuran,
-                'pathImg1' => '',
-                'pathImg2' => '',
-                'fileName1' => '',
-                'fileName2' => '',
-            ]);
         }
     }
 }

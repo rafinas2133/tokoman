@@ -65,7 +65,11 @@
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
-
+                        @if(Auth::user()->email_verified_at == null)
+                        <x-dropdown-link :href="'/verify-email'">
+                            {{ __('Verification Email') }}
+                        </x-dropdown-link>
+                        @endif
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf

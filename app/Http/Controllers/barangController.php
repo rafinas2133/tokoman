@@ -13,9 +13,28 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
 use Pusher\Pusher;
+use Route;
 
 class barangController extends Controller
 {
+    public $needPush = true;
+    public function apiRecieve()
+    {
+        $user = (Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'));
+        return response()->json($user);
+    }
+    public function channelRecieve($id)
+    {
+        $permission = 'inactive';
+        if (str_contains($id, 'stokedit')) {
+            $permission = substr_replace($id, '', 0, 8);
+        }
+        $acceptedUrl = ['dashboard', 'stok', 'riwayat', 'stoksearch', 'riwayatfilter'];
+        if (in_array($id, $acceptedUrl)) {
+            $permission = 'active';
+        }
+        return response()->json($permission);
+    }
     public function index()
     {
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
@@ -65,11 +84,20 @@ class barangController extends Controller
         $barang->stok += abs($inputanstok);
         $barang->save();
 
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', 'Stok Barang '. $barang->nama_barang .' Berhasil Ditambahkan Sebanyak '. $inputanstok .' oleh user '.Auth::user()->name);
-        $pusher->trigger('report-channel', 'my-event', 'Ada perubahan traffic transaksi barang');
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('my-channel', 'my-event', [
+            'massage' => 'Stok Barang ' . $barang->nama_barang . ' Berhasil Ditambahkan Sebanyak ' . $inputanstok . ' oleh user ' . Auth::user()->name,
+            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+            'id' => $barang->id_barang,
+            'excepturl' => ''
+        ]);
 
-        return redirect('/stok')->with('success','Stok Berhasil Ditambahkan');
+        return redirect('/stok')->with('success', 'Stok Berhasil Ditambahkan');
+    }
+    public function apiSeeder(Request $request)
+    {
+        $this->needPush = false;
+        return $this->addSave($request);
     }
     public function addSave(Request $request)
     {
@@ -159,10 +187,15 @@ class barangController extends Controller
         $riwayat->tanggal = now();
         $riwayat->id_barang = $barang->id;
         $riwayat->save();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', 'Barang '. $barang->nama_barang .' Berhasil Ditambahkan oleh user '.Auth::user()->name);
-        $pusher->trigger('report-channel', 'my-event', 'Ada perubahan traffic stok');
-
+        if ($this->needPush) {
+            $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+            $pusher->trigger('my-channel', 'my-event', [
+                'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Ditambahkan oleh user ' . Auth::user()->name,
+                'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+                'id' => $barang->id_barang,
+                'excepturl' => ''
+            ]);
+        }
         return redirect('/stok')->with('success', 'Data Berhasil Ditambahkan');
     }
 
@@ -181,7 +214,14 @@ class barangController extends Controller
         Storage::disk('s3')->delete('images/' . $barang->fileName2);
         $barang->pathImg2 = '';
         $barang->save();
-        return redirect('/stok/edit/' . $id)->with('success','Gambar Berhasil Dihapus');
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('my-channel', 'my-event', [
+            'massage' => 'Gambar 2 Barang ' . $barang->nama_barang . ' Berhasil Dihapus oleh user ' . Auth::user()->name,
+            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+            'id' => $barang->id_barang,
+            'excepturl' => 'dashboard,riwayat,riwayatfilter,stok,stoksearch'
+        ]);
+        return redirect('/stok/edit/' . $id)->with('success', 'Gambar Berhasil Dihapus');
     }
     function timpaGambar1($id)
     {
@@ -233,7 +273,7 @@ class barangController extends Controller
             return redirect('/stok/edit/' . $id)->with('error', $validator->errors()->first());
         }
         $barang = StokBarang::where('id_barang', $id)->first();
-        $oldName= $barang->nama_barang;
+        $oldName = $barang->nama_barang;
         $path1 = $barang->pathImg1;
         $path2 = $barang->pathImg2;
         $filename1 = $barang->fileName1;
@@ -267,8 +307,17 @@ class barangController extends Controller
         $barang->fileName2 = $filename2;
         $barang->save();
 
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', 'Barang '.$oldName .' Berhasil Diubah oleh user '.Auth::user()->name);
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger(
+            'my-channel',
+            'my-event',
+            [
+                'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Diubah oleh user ' . Auth::user()->name,
+                'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+                'id' => $barang->id_barang,
+                'excepturl' => 'dashboard,riwayat,riwayatfilter'
+            ]
+        );
 
         return redirect('/stok/edit/' . $id)->with('success', 'Data Berhasil Diubah');
     }
@@ -282,9 +331,13 @@ class barangController extends Controller
         }
         Storage::disk('s3')->delete('images/' . $barang->fileName1);
         StokBarang::destroy($id);
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'),config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', 'Barang '.$barang->nama_barang .' Berhasil Dihapus oleh user '.Auth::user()->name);
-        $pusher->trigger('report-channel', 'my-event', 'Ada perubahan traffic stok');
+        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+        $pusher->trigger('my-channel', 'my-event', [
+            'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Dihapus oleh user ' . Auth::user()->name,
+            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+            'id' => $barang->id_barang,
+            'excepturl' => 'dashboard,riwayat,riwayatfilter'
+        ]);
         return redirect('/stok')->with('success', 'Data Berhasil Dihapus');
     }
 }

@@ -1,4 +1,6 @@
-<?php $parrent=$parrent??''; ?>
+<?php $parrent=$parrent??''; 
+echo "<script>console.log(".$parent.")</script>"
+?>
 @if($message)
     <x-modalCustom name="confirm-user-deletion" :show="true" focusable id="modal-yakin" :parrent="$parrent">
         <div class="space-y-6 p-6">

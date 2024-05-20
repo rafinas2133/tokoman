@@ -1,5 +1,5 @@
 <?php $parrent=$parrent??''; 
-echo "<script>console.log(".$parent.")</script>"
+echo "<script>console.log('".$parrent."')</script>"
 ?>
 @if($message)
     <x-modalCustom name="confirm-user-deletion" :show="true" focusable id="modal-yakin" :parrent="$parrent">

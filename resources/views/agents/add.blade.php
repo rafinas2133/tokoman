@@ -1,3 +1,3 @@
 <x-mainApp-layout>
-    @include('layouts.AddAgents')
+    @include('layouts.addAgents')
 </x-mainApp-layout>

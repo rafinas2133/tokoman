@@ -1,6 +1,6 @@
 <div class="container mx-auto px-4">
-    <h1 class="text-2xl text-white font-bold my-4">Add Agents</h1>
-    <form class="text-white" action="{{ route('agents.store') }}" method="POST">
+    <h1 class="text-2xl dark:text-white text-black font-bold my-4">Add Agents</h1>
+    <form class="dark:text-white text-black" action="{{ route('agents.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
             <label for="name" class="block">Name</label>
@@ -12,7 +12,7 @@
         </div>
         <div class="mb-4">
             <label for="images" class="block">Images</label>
-            <input class="text-black w-full" type="text" name="images" class="w-full px-4 py-2" required>
+            <input type="file" class="text-black bg-white w-full" accept=".jpg, .jpeg, .png" name="images" id="images" class="w-full px-4 py-2" required>
         </div>
         <div class="mb-4">
             <label for="noTelp" class="block">Telephone</label>

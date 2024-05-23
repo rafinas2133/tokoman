@@ -19,19 +19,22 @@ Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('tes
 
 Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])->group(function () {
     //API Profit
-    Route::get("/api",[ProfitController::class,"apiFetch"])->name("ApiFetch");
+    Route::get("/api", [ProfitController::class, "apiFetch"])->name("ApiFetch");
     //Agents Mitra
     Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
     Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');
 
-    Route::get('/agents', [agentsController::class, 'index'])->name('agents');
-    Route::get('/agents/add', [agentsController::class, 'add'])->name('agents.add');
-    Route::post('/agents', [AgentsController::class, 'store'])->name('agents.store');
-    Route::get('/agents/{agents}', [AgentsController::class, 'show'])->name('agents.show');
-    Route::get('/agents/{agents}/edit', [AgentsController::class, 'edit'])->name('agents.edit');
-    Route::put('/agents/{agents}', [AgentsController::class, 'update'])->name('agents.update');
-    Route::delete('/agents/{agents}', [AgentsController::class, 'destroy'])->name('agents.destroy');
-
+    Route::prefix('agents')->group(function () {
+        Route::name('agents.')->group(function () {
+            Route::get('/', [agentsController::class, 'index']);
+            Route::get('/add', [agentsController::class, 'add'])->name('add');
+            Route::post('/', [AgentsController::class, 'store'])->name('store');
+            Route::get('/{agents}', [AgentsController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [AgentsController::class, 'edit'])->name('edit');
+            Route::put('/{agents}', [AgentsController::class, 'update'])->name('update');
+            Route::delete('/{agents}', [AgentsController::class, 'destroy'])->name('destroy');
+        });
+    });
     Route::get('/mitra', [mitraController::class, 'index'])->name('mitra');
 
     Route::post('/export-profit', [dashboardController::class, 'exportPDF'])->name('exportProfit');
@@ -52,14 +55,15 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 
     // Manipulasi Stok
     Route::prefix('stok')->group(function () {
-        Route::get('/', [barangController::class, 'adminIndex'])->name('stokIndex');
-        Route::get('/search', [SearchStok::class, 'index'])->name('searchStokadmin');
-        Route::get('/add', [barangController::class, 'add'])->name('tambahBarang');
-        Route::post('/addsave', [barangController::class, 'addsave'])->name('stokSave');
-        Route::get('/edit/{id}', [barangController::class, 'edit'])->name('editStok');
-        Route::put('/editsave/{id}', [barangController::class, 'editsave'])->name('editSave');
-        Route::delete('/delete/{id}', [barangController::class, 'delete'])->name('deleteStok');
-
+        Route::name('stok.')->group(function () {
+            Route::get('/', [barangController::class, 'adminIndex'])->name('index');
+            Route::get('/search', [SearchStok::class, 'index'])->name('search');
+            Route::get('/add', [barangController::class, 'add'])->name('tambah');
+            Route::post('/addsave', [barangController::class, 'addsave'])->name('save');
+            Route::get('/edit/{id}', [barangController::class, 'edit'])->name('edit');
+            Route::put('/editsave/{id}', [barangController::class, 'editsave'])->name('editSave');
+            Route::delete('/delete/{id}', [barangController::class, 'delete'])->name('delete');
+        });
         Route::get('/addsave', function () {
             return redirect()->route('stokBarang');
         });
@@ -69,6 +73,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
         Route::get('/delete/{id}', function () {
             return redirect()->route('stokBarang');
         });
+
     });
 
     Route::put('/tambahstok/{id}', [barangController::class, 'tambahStok'])->name('tambahStok');
@@ -84,13 +89,14 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 
     // Khusus Admin
     Route::prefix('admin')->middleware(['admin'])->group(function () {
-        Route::get('/', [pegawaiController::class, 'index'])->name('Manajemen.Admin');
-        Route::get('/add', [pegawaiController::class, 'add'])->name('Tambah.Pegawai');
-        Route::post('/addsave', [pegawaiController::class, 'addSave'])->name('Tambahkan.Pegawai');
-        Route::get('/edit/{id}', [pegawaiController::class, 'edit'])->name('Edit.Pegawai');
-        Route::put('/editsave/{id}', [pegawaiController::class, 'editsave'])->name('Editkan.Pegawai');
-        Route::delete('/delete/{id}', [pegawaiController::class, 'delete'])->name('Hapus.Pegawai');
-
+        Route::name('admin.')->group(function () {
+            Route::get('/', [pegawaiController::class, 'index'])->name('index');
+            Route::get('/add', [pegawaiController::class, 'add'])->name('add');
+            Route::post('/addsave', [pegawaiController::class, 'addSave'])->name('addSave');
+            Route::get('/edit/{id}', [pegawaiController::class, 'edit'])->name('edit');
+            Route::put('/editsave/{id}', [pegawaiController::class, 'editsave'])->name('editSave');
+            Route::delete('/delete/{id}', [pegawaiController::class, 'delete'])->name('delete');
+        });
         Route::get('/editsave/{id}', function () {
             return redirect()->route('Manajemen.Admin');
         });

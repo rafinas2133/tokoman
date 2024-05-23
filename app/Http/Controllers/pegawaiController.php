@@ -160,12 +160,10 @@ class pegawaiController extends Controller
         if ($userDelete->id == null) {
             return redirect('/admin')->with('error', 'Data Tidak Ditemukan');
         }
-
-        User::where('id', $id)->delete();
-        ;
         if ($userDelete->name == $authUser->name) {
-            return redirect('/');
+            return redirect('/admin')->with('error', 'Hapus Akunmu Lewat Mekanisme Profil');
         }
+        User::where('id', $id)->delete();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $pusher->trigger('admin-channel', 'my-event', [
             'massage' => 'User ' . $userDelete->name . ' Berhasil Dihapus oleh Admin ' . Auth::user()->name,

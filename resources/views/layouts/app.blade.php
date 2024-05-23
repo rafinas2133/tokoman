@@ -45,6 +45,7 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/TokomanScript.js"></script>
 <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/modalPusher.js"></script>
@@ -62,6 +63,7 @@
         .then(response => response.json())
         .then(data => {
             var userReceives=data;
+
             console.log(userReceives.replace(' ',''))
             var channelLogout = pusher.subscribe(userReceives.replace(' ',''));
             channelLogout.bind('my-event', function (data) {

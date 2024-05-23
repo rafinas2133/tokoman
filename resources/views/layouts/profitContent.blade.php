@@ -1,7 +1,7 @@
 <div class="flex flex-col">
     <div class="container text-white flex flex-col justify-center items-center">
         <h1 class="text-3x text-center my-8 font-bold">Hitung Profit</h1>
-        <form id="profitForm" action="{{ route('profit.index') }}" method="GET" class="">
+        <form id="profitForm" action="{{ route('ApiFetch') }}" method="GET" class="">
             <div class="flex flex-col md:flex-row">
                 <div>
                     <label for="period">Select Period:</label>
@@ -23,7 +23,7 @@
         </form>
     </div>
     <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
-        <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
+        <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full" id="parrentchart">
             <canvas id="profitChart"></canvas>
         </div>
     </div>
@@ -33,10 +33,11 @@
 </div>
 
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Fungsi untuk membuat grafik profit
+        console.log()
         function createChart(fromDate, toDate, profit) {
             console.log(fromDate, toDate, profit);
             var ctx = document.getElementById('profitChart').getContext('2d');
@@ -83,7 +84,6 @@
             // Kirim formulir secara asynchronous
             var formData = new FormData(form);
             var url = form.getAttribute('action');
-
             // Jika metode formulir adalah GET, hilangkan body dari permintaan fetch
             var method = form.getAttribute('method').toUpperCase();
             if (method === 'GET') {
@@ -92,25 +92,29 @@
             }
 
             fetch(url, {
-                method: method, // Gunakan metode formulir yang ditentukan
+                method: method, // Use the specified form method
                 body: formData
             })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
-                    // Perbarui bagian halaman yang diperlukan dengan data yang diperoleh dari server
-                    var parser = new DOMParser();
-                    var newDocument = parser.parseFromString(data, 'text/html');
-                    var newChart = newDocument.getElementById('profitChart');
-                    var oldChart = document.getElementById('profitChart');
+                    console.log(data);
+                    // Assuming 'data' contains the necessary profit, fromDate, and toDate directly
 
-                    oldChart.parentNode.replaceChild(newChart, oldChart);
+                    // Update the profit text directly without needing to parse HTML
+                    var profitTextElement = document.getElementById('profitText');
+                    profitTextElement.innerText = 'Profit from ' + data.from + ' to ' + data.to + ': $' + data.profit;
+                    // Remove the existing canvas
+                    document.getElementById("profitChart").remove();
 
-                    // Ambil nilai dari input tanggal dan profit, lalu panggil kembali fungsi createChart
-                    var fromDate = document.getElementById('from_date').value;
-                    var toDate = document.getElementById('to_date').value;
-                    var profitTextElement = newDocument.getElementById('profitText');
-                    var profit = parseFloat(profitTextElement.innerText.replace('Profit from ' + fromDate + ' to ' + toDate + ': $', '')); // Ambil nilai profit dari teks yang diperoleh dari server
-                    createChart(fromDate, toDate, profit);
+                    // Create a new canvas element
+                    var newCanvas = document.createElement('canvas');
+                    newCanvas.id = "profitChart";
+
+                    // Append the new canvas to the parent container
+                    document.getElementById("parrentchart").appendChild(newCanvas);
+
+                    // Now you can recreate the chart on the new canvas
+                    createChart(data.from, data.to, data.profit);
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -118,14 +122,4 @@
         });
     });
 
-</script>
-
-<script>
-    document.addEventListener("turbo:submit-end", function (event) {
-        var newContent = event.detail.fetchOptions.response;
-        var newChartContainer = newContent.querySelector("#profitChartContainer");
-
-        var oldChartContainer = document.getElementById("profitChartContainer");
-        oldChartContainer.parentNode.replaceChild(newChartContainer, oldChartContainer);
-    });
 </script>

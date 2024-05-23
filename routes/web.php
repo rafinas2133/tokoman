@@ -13,11 +13,13 @@ use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
 use Illuminate\Support\Facades\Route;
 
-// Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');
+Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');
 // Route untuk user terAuth()
 
 
 Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])->group(function () {
+    //API Profit
+    Route::get("/api",[ProfitController::class,"apiFetch"])->name("ApiFetch");
     //Agents Mitra
     Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
     Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');

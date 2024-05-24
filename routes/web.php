@@ -35,7 +35,18 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
             Route::delete('/{agents}', [AgentsController::class, 'destroy'])->name('destroy');
         });
     });
-    Route::get('/mitra', [mitraController::class, 'index'])->name('mitra');
+
+    Route::prefix('mitra')->group(function () {
+        Route::name('mitra.')->group(function () {
+            Route::get('/', [mitraController::class, 'index']);
+            Route::get('/add', [mitraController::class, 'add'])->name('add');
+            Route::post('/', [mitraController::class, 'store'])->name('store');
+            Route::get('/{mitra}', [mitraController::class, 'show'])->name('show');
+            Route::get('/{id}/edit', [mitraController::class, 'edit'])->name('edit');
+            Route::put('/{mitra}', [mitraController::class, 'update'])->name('update');
+            Route::delete('/{mitra}', [mitraController::class, 'destroy'])->name('destroy');
+        });
+    });
 
     Route::post('/export-profit', [dashboardController::class, 'exportPDF'])->name('exportProfit');
     Route::post('/export-pdf', [riwayatController::class, 'exportPDF'])->name('exportPDF');

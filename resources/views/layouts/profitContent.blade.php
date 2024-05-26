@@ -2,7 +2,7 @@
     <div class="container text-white flex flex-col justify-center items-center">
         <h1 class="text-3x text-center my-8 font-bold">Hitung Profit</h1>
         <form id="profitForm" action="{{ route('ApiFetch') }}" method="GET" class="">
-            <div class="flex flex-col md:flex-row">
+            <div class="flex flex-col md:flex-row gap-4">
                 <div>
                     <label for="period">Select Period:</label>
                     <select class="text-black" name="period" id="period">

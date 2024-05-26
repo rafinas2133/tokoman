@@ -61,16 +61,16 @@ class mitraController extends Controller
         //begin pusher
         $generatePusher = new pegawaiController();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
+        $pusher->trigger('mitra-channel', 'my-event', [
             'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menambahkan agent ' . $mitra->name,
+                ' berhasil menambahkan mitra ' . $mitra->name,
             'user' => $generatePusher->generateDataPusher(Auth::user()),
             'id' => $mitra->id,
         ]);
 
         $mitra->save();
 
-        return redirect('/mitra')->with('success', 'mitra saved!');
+        return redirect('/mitra')->with('success', 'Mitra '.$mitra->name.' Berhasil Ditambahkan!');
     }
 
     public function show(Mitra $mitra)
@@ -82,7 +82,7 @@ class mitraController extends Controller
     {
         $mitra = Mitra::where('id', $id)->first();
         if (!$mitra)
-            return redirect()->route('mitra.')->with('error', 'Agent not found');
+            return redirect()->route('mitra.')->with('error', 'Mitra Tidak Ditemukan');
         return view('mitra.edit', compact('mitra'));
     }
 
@@ -129,28 +129,29 @@ class mitraController extends Controller
         //begin pusher
         $generatePusher = new pegawaiController();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
+        $pusher->trigger('mitra-channel', 'my-event', [
             'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil mengubah agent ' . $oldNama,
+                ' berhasil mengubah mitra ' . $oldNama,
             'user' => $generatePusher->generateDataPusher(Auth::user()),
             'id' => $mitra->id,
         ]);
 
-        return redirect('/mitra')->with('success', 'mitra updated!');
+        return redirect()->back()->with('success', 'Mitra '.$oldNama.' Terupdate!');
     }
 
     public function destroy(Mitra $mitra)
     {
+        Storage::disk('s3')->delete('mitra/'.$mitra->images);
         $mitra->delete();
         $generatePusher = new pegawaiController();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
+        $pusher->trigger('mitra-channel', 'my-event', [
             'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menghapus agent ' . $mitra->name,
+                ' berhasil menghapus mitra ' . $mitra->name,
             'user' => $generatePusher->generateDataPusher(Auth::user()),
             'id' => $mitra->id,
         ]);
-        return redirect('/mitra')->with('success', 'mitra deleted!');
+        return redirect('/mitra')->with('success', 'Mitra '.$mitra->name.' Terhapus!');
     }
 }
 

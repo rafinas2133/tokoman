@@ -20,7 +20,7 @@
 <div
     class=" dark:text-white text-black h-full border-r border-t dark:border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300 this">
     @if (Auth::user()->email_verified_at != null)
-        <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">Manajemen</div>
+        <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">MANAJEMEN</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="{{ route('stok.index') }}"
@@ -74,7 +74,7 @@
             </li>
             <li>
                 <a href="/mitra"
-                    class="{{ request()->routeIs('mitra') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
+                    class="{{ request()->routeIs('mitra.*') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>👥</span>
                     <span>Mitra</span>
                 </a>

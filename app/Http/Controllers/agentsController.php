@@ -70,7 +70,7 @@ class agentsController extends Controller
 
         $agents->save();
 
-        return redirect('/agents')->with('success', 'agents saved!');
+        return redirect('/agents')->with('success', 'Agent '.$agents->name.' Berhasil Ditambahkan!');
     }
 
     public function show(Agents $agents)
@@ -82,7 +82,7 @@ class agentsController extends Controller
     {
         $agents=Agents::where('id',$id)->first();
         if(!$agents)
-        return redirect()->route('agents.')->with('error','Agent not found');
+        return redirect()->route('agents.')->with('error','Agent Tidak Ditemukan');
         return view('agents.edit', compact('agents'));
     }
 
@@ -136,11 +136,12 @@ class agentsController extends Controller
             'id' => $agents->id,
         ]);
 
-        return redirect()->back()->with('success', 'agents updated!');
+        return redirect()->back()->with('success', 'Agent '.$oldNama.' Terupdate!');
     }
 
     public function destroy(Agents $agents)
     {
+        Storage::disk('s3')->delete('agents/'.$agents->images);
         $agents->delete();
         $generatePusher = new pegawaiController();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
@@ -150,7 +151,7 @@ class agentsController extends Controller
             'user' => $generatePusher->generateDataPusher(Auth::user()),
             'id' => $agents->id,
         ]);
-        return redirect('/agents')->with('success', 'agents deleted!');
+        return redirect('/agents')->with('success', 'Agent '.$agents->name.' Terhapus!');
     }
 }
 

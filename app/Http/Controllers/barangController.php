@@ -44,7 +44,7 @@ class barangController extends Controller
     }
     public function reqWa($name)
     {
-        $phone = kontak::where('name', 'ZidanElek')->first();
+        $phone = kontak::where('name', 'admin')->first();
         return redirect("https://wa.me/$phone->noHp?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
     }
     public function adminIndex()
@@ -213,6 +213,7 @@ class barangController extends Controller
         $barang = StokBarang::where('id_barang', $id)->first();
         Storage::disk('s3')->delete('images/' . $barang->fileName2);
         $barang->pathImg2 = '';
+        $barang->fileName2 = '';
         $barang->save();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $pusher->trigger('my-channel', 'my-event', [
@@ -223,18 +224,16 @@ class barangController extends Controller
         ]);
         return redirect('/stok/edit/' . $id)->with('success', 'Gambar Berhasil Dihapus');
     }
-    function timpaGambar1($id)
+    function timpaGambar1($barang)
     {
-        $barang = StokBarang::where('id_barang', $id)->first();
         $pathImg1 = $barang->pathImg1;
         if ($pathImg1 != '') {
             Storage::disk('s3')->delete('images/' . $barang->fileName1);
         }
 
     }
-    function timpaGambar2($id)
+    function timpaGambar2($barang)
     {
-        $barang = StokBarang::where('id_barang', $id)->first();
         $pathImg2 = $barang->pathImg2;
         if ($pathImg2 != '') {
             Storage::disk('s3')->delete('images/' . $barang->fileName2);
@@ -279,14 +278,14 @@ class barangController extends Controller
         $filename1 = $barang->fileName1;
         $filename2 = $barang->fileName2;
         if ($request->file('gambar1') != null) {
-            $this->timpaGambar1($id);
+            $this->timpaGambar1($barang);
             $file = $request->file('gambar1');
             $filename1 = '-' . time() . '.' . $file->getClientOriginalExtension();
             Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file));
             $path1 = $this->getUrlImg($filename1);
         }
         if ($request->file('gambar2') != null) {
-            $this->timpaGambar2($id);
+            $this->timpaGambar2($barang);
             $file = $request->file('gambar2');
             $filename2 = '-' . time() . '.' . $file->getClientOriginalExtension();
             Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file));

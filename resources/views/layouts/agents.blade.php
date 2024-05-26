@@ -1,7 +1,16 @@
+@foreach ($agents as $agent)
+    <div class="kumpulanModal">
+        @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus Agent ' . $agent->name, 'form' => 'deleteForm' . $agent->id, 'theVal' => $agent->id])
+    </div>
+@endforeach
+
 <div class="container mx-auto px-4 dark:text-white text-black">
     <h1 class="text-3xl text-center font-bold my-4">Agents</h1>
     <a href="{{ route('agents.add') }}"
         class="bg-blue-500 px-4 py-2 rounded hover:bg-gray-700 hover:rounded-md hover:shadow">Add agents</a>
+    @if($agents->isEmpty())
+        <p class="text-center">Belum ada data</p>
+    @endif
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-4">
         @foreach ($agents as $agent)
             <div class="dark:bg-gray-500 bg-white p-4 rounded shadow relative">
@@ -19,11 +28,12 @@
                         class="absolute right-0 mr-3 mt-2 top-12 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg p-1 z-20">
                         <a href="{{ route('agents.edit', $agent->id) }}"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Edit</a>
-                        <form action="{{ route('agents.destroy', $agent->id) }}" method="POST">
+                        <button type="click" onclick="validasiForm{{$agent->id}}()"
+                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Delete</button>
+                        <form id="deleteForm{{$agent->id}}" action="{{ route('agents.destroy', $agent->id) }}"
+                            method="POST">
                             @csrf
                             @method('delete')
-                            <button type="submit"
-                                class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Delete</button>
                         </form>
                     </div>
                 </div>

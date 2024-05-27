@@ -43,15 +43,16 @@ class riwayatController extends Controller
             ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"), 'jenis_riwayat', 'id_barang', 'nama_barang')
             ->orderBy('tanggal', 'asc')
             ->get();
-        $dataOut = Laporan::select(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat') as tanggal"), 'id_barang', \DB::raw('SUM(jumlah_barang) as total'), 'nama_barang')
-            ->groupBy(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat')"), 'id_barang', 'nama_barang')
+        $dataOut = Riwayat::select(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat') as tanggal"), 'id_barang', 'jenis_riwayat', \DB::raw('SUM(jumlah) as total'), 'nama_barang')
+            ->where('jenis_riwayat', 'keluar') // Filter hanya untuk jenis riwayat 'keluar'
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"), 'jenis_riwayat', 'id_barang', 'nama_barang')
             ->orderBy('tanggal', 'asc')
             ->get();
         $pdf = PDF::loadView('pdf.view', compact('dataIn', 'dataOut'));
         return $pdf->download('riwayatTraficTokoman-' . now() . '.pdf');
     }
-    
-    public function tampilkan()
+
+    public function index()
     {
         $years = Riwayat::selectRaw('YEAR(tanggal) as year')
             ->groupBy('year')

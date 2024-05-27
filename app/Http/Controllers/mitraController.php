@@ -136,7 +136,7 @@ class mitraController extends Controller
             'id' => $mitra->id,
         ]);
 
-        return redirect()->back()->with('success', 'Mitra '.$oldNama.' Terupdate!');
+        return redirect()->route('mitra.index')->with('success', 'Mitra '.$oldNama.' Terupdate!');
     }
 
     public function destroy(Mitra $mitra)

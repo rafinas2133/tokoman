@@ -11,6 +11,8 @@ use App\Models\Riwayat;
 use Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Mail;
 use Storage;
@@ -21,11 +23,19 @@ class dashboardController extends Controller
 
     public function exportPDF(Request $request)
     {
+        $modifiedRequest = clone $request;
+
+        // Set default values if not present
+        $modifiedRequest->request->add([
+            'period' => 'thisMonth'
+        ]);
         $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
-            $request->input('period', 'day'),
-            $request->input('from_date', Carbon::now()->subWeek()->toDateString()),
-            $request->input('to_date', Carbon::now()->toDateString())
+            $modifiedRequest
         );
+        $totalprofit = 0;
+        foreach ($profitData as $profit) {
+            $totalprofit += $profit->profit;
+        }
         $imageData = $request->profit_image;
         // Menghapus bagian awal dari string base64 yang tidak diperlukan untuk konversi
         $imageData = str_replace('data:image/png;base64,', '', $imageData);
@@ -34,7 +44,7 @@ class dashboardController extends Controller
 
         // Menyimpan gambar ke dalam storage
         Storage::disk('s3')->put('profit.png', $decodedImageData);
-        $pdf = PDF::loadView('pdf.profit', $profitData);
+        $pdf = PDF::loadView('pdf.profit',compact('totalprofit'));
         return $pdf->download('ProfitTraficTokoman-' . now() . '.pdf');
     }
     public function index(Request $request)
@@ -46,21 +56,19 @@ class dashboardController extends Controller
             Mail::to($user->email)->send(new LoginNotification($user, $sessionData));
 
         }
-        $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
-            $request->input('period', 'day'),
-            $request->input('from_date', Carbon::now()->subWeek()->toDateString()),
-            $request->input('to_date', Carbon::now()->toDateString())
-        );
-        $profitDataRecent = app('App\Http\Controllers\ProfitController')->getProfitData(
-            $request->input('period', 'day'),
-            $request->input('from_date', Carbon::now()->subWeek()->subWeek()->toDateString()),
-            $request->input('to_date', Carbon::now()->subWeek()->toDateString())
-        );
-        $percentageProfit = 0;
-        if ($profitDataRecent['profit'] != 0) {    // Pastikan pembagi tidak nol
-            $percentageProfit = (abs($profitData['profit'] - abs($profitDataRecent['profit'])) / abs($profitDataRecent['profit'])) * 100;
-        }
+        $modifiedRequest = clone $request;
 
+        // Set default values if not present
+        $modifiedRequest->request->add([
+            'period' => 'thisMonth'
+        ]);
+        $profitData = app('App\Http\Controllers\ProfitController')->getProfitData(
+            $modifiedRequest
+        );
+        $totalProfit = 0;
+        foreach ($profitData as $profit) {
+            $totalProfit += $profit->profit;
+        }
         if (isset($request)) {
             $period = $request->input('timeFilter'); // Default to monthly if not specified
         }
@@ -88,13 +96,14 @@ class dashboardController extends Controller
             ->where('jenis_riwayat', 'masuk')
             ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"));
 
-        $dataKeluar = \DB::table('laporan')
+        $dataKeluar = \DB::table('riwayat')
             ->select(
-                \DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat') as tanggal"),
+                \DB::raw("DATE_FORMAT(tanggal, '$dateFormat') as tanggal"),
                 \DB::raw('0 as totalMasuk'),  // Kolom dummy untuk totalMasuk
-                \DB::raw('SUM(jumlah_barang) as totalKeluar')
+                \DB::raw('SUM(jumlah) as totalKeluar')
             )
-            ->groupBy(\DB::raw("DATE_FORMAT(tanggal_laporan, '$dateFormat')"));
+            ->where('jenis_riwayat', 'keluar')
+            ->groupBy(\DB::raw("DATE_FORMAT(tanggal, '$dateFormat')"));
 
         $combinedData = \DB::query()
             ->select('tanggal', \DB::raw('SUM(totalMasuk) as totalMasuk'), \DB::raw('SUM(totalKeluar) as totalKeluar'))
@@ -143,8 +152,10 @@ class dashboardController extends Controller
 
         return view(
             "dashboard",
-            $profitData,
+
             [
+                'profit' => $totalProfit,
+                'profitData' => json_encode($profitData),
                 'riwayatTerbaru' => $riwayatTerbaru,
                 'totalToday' => $totalToday,
                 'differencePercentage' => number_format($differencePercentage, 2, '.', ','),
@@ -153,7 +164,6 @@ class dashboardController extends Controller
                 'barangPenjualan' => $barangPenjualan,
                 'combinedData' => $combinedData,
                 'choosenPeriod' => $period,
-                'precentageProfit' => $percentageProfit,
             ]
         );
     }

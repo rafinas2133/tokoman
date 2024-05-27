@@ -37,18 +37,6 @@ class barangController extends Controller
     }
     public function index()
     {
-        $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
-        $barang = StokBarang::paginate(6);
-
-        return view("welcome", ["barangs" => $barang], compact('types'));
-    }
-    public function reqWa($name)
-    {
-        $phone = kontak::where('name', 'admin')->first();
-        return redirect("https://wa.me/$phone->noHp?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
-    }
-    public function adminIndex()
-    {
         $barang = StokBarang::paginate(9);
         return view("stok.index", ["barangs" => $barang]);
 
@@ -318,7 +306,7 @@ class barangController extends Controller
             ]
         );
 
-        return redirect('/stok/edit/' . $id)->with('success', 'Data Berhasil Diubah');
+        return redirect('/stok')->with('success', 'Data Berhasil Diubah');
     }
 
     public function delete($id)

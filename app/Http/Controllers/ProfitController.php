@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Modal;
 use App\Models\Laporan;
@@ -18,9 +19,7 @@ class ProfitController extends Controller
 
         // Set default values if not present
         $modifiedRequest->request->add([
-            'period' => $req->input('period', 'day'),
-            'from_date' => $req->input('from_date', Carbon::now()->subWeek()->toDateString()),
-            'to_date' => $req->input('to_date', Carbon::now()->toDateString()),
+            'period' => $req->input('period'),
         ]);
 
         $this->api = "api";
@@ -28,76 +27,132 @@ class ProfitController extends Controller
     }
     public function index(Request $request)
     {
+        $period = $request->input('period', 'thisMonth');
 
-        $period = $request->input('period', 'day');
-        $fromDate = $request->input('from_date', Carbon::now()->subWeek()->toDateString());
-        $toDate = $request->input('to_date', Carbon::now()->toDateString());
-
+        $results = $this->filterProfitData();
         switch ($period) {
-            case 'week':
-                $fromDate = Carbon::parse($fromDate)->startOfWeek();
-                $toDate = Carbon::parse($toDate)->endOfWeek();
+            case 'yearly':
+                $finalresults = $results['yearly'];
                 break;
-            case 'year':
-                $fromDate = Carbon::parse($fromDate)->startOfYear();
-                $toDate = Carbon::parse($toDate)->endOfYear();
+            case 'thisMonth':
+                $finalresults = $results['weekly'];
+                break;
+            case 'thisYear':
+                $finalresults = $results['monthly'];
                 break;
             default:
+                $finalresults = null;
                 break;
         }
 
-        // Hitung total modal dari tanggal yang dipilih
-        $totalModal = Modal::whereBetween('Tanggal', [$fromDate, $toDate])->sum('Total_modal');
+        // Convert the results to JSON
+        $finalresultsJson = json_encode($finalresults);
 
-        // Hitung total penjualan dari tanggal yang dipilih
-        $totalPenjualan = Laporan::whereBetween('tanggal_laporan', [$fromDate, $toDate])->sum('total');
-
-        // Hitung profit
-        $profit = $totalPenjualan - $totalModal;
-
-        if ($this->api == 'api')
+        if ($this->api == 'api') {
             return response()->json([
-                'profit' => $profit,
-                'from' => $request->from_date,
-                'to' => $request->to_date,
+                'finalresults' => $finalresults
             ]);
-
-        return view("hitungProfit", compact('period', 'fromDate', 'toDate', 'profit'));
-    }
-
-    public function getProfitData($period, $fromDate, $toDate)
-    {
-        switch ($period) {
-            case 'week':
-                $fromDate = Carbon::parse($fromDate)->startOfWeek();
-                $toDate = Carbon::parse($toDate)->endOfWeek();
-                break;
-            case 'year':
-                $fromDate = Carbon::parse($fromDate)->startOfYear();
-                $toDate = Carbon::parse($toDate)->endOfYear();
-                break;
-            default:
-                // Default to day
-                break;
         }
-
-        // Hitung total modal dari tanggal yang dipilih
-        $totalModal = Modal::whereBetween('Tanggal', [$fromDate, $toDate])->sum('Total_modal');
-
-        // Hitung total penjualan dari tanggal yang dipilih
-        $totalPenjualan = Laporan::whereBetween('tanggal_laporan', [$fromDate, $toDate])->sum('total');
-
-        // Hitung profit
-        $profit = $totalPenjualan - $totalModal;
-
-        return [
-            'period' => $period,
-            'fromDate' => $fromDate,
-            'toDate' => $toDate,
-            'profit' => $profit,
-        ];
+        if ($this->api == 'controller') {
+            return $finalresults;
+        }
+        return view("hitungProfit", ['finalresults' => $finalresultsJson]);
     }
 
 
+    public function filterProfitData()
+    {
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
 
+        // Query untuk Modal
+        $weeklyModalQuery = DB::table('Modal')
+            ->select(DB::raw("DATE_FORMAT(Tanggal, '%Y-%u') as periode"), DB::raw("SUM(Total_modal) as total_modal"))
+            ->whereYear('tanggal', $currentYear)
+            ->whereMonth('tanggal', $currentMonth)
+            ->groupBy('periode');
+
+        // Query untuk laporan
+        $weeklyLaporanQuery = DB::table('laporan')
+            ->select(DB::raw("DATE_FORMAT(tanggal_laporan, '%Y-%u') as periode"), DB::raw("SUM(total) as total_terjual"))
+            ->whereYear('tanggal_laporan', $currentYear)
+            ->whereMonth('tanggal_laporan', $currentMonth)
+            ->groupBy('periode');
+
+        // Menggabungkan hasil query
+        $weeklyResult = DB::table(DB::raw("({$weeklyModalQuery->toSql()}) as modal"))
+            ->mergeBindings($weeklyModalQuery)
+            ->leftJoin(DB::raw("({$weeklyLaporanQuery->toSql()}) as laporan"), 'modal.periode', '=', 'laporan.periode')
+            ->mergeBindings($weeklyLaporanQuery)
+            ->select(
+                'modal.periode',
+                DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
+            )
+            ->get();
+
+        // Query untuk Modal
+        $monthlyModalQuery = DB::table('Modal')
+            ->select(DB::raw("DATE_FORMAT(Tanggal, '%Y-%m') as periode"), DB::raw("SUM(Total_modal) as total_modal"))
+            ->whereYear('Tanggal', $currentYear)
+            ->groupBy('periode');
+
+        // Query untuk laporan
+        $monthlyLaporanQuery = DB::table('laporan')
+            ->select(DB::raw("DATE_FORMAT(tanggal_laporan, '%Y-%m') as periode"), DB::raw("SUM(total) as total_terjual"))
+            ->whereYear('tanggal_laporan', $currentYear)
+            ->groupBy('periode');
+
+        // Menggabungkan hasil query
+        $monthlyResult = DB::table(DB::raw("({$monthlyModalQuery->toSql()}) as Modal"))
+            ->mergeBindings($monthlyModalQuery)
+            ->leftJoin(DB::raw("({$monthlyLaporanQuery->toSql()}) as laporan"), 'Modal.periode', '=', 'laporan.periode')
+            ->mergeBindings($monthlyLaporanQuery)
+            ->select(
+                'Modal.periode as periode',
+                DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
+            )
+            ->get();
+
+        // Query untuk Modal
+        $yearlyModalQuery = DB::table('Modal')
+            ->select(DB::raw("YEAR(Tanggal) as periode"), DB::raw("SUM(Total_modal) as total_modal"))
+            ->groupBy('periode');
+
+        // Query untuk laporan
+        $yearlyLaporanQuery = DB::table('laporan')
+            ->select(DB::raw("YEAR(tanggal_laporan) as periode"), DB::raw("SUM(total) as total_terjual"))
+            ->groupBy('periode');
+
+        // Menggabungkan hasil query
+        $yearlyResult = DB::table(DB::raw("({$yearlyModalQuery->toSql()}) as Modal"))
+            ->mergeBindings($yearlyModalQuery)
+            ->leftJoin(DB::raw("({$yearlyLaporanQuery->toSql()}) as laporan"), 'Modal.periode', '=', 'laporan.periode')
+            ->mergeBindings($yearlyLaporanQuery)
+            ->select(
+                'Modal.periode as periode',
+                DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
+            )
+            ->get();
+        $results = [
+            'weekly' => $weeklyResult,
+            'monthly' => $monthlyResult,
+            'yearly' => $yearlyResult,
+        ];
+
+        // Menampilkan hasil
+        return $results;
+    }
+    public function getProfitData(Request $req)
+    {
+        // Clone the original request
+        $modifiedRequest = clone $req;
+
+        // Set default values if not present
+        $modifiedRequest->request->add([
+            'period' => $req->input('period'),
+        ]);
+
+        $this->api = "controller";
+        return $this->index($modifiedRequest);
+    }
 }

@@ -25,7 +25,7 @@
     <div class="chart">
         <img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/profit.png" alt="Chart" style="width: 100%; height: 40%;">
     </div>
-    <p>Profit minggu ini adalah Rp.{{$profit}}</p>
+    <p>Profit bulan ini adalah Rp.{{$totalprofit}}</p>
 </body>
 
 </html>

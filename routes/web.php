@@ -11,6 +11,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfitController;
 use App\Http\Controllers\riwayatController;
+use App\Http\Controllers\welcomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');
@@ -26,7 +27,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 
     Route::prefix('agents')->group(function () {
         Route::name('agents.')->group(function () {
-            Route::get('/', [agentsController::class, 'index']);
+            Route::get('/', [agentsController::class, 'index'])->name('index');
             Route::get('/add', [agentsController::class, 'add'])->name('add');
             Route::post('/', [AgentsController::class, 'store'])->name('store');
             Route::get('/{agents}', [AgentsController::class, 'show'])->name('show');
@@ -38,7 +39,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 
     Route::prefix('mitra')->group(function () {
         Route::name('mitra.')->group(function () {
-            Route::get('/', [mitraController::class, 'index']);
+            Route::get('/', [mitraController::class, 'index'])->name('index');
             Route::get('/add', [mitraController::class, 'add'])->name('add');
             Route::post('/', [mitraController::class, 'store'])->name('store');
             Route::get('/{mitra}', [mitraController::class, 'show'])->name('show');
@@ -53,7 +54,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 
     // Route Semua Role User
     Route::prefix('riwayat')->group(function () {
-        Route::get('/', [riwayatController::class, 'tampilkan'])->name('riwayat');
+        Route::get('/', [riwayatController::class, 'index'])->name('riwayat');
         Route::get('/filter', [riwayatController::class, 'filterResults'])->name('riwayatFilter');
     });
 
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
     // Manipulasi Stok
     Route::prefix('stok')->group(function () {
         Route::name('stok.')->group(function () {
-            Route::get('/', [barangController::class, 'adminIndex'])->name('index');
+            Route::get('/', [barangController::class, 'index'])->name('index');
             Route::get('/search', [SearchStok::class, 'index'])->name('search');
             Route::get('/add', [barangController::class, 'add'])->name('tambah');
             Route::post('/addsave', [barangController::class, 'addsave'])->name('save');
@@ -101,13 +102,16 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
     // Khusus Admin
     Route::prefix('admin')->middleware(['admin'])->group(function () {
         Route::name('admin.')->group(function () {
-            Route::get('/', [pegawaiController::class, 'index'])->name('index');
-            Route::get('/add', [pegawaiController::class, 'add'])->name('add');
-            Route::post('/addsave', [pegawaiController::class, 'addSave'])->name('addSave');
-            Route::get('/edit/{id}', [pegawaiController::class, 'edit'])->name('edit');
-            Route::put('/editsave/{id}', [pegawaiController::class, 'editsave'])->name('editSave');
-            Route::delete('/delete/{id}', [pegawaiController::class, 'delete'])->name('delete');
+            Route::controller(pegawaiController::class)->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/add', 'add')->name('add');
+                Route::post('/addsave', 'addSave')->name('addSave');
+                Route::get('/edit/{id}', 'edit')->name('edit');
+                Route::put('/editsave/{id}', 'editsave')->name('editSave');
+                Route::delete('/delete/{id}',  'delete')->name('delete');
+            });
         });
+
         Route::get('/editsave/{id}', function () {
             return redirect()->route('Manajemen.Admin');
         });
@@ -121,8 +125,8 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback', 'verifyEdit'])
 });
 
 // Route Guest unAuth()
-Route::get('/', [barangController::class, 'index'])->middleware(['noback', 'verifyEdit'])->name('stokBarang');
-Route::get('/wa/{id}', [barangController::class, 'reqWa']);
+Route::get('/', [welcomeController::class, 'index'])->middleware(['noback', 'verifyEdit'])->name('stokBarang');
+Route::get('/wa/{id}', [welcomeController::class, 'reqWa']);
 Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth')->name('theAPI');
 // RouteSearch
 Route::get('/search', [SearchController::class, 'index'])->name('search')->middleware('verifyEdit');

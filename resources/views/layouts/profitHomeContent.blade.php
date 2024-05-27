@@ -43,9 +43,14 @@
                 });
 
             }
-
+            function fetchChart(data) {
+                var labels = data.map(item => item.periode);
+                var profits = data.map(item => item.profit);
+                createChart(labels, profits);
+            }
             // Panggil fungsi createChart saat halaman dimuat dengan data default
-            createChart(['{{ $fromDate }}', '{{ $toDate }}'], [0, {{ $profit }}]);
+            var initialData = {!! $profitData !!};  // Decode JSON to JavaScript object
+            fetchChart(initialData);
         });
     </script>
     <script>

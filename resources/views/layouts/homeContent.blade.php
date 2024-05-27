@@ -34,11 +34,8 @@
 
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
-            <div class="text-gray-600">TOTAL PENGHASILAN MINGGUAN</div>
-            <div class="text-xl font-semibold">Rp. {{$profit}}</div>
-            <div class="{{$precentageProfit >= 0 ? 'text-green-500' : 'text-red-500'}}">
-                {{$precentageProfit >= 0 ? '+' : ''}}{{$precentageProfit}}%
-            </div>
+            <div class="text-gray-600">TOTAL PENGHASILAN Bulanan</div>
+            <div class="text-xl font-semibold">Rp. {{$profit}}</div>    
         </div>
 
     </div>
@@ -107,6 +104,7 @@
         var ctx = canvas.getContext('2d');
         var canvas2 = document.getElementById('profitChart');
         var ctx2 = canvas2.getContext('2d');
+
         function fetchChartData() {
             var combinedData = @json($combinedData);
 

@@ -148,7 +148,7 @@ class pegawaiController extends Controller
             ]);
         }
 
-        return redirect('/admin/edit/' . $id)->with('success', 'Data berhasil diubah!');
+        return redirect('/admin')->with('success', 'Data berhasil diubah!');
     }
     public function delete($id)
     {

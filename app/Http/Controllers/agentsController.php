@@ -136,7 +136,7 @@ class agentsController extends Controller
             'id' => $agents->id,
         ]);
 
-        return redirect()->back()->with('success', 'Agent '.$oldNama.' Terupdate!');
+        return redirect()->route('agents.index')->with('success', 'Agent '.$oldNama.' Terupdate!');
     }
 
     public function destroy(Agents $agents)

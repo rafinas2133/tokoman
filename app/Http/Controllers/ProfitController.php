@@ -67,14 +67,14 @@ class ProfitController extends Controller
 
         // Query untuk Modal
         $weeklyModalQuery = DB::table('Modal')
-            ->select(DB::raw("DATE_FORMAT(Tanggal, '%Y-%u') as periode"), DB::raw("SUM(Total_modal) as total_modal"))
+            ->select(DB::raw("DATE_FORMAT(Tanggal, '%Y-%m-%u') as periode"), DB::raw("SUM(Total_modal) as total_modal"))
             ->whereYear('tanggal', $currentYear)
             ->whereMonth('tanggal', $currentMonth)
             ->groupBy('periode');
 
         // Query untuk laporan
         $weeklyLaporanQuery = DB::table('laporan')
-            ->select(DB::raw("DATE_FORMAT(tanggal_laporan, '%Y-%u') as periode"), DB::raw("SUM(total) as total_terjual"))
+            ->select(DB::raw("DATE_FORMAT(tanggal_laporan, '%Y-%m-%u') as periode"), DB::raw("SUM(total) as total_terjual"))
             ->whereYear('tanggal_laporan', $currentYear)
             ->whereMonth('tanggal_laporan', $currentMonth)
             ->groupBy('periode');

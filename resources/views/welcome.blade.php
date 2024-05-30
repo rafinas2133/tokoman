@@ -19,17 +19,17 @@
     <div id="mainApp" class=" bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
         <div class="bg-slate-300 dark:bg-gray-900">
-        @include('layouts.toko')
-        @include('layouts.stokbarang')
+            @include('layouts.toko')
+            @include('layouts.LandingContent')
         </div>
         @include('layouts.footer')
     </div>
 </body>
 <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/TokomanScript.js"></script>
 @auth
-<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/modalPusher.js"></script>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/pusherLogout.js"></script>
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/modalPusher.js"></script>
+    <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/pusherLogout.js"></script>
 @endauth
 <!-- <script>
     window.onload = function() {

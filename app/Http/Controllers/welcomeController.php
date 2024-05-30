@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Agents;
 use App\Models\kontak;
+use App\Models\Mitra;
 use App\Models\StokBarang;
 use Illuminate\Http\Request;
 
@@ -12,8 +14,9 @@ class welcomeController extends Controller
     {
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(6);
-
-        return view("welcome", ["barangs" => $barang], compact('types'));
+        $agents = Agents::paginate(6);
+        $mitra = Mitra::paginate(6);
+        return view("welcome", ["barangs" => $barang,"agents"=>$agents,"mitra"=>$mitra], compact('types'));
     }
     public function reqWa($name)
     {

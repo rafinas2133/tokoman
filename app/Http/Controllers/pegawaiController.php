@@ -139,8 +139,7 @@ class pegawaiController extends Controller
                 $changed = true;
             }
             Mail::to($userPush->email)->send(new userUpdation($userPush, $changed));
-
-            $userPush->edited = 'true';
+            $userPush->edited=true;
             $userPush->save();
             $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
                 'massage' => 'Akun kamu telah diubah oleh admin, silahkan login ulang',

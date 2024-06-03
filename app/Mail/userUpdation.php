@@ -17,10 +17,12 @@ class userUpdation extends Mailable
     public $user;
     public $admin;
     public $change;
-    public function __construct($user,$a)
+    public function __construct($user, $a)
     {
         $this->user = $user;
         $this->admin = null;
+        if ((Auth::user()->role_id == 0 && Auth::user()->id != $this->user->id))
+            $this->admin = "admin";
         $this->change = $a;
     }
 
@@ -29,8 +31,8 @@ class userUpdation extends Mailable
         return $this->view('email.updateUser')
             ->with([
                 'user' => $this->user,
-                'admin'=> Auth::user()->role_id==0&&Auth::user()->id!=$this->user->id?'admin':$this->admin,
-                'change'=> $this->change
+                'admin' => $this->admin,
+                'change' => $this->change
             ]);
     }
 }

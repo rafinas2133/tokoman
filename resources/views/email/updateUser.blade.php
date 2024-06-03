@@ -1,6 +1,6 @@
-<?php
+@php
 $admin = ''.($admin ?? 'Urself');
-?>
+@endphp
 <!DOCTYPE html>
 <html>
 

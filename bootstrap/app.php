@@ -25,8 +25,6 @@ return Application::configure(basePath: dirname(__DIR__))
             '/testingAPI123',
         ]);
     })->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['verifyEdit' => \App\Http\Middleware\mustLoginAfterEdit::class]);
-    })->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['verifypls' => \App\Http\Middleware\verifypls::class]);
     })
     

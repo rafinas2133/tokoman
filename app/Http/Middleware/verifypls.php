@@ -16,13 +16,17 @@ class verifypls
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check()){
-            if(Auth::user()->email_verified_at==null){
-                return redirect()->route('verification.notice')->with("error","Verifikasi Email Dulu");
+        if (Auth::check()) {
+            if (Auth::user()->email_verified_at == null && !$request->routeIs('stokBarang', 'search')) {
+                return redirect()->route('verification.notice')->with("error", "Verifikasi Email Dulu");
             }
-            return $next($request);
+            if (Auth::user()->edited) {
+                Auth::logout();
+                return redirect('/');
+            }
         }
-        
-        
+        return $next($request);
+
+
     }
 }

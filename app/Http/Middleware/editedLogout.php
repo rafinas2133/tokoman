@@ -16,6 +16,7 @@ class editedLogout
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(Auth::check())
         if (Auth::user()->edited=="true") {
             Auth::logout();
             return redirect('/');

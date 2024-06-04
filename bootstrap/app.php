@@ -26,6 +26,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['verifypls' => \App\Http\Middleware\verifypls::class]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['edited' => \App\Http\Middleware\editedLogout::class]);
     })
     
     ->withExceptions(function (Exceptions $exceptions) {

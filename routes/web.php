@@ -18,7 +18,7 @@ Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('tes
 // Route untuk user terAuth()
 
 
-Route::middleware(['auth', 'auth.session', 'verifypls', 'noback'])->group(function () {
+Route::middleware(['auth', 'auth.session', 'verifypls', 'noback','edited'])->group(function () {
     //API Profit
     Route::get("/api", [ProfitController::class, "apiFetch"])->name("ApiFetch");
     //API Penjualan
@@ -127,13 +127,13 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback'])->group(functi
 });
 
 // Route Guest unAuth()
-Route::get('/', [welcomeController::class, 'index'])->middleware(['noback','verifypls','auth.session'])->name('stokBarang');
+Route::get('/', [welcomeController::class, 'index'])->middleware(['noback','auth.session','edited'])->name('stokBarang');
 Route::get('/wa/{id}', [welcomeController::class, 'reqWa']);
 Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth')->name('theAPI');
 // RouteSearch
-Route::get('/search', [SearchController::class, 'index'])->name('search')->middleware(['noback','verifypls']);
+Route::get('/search', [SearchController::class, 'index'])->name('search')->middleware(['noback','auth.session','edited']);
 
-Route::middleware(['auth', 'auth.session', 'noback'])->group(function () {
+Route::middleware(['auth', 'auth.session', 'noback','edited'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

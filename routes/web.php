@@ -127,7 +127,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback'])->group(functi
 });
 
 // Route Guest unAuth()
-Route::get('/', [welcomeController::class, 'index'])->middleware(['noback','verifypls'])->name('stokBarang');
+Route::get('/', [welcomeController::class, 'index'])->middleware(['noback','verifypls','auth.session'])->name('stokBarang');
 Route::get('/wa/{id}', [welcomeController::class, 'reqWa']);
 Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth')->name('theAPI');
 // RouteSearch

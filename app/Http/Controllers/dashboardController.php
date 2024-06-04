@@ -20,7 +20,7 @@ use Storage;
 
 class dashboardController extends Controller
 {
-
+    public $api = null;
     public function exportPDF(Request $request)
     {
         $modifiedRequest = clone $request;
@@ -44,8 +44,20 @@ class dashboardController extends Controller
 
         // Menyimpan gambar ke dalam storage
         Storage::disk('s3')->put('profit.png', $decodedImageData);
-        $pdf = PDF::loadView('pdf.profit',compact('totalprofit'));
+        $pdf = PDF::loadView('pdf.profit', compact('totalprofit'));
         return $pdf->download('ProfitTraficTokoman-' . now() . '.pdf');
+    }
+    public function apiFetch(Request $request)
+    {
+        $modifiedRequest = clone $request;
+
+        // Set default values if not present
+        $modifiedRequest->request->add([
+            'timeFilter' => $request->input('timeFilter'),
+        ]);
+
+        $this->api = "api";
+        return $this->index($modifiedRequest);
     }
     public function index(Request $request)
     {
@@ -70,7 +82,7 @@ class dashboardController extends Controller
             $totalProfit += $profit->profit;
         }
         if (isset($request)) {
-            $period = $request->input('timeFilter'); // Default to monthly if not specified
+            $period = $request->input('timeFilter');
         }
         switch ($period) {
             case 'weekly':
@@ -149,7 +161,10 @@ class dashboardController extends Controller
             ->orderBy('riwayat.created_at', 'desc')
             ->take(5)
             ->get();
-
+        if ($this->api == "api")
+            return response()->json([
+                "data" => $combinedData
+            ]);
         return view(
             "dashboard",
 
@@ -162,7 +177,7 @@ class dashboardController extends Controller
                 'dataThisMonth' => $dataThisMonth,
                 'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),
                 'barangPenjualan' => $barangPenjualan,
-                'combinedData' => $combinedData,
+                'combinedData' => json_encode($combinedData),
                 'choosenPeriod' => $period,
             ]
         );

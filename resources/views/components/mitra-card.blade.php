@@ -15,7 +15,7 @@
         <p class="text-black text-base dark:text-white">
             <strong>No. Telepon:</strong> {{ $mitra->noTelp }}
         </p>
-        <button onclick="opengapps()"
+        <button onclick="opengappsmitra{{$mitra->id}}()"
             class="w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">Klik untuk
             melihat alamat lengkap
             <img class="max-w-[30px] max-h-[30px] ml-2"
@@ -24,7 +24,7 @@
     </div>
 </div>
 <script>
-    function opengapps() {
-        window.open('https://www.google.com/maps')
+    function opengappsmitra{{$mitra->id}}() {
+        window.open('{{$mitra->gmaps}}')
     }
 </script>

@@ -5,22 +5,27 @@
         enctype="multipart/form-data">
         @csrf
         <div class="mb-4">
-            <label for="name" class="block">Name</label>
+            <label for="name" class="block">Nama</label>
             <input class="text-black w-full" type="text" name="name" class="w-full px-4 py-2" required>
         </div>
         <div class="mb-4">
-            <label for="address" class="block">Address</label>
+            <label for="address" class="block">Alamat</label>
             <input class="text-black w-full" type="text" name="address" class="w-full px-4 py-2" required>
         </div>
         <div class="mb-4">
-            <label for="images" class="block">Images</label>
-            <input type="file" class="text-black bg-white w-full" accept=".jpg, .jpeg, .png" name="images" id="images"
-                class="w-full px-4 py-2" required>
+            <label for="gmaps" class="block">Link Gmaps:</label>
+            <input class="text-black w-full" type="text" name="gmaps" class="w-full px-4 py-2" required>
         </div>
         <div class="mb-4">
-            <label for="noTelp" class="block">Telephone</label>
-            <input class="text-black w-full" type="text" name="noTelp" class="w-full px-4 py-2" required>
+            <label for="images" class="block">Gambar</label>
+            <input type="file" accept=".jpg, .jpeg, .png" name="images" id="images"
+                class="w-full px-4 py-2 text-black bg-white" required>
         </div>
-        <button type="button" onclick="validasiForm()" class="bg-blue-500 text-white px-4 py-2 rounded">Save</button>
+
+        <div class="mb-4">
+            <label for="noTelp" class="block">Telepon</label>
+            <input class="text-black w-full" type="text" name="noTelp" class="w-full px-4 py-2 " required>
+        </div>
+        <button type="button" onclick="validasiForm()" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
     </form>
 </div>

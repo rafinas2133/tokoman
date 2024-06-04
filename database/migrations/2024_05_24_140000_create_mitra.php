@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('address');
             $table->string('images');
             $table->string('noTelp');
+            $table->string('gmaps');
             $table->timestamps();
         });
     }

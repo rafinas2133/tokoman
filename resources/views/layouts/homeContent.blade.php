@@ -35,7 +35,7 @@
 
         <div class="bg-gray-100 w-full p-4 rounded-lg shadow">
             <div class="text-gray-600">TOTAL PENGHASILAN Bulanan</div>
-            <div class="text-xl font-semibold">Rp. {{$profit}}</div>    
+            <div class="text-xl font-semibold">Rp. {{$profit}}</div>
         </div>
 
     </div>
@@ -68,30 +68,28 @@
         </div>
         <!-- Placeholder for traffic sources -->
         <div class="flex gap-4">
-            <form action="/dashboard" method="get">
+            <form id="barangForm" action="{{ route('ApiSales') }}" method="get">
                 <select id="timeFilter" name="timeFilter"
-                    class="bg-blue-500 text-white font-bold py-2 px-4 w-full my-2 rounded">
+                    class="bg-blue-500 text-white font-bold py-2 px-4 w-64 my-2 rounded">
                     <option value="daily" {{$choosenPeriod == 'daily' ? 'selected' : ''}}>Harian</option>
                     <option value="weekly" {{$choosenPeriod == 'weekly' ? 'selected' : ''}}>Mingguan</option>
                     <option value="monthly" {{$choosenPeriod == 'monthly' ? 'selected' : ''}}>Bulanan</option>
                     <option value="yearly" {{$choosenPeriod == 'yearly' ? 'selected' : ''}}>Tahunan</option>
                 </select>
-                <button type="submit"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Load
-                    Data</button>
             </form>
         </div>
         <button id="openChart"
             class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
             Chart in New Tab</button>
         <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
-            <div class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
+            <div id="parentBrg" class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
                 <canvas id="barangChart"></canvas>
             </div>
         </div>
     </div>
     <script>
         function exportToPDF() {
+            document.getElementById('hiddenInput').value=document.getElementById('timeFilter').value;
             var canvas = document.getElementById('barangChart');
             var canvasImg = canvas.toDataURL("image/png", 1.0);
             document.getElementById('hiddenImage').value = canvasImg;
@@ -100,50 +98,87 @@
 
     </script>
     <script>
-        var canvas = document.getElementById('barangChart');
-        var ctx = canvas.getContext('2d');
-        var canvas2 = document.getElementById('profitChart');
-        var ctx2 = canvas2.getContext('2d');
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#barangForm').on('change', function (e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+                var url = $(this).attr('action');
+                var method = "GET"
 
-        function fetchChartData() {
-            var combinedData = @json($combinedData);
+                $.ajax({
+                    url: url,
+                    type: method,
+                    data: formData,
+                    success: function (data) {
+                        updateChart(data.data);
+                    },
+                    error: function (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            });
+            var canvas2 = document.getElementById('profitChart');
+            var ctx2 = canvas2.getContext('2d');
+            function updateChart(data) {
+                var labels = data.map(item => item.tanggal);
+                var datain = data.map(item => item.totalMasuk);
+                var dataout = data.map(item => item.totalKeluar);
 
-            var labels = combinedData.map(data => data.tanggal);
-            var dataMasuk = combinedData.map(data => data.totalMasuk);
-            var dataKeluar = combinedData.map(data => data.totalKeluar);
+                // Remove the existing canvas
+                document.getElementById("barangChart").remove();
 
-            var barangChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total Masuk',
-                        data: dataMasuk,
-                        borderColor: 'blue',
-                        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                        fill: false
-                    }, {
-                        label: 'Total Keluar',
-                        data: dataKeluar,
-                        borderColor: 'green',
-                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                        fill: false
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+                // Create a new canvas element
+                var newCanvas = document.createElement('canvas');
+                newCanvas.id = "barangChart";
+
+                // Append the new canvas to the parent container
+                document.getElementById("parentBrg").appendChild(newCanvas);
+
+                // Now you can recreate the chart on the new canvas
+                createChart(labels, datain, dataout);
+            }
+
+            function createChart(labels, datain, dataout) {
+                var labels = labels;
+                var dataMasuk = datain;
+                var dataKeluar = dataout;
+                var canvas = document.getElementById('barangChart');
+                var ctx = canvas.getContext('2d');
+                var barangChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Total Masuk',
+                            data: dataMasuk,
+                            borderColor: 'blue',
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            fill: false
+                        }, {
+                            label: 'Total Keluar',
+                            data: dataKeluar,
+                            borderColor: 'green',
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
                         }
                     }
-                }
-            });
-        }
-        document.addEventListener('DOMContentLoaded', function () {
-            fetchChartData();
+                });
+            }
+            var initialData = {!! $combinedData !!};  // Decode JSON to JavaScript object
+            updateChart(initialData);
+
             document.getElementById('openChart').addEventListener('click', function () {
+                var canvas = document.getElementById('barangChart');
+                var ctx = canvas.getContext('2d');
                 var canvasImg = ctx.canvas.toDataURL("image/png");
                 var win = window.open();
                 win.document.write('<img src="' + canvasImg + '" />');
@@ -156,7 +191,7 @@
 
         });
     </script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </div>
 
 <!-- Recent Transactions -->

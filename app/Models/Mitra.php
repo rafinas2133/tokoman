@@ -10,5 +10,5 @@ class Mitra extends Model
     use HasFactory;
 
     protected $table = 'mitra';
-    protected $fillable = ['name', 'address', 'images', 'noTelp'];
+    protected $fillable = ['name', 'address', 'images', 'noTelp','gmaps'];
 }

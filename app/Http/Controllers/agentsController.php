@@ -30,6 +30,14 @@ class agentsController extends Controller
                 'name' => 'required',
                 'address' => 'required',
                 'images' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gmaps' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (strpos($value, "www.google.com/maps") === false && strpos($value, "maps.app.goo.gl") === false) {
+                            $fail('Masukkan link Google Maps yang valid');
+                        }
+                    },
+                ],
                 'noTelp' => 'required|numeric',
             ],
             [
@@ -56,6 +64,7 @@ class agentsController extends Controller
             'address' => $request->get('address'),
             'images' => $filename,
             'noTelp' => $request->get('noTelp'),
+            'gmaps'=>$request->gmaps,
         ]);
 
         //begin pusher
@@ -95,6 +104,14 @@ class agentsController extends Controller
                 'address' => 'required',
                 'images' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'noTelp' => 'required|numeric',
+                'gmaps' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (strpos($value, "www.google.com/maps") === false && strpos($value, "maps.app.goo.gl") === false) {
+                            $fail('Masukkan link Google Maps yang valid');
+                        }
+                    },
+                ],
             ],
             [
                 'noTelp.numeric' => 'No.Telepon harus angka',
@@ -114,6 +131,7 @@ class agentsController extends Controller
             'name' => $request->get('name'),
             'address' => $request->get('address'),
             'noTelp' => $request->get('noTelp'),
+            'gmaps'=> $request->gmaps
         ]);
 
         if ($request->hasFile('images')) {

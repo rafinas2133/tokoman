@@ -7,7 +7,7 @@
 <div class="container mx-auto px-4 dark:text-white text-black">
     <h1 class="text-3xl text-center font-bold my-4">Agents</h1>
     <a href="{{ route('agents.add') }}"
-        class="bg-blue-500 px-4 py-2 rounded hover:bg-gray-700 hover:rounded-md hover:shadow">Add agents</a>
+        class="bg-blue-500 px-4 py-2 rounded hover:bg-gray-700 hover:rounded-md hover:shadow">Tambah Agen</a>
     @if($agents->isEmpty())
         <p class="text-center">Belum ada data</p>
     @endif
@@ -29,7 +29,7 @@
                         <a href="{{ route('agents.edit', $agent->id) }}"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Edit</a>
                         <button type="click" onclick="validasiForm{{$agent->id}}()"
-                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Delete</button>
+                            class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Hapus</button>
                         <form id="deleteForm{{$agent->id}}" action="{{ route('agents.destroy', $agent->id) }}"
                             method="POST">
                             @csrf

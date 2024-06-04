@@ -30,6 +30,14 @@ class mitraController extends Controller
                 'name' => 'required',
                 'address' => 'required',
                 'images' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'gmaps' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (strpos($value, "www.google.com/maps") === false && strpos($value, "maps.app.goo.gl") === false) {
+                            $fail('Masukkan link Google Maps yang valid');
+                        }
+                    },
+                ],
                 'noTelp' => 'required|numeric',
             ],
             [
@@ -56,6 +64,7 @@ class mitraController extends Controller
             'address' => $request->get('address'),
             'images' => $filename,
             'noTelp' => $request->get('noTelp'),
+            'gmaps'=>$request->gmaps,
         ]);
 
         //begin pusher
@@ -70,7 +79,7 @@ class mitraController extends Controller
 
         $mitra->save();
 
-        return redirect('/mitra')->with('success', 'Mitra '.$mitra->name.' Berhasil Ditambahkan!');
+        return redirect('/mitra')->with('success', 'Mitra ' . $mitra->name . ' Berhasil Ditambahkan!');
     }
 
     public function show(Mitra $mitra)
@@ -95,6 +104,14 @@ class mitraController extends Controller
                 'address' => 'required',
                 'images' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
                 'noTelp' => 'required|numeric',
+                'gmaps' => [
+                    'required',
+                    function ($attribute, $value, $fail) {
+                        if (strpos($value, "www.google.com/maps") === false && strpos($value, "maps.app.goo.gl") === false) {
+                            $fail('Masukkan link Google Maps yang valid');
+                        }
+                    },
+                ],
             ],
             [
                 'noTelp.numeric' => 'No.Telepon harus angka',
@@ -114,6 +131,7 @@ class mitraController extends Controller
             'name' => $request->get('name'),
             'address' => $request->get('address'),
             'noTelp' => $request->get('noTelp'),
+            'gmaps'=> $request->gmaps
         ]);
 
         if ($request->hasFile('images')) {
@@ -136,12 +154,12 @@ class mitraController extends Controller
             'id' => $mitra->id,
         ]);
 
-        return redirect()->route('mitra.index')->with('success', 'Mitra '.$oldNama.' Terupdate!');
+        return redirect()->route('mitra.index')->with('success', 'Mitra ' . $oldNama . ' Terupdate!');
     }
 
     public function destroy(Mitra $mitra)
     {
-        Storage::disk('s3')->delete('mitra/'.$mitra->images);
+        Storage::disk('s3')->delete('mitra/' . $mitra->images);
         $mitra->delete();
         $generatePusher = new pegawaiController();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
@@ -151,7 +169,6 @@ class mitraController extends Controller
             'user' => $generatePusher->generateDataPusher(Auth::user()),
             'id' => $mitra->id,
         ]);
-        return redirect('/mitra')->with('success', 'Mitra '.$mitra->name.' Terhapus!');
+        return redirect('/mitra')->with('success', 'Mitra ' . $mitra->name . ' Terhapus!');
     }
 }
-

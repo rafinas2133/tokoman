@@ -20,7 +20,7 @@
 <div
     class=" dark:text-white text-black h-full border-r border-t dark:border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300 this">
     @if (Auth::user()->email_verified_at != null)
-        <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">MANAJEMEN</div>
+        <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">Manajemen</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="{{ route('stok.index') }}"
@@ -39,7 +39,7 @@
                 </li>
             @endif
         </ul>
-        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">ANALYTICS</div>
+        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">Analisis</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="{{ route('profit.index') }}"
@@ -52,24 +52,24 @@
                 <a href="{{ route('laporan') }}"
                     class="{{ request()->routeIs('laporan') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>📝</span>
-                    <span>Reports</span>
+                    <span>Laporan</span>
                 </a>
             </li>
             <li>
                 <a href="/riwayat"
                     class="{{ request()->routeIs('riwayat', 'riwayatFilter') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>⏰</span>
-                    <span>History</span>
+                    <span>Riwayat</span>
                 </a>
             </li>
         </ul>
-        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">SUPPORT</div>
+        <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">Kerja Sama</div>
         <ul class="space-y-2 p-5">
             <li>
                 <a href="/agents"
                     class="{{ request()->routeIs('agents.*') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>👤</span>
-                    <span>Agents</span>
+                    <span>Agent</span>
                 </a>
             </li>
             <li>
@@ -81,13 +81,13 @@
             </li>
         </ul>
     @endif
-    <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">SETTINGS</div>
+    <div class="p-4 text-xl font-semibold border-y dark:border-gray-700">Pengaturan</div>
     <ul class="space-y-2 p-5">
         <li>
             <a href="{{ route('profile.edit') }}"
                 class="{{ request()->routeIs('profile.edit') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                 <span>👤</span>
-                <span>Profile</span>
+                <span>Profil</span>
             </a>
         </li>
         <li>
@@ -97,7 +97,7 @@
                 <button type="submit"
                     class="flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow w-full">
                     <span>🚪</span>
-                    <span>Logout</span>
+                    <span>Keluar</span>
                 </button>
             </form>
             </a>

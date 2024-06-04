@@ -3,7 +3,7 @@ $line = 1;
 ?>
 </style>
 <div class="flex flex-col items-center justify-center mt-10">
-    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Reporting Form</h1>
+    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Laporan</h1>
     <div class="flex items-center justify-center space-x-4 mb-2 ">
         <form action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
@@ -13,19 +13,20 @@ $line = 1;
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div class="">
                             <label for="reportDate1"
-                                class="block text-sm font-medium text-black dark:text-white">Item Date:</label>
+                                class="block text-sm font-medium text-black dark:text-white">Tanggal:</label>
                             <input type="date" id="reportDate1" name="reportDate1"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-3000 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required value="{{ now()->toDateString() }}" readonly>
                         </div>
                         <div class="">
-                            <label for="itemName1"
-                                class="block text-sm font-medium text-black dark:text-white">Item Name:</label>
+                            <label for="itemName1" class="block text-sm font-medium text-black dark:text-white">Nama
+                                Barang:</label>
                             <select id="itemName1" name="itemName1"
                                 class="mt-1 p-2 pr-8 w-full rounded-md truncate border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required>
                                 @foreach($options as $options)
-                                    <option value="{{ $options->id }}" class="truncate" data-price="{{ $options->harga_jual }}">
+                                    <option value="{{ $options->id }}" class="truncate"
+                                        data-price="{{ $options->harga_jual }}">
                                         {{ $options->nama_barang }}
                                     </option>
                                 @endforeach
@@ -33,14 +34,14 @@ $line = 1;
                         </div>
                         <div>
                             <label for="itemQuantity1"
-                                class="block text-sm font-medium text-black dark:text-white">Item Quantity:</label>
+                                class="block text-sm font-medium text-black dark:text-white">Jumlah Barang:</label>
                             <input type="number" id="itemQuantity1" name="itemQuantity1" min="1"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 required>
                         </div>
                         <div>
-                            <label for="itemPrice1"
-                                class="block text-sm font-medium text-black dark:text-white">Item Price:</label>
+                            <label for="itemPrice1" class="block text-sm font-medium text-black dark:text-white">Harga
+                                Barang:</label>
                             <input type="number" id="itemPrice1" name="itemPrice1" min="0.01" step="0.01"
                                 class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                 readonly required>
@@ -49,12 +50,12 @@ $line = 1;
                     <div class="flex justify-center gap-2">
                         <div class="mt-4">
                             <button type="button" id="addLineBtn"
-                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Add
-                                Another Line</button>
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah
+                                laporan lain</button>
                         </div>
                         <div class="mt-4">
                             <button type="Submit"
-                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Submit</button>
+                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah</button>
                         </div>
                     </div>
 
@@ -67,7 +68,7 @@ $line = 1;
     <!-- JavaScript to handle adding new input lines -->
     <script>
         let line = 1;
-        
+
         function handleItemNameChange(line) {
             const itemNameSelect = document.getElementById(`itemName${line}`);
             itemNameSelect.addEventListener('change', function () {
@@ -107,32 +108,31 @@ $line = 1;
             newLineDiv.className = 'grid grid-cols-2 md:grid-cols-5 gap-4 mt-4';
             newLineDiv.innerHTML = `
             <div>
-                <label for="reportDate${line}" class="block text-sm font-medium text-black dark:text-white">Report Date:</label>
+                <label for="reportDate${line}" class="block text-sm font-medium text-black dark:text-white">Tanggal: </label>
                 <input type="date" id="reportDate${line}" name="reportDate${line}" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required min="{{ now()->subWeek()->toDateString() }}" max="{{ now()->toDateString() }}" value="{{ now()->toDateString() }}">
             </div>
             <div>
-                <label for="itemName${line}" class="block text-sm font-medium text-black dark:text-white">Item Name:</label>
+                <label for="itemName${line}" class="block text-sm font-medium text-black dark:text-white">Nama Barang:</label>
                 <select id="itemName${line}" name="itemName${line}" class="mt-1 p-2 pr-8 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 truncate" required>
                     ${generateOptions()}
                 </select>
             </div>
             <div>
-                <label for="itemQuantity${line}" class="block text-sm font-medium text-black dark:text-white">Item Quantity:</label>
+                <label for="itemQuantity${line}" class="block text-sm font-medium text-black dark:text-white">Jumlah Barang:</label>
                 <input type="number" id="itemQuantity${line}" name="itemQuantity${line}" min="1" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
             </div>
             <div>
-                <label for="itemPrice${line}" class="block text-sm font-medium text-black dark:text-white">Item Price:</label>
+                <label for="itemPrice${line}" class="block text-sm font-medium text-black dark:text-white">Harga Barang:</label>
                 <input type="number" id="itemPrice${line}" name="itemPrice${line}" min="0.01" step="0.01" class="mt-1 p-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" readonly required>
             </div>
             <div>
-                <label class="block text-red-700 text-sm font-medium">delete</label>
-                <span class="inline-block px-3 py-2 mt-1 bg-gray-200 rounded-md shadow-sm">
-                    <button type="button" class="text-red-500 hover:text-red-700 focus:outline-none">
+                <label class="block text-red-700 text-sm font-medium">Hapus</label>
+                    <button type="button" class="text-red-500 hover:text-red-700 focus:outline-none inline-block px-3 py-2 mt-1 bg-gray-200 rounded-md shadow-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                </span>
+             
             </div>
         `;
             const deleteBtn = newLineDiv.querySelector('button');

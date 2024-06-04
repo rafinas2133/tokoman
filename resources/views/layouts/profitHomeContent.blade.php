@@ -49,7 +49,7 @@
                 createChart(labels, profits);
             }
             // Panggil fungsi createChart saat halaman dimuat dengan data default
-            var initialData = {!! $profitData !!};  // Decode JSON to JavaScript object
+            var initialData = {!! $profitData !!};  
             fetchChart(initialData);
         });
     </script>

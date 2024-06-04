@@ -6,7 +6,7 @@
 <div class="container mx-auto px-4 dark:text-white text-black">
     <h1 class="text-3xl text-center font-bold my-4">Mitra</h1>
     <a href="{{ route('mitra.add') }}"
-        class="bg-blue-500 px-4 py-2 rounded hover:bg-gray-700 hover:rounded-md hover:shadow">Add Mitra</a>
+        class="bg-blue-500 px-4 py-2 rounded hover:bg-gray-700 hover:rounded-md hover:shadow">Tambah Mitra</a>
     @if($mitra->isEmpty())
         <p class="text-center">Belum ada data</p>
     @endif
@@ -31,7 +31,7 @@
                             @csrf
                             @method('delete')
                             <button type="button" onclick="validasiForm{{$mitras->id}}()"
-                                class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Delete</button>
+                                class="w-full text-left block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Hapus</button>
                         </form>
                     </div>
                 </div>

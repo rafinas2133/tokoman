@@ -4,7 +4,7 @@
         <form id="profitForm" action="{{ route('ApiFetch') }}" method="GET" class="">
             <div class="flex flex-col md:flex-row gap-4">
                 <div>
-                    <label for="period">Select Period:</label>
+                    <label for="period">Pilih Periode:</label>
                     <select class="text-black" name="period" id="period">
                         <option value="thisMonth">Bulan ini</option>
                         <option value="thisYear">Tahun ini</option>
@@ -20,7 +20,7 @@
         </div>
     </div>
 </div>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         function createChart(labels, data) {
@@ -66,33 +66,26 @@
             // Now you can recreate the chart on the new canvas
             createChart(labels, profits);
         }
-
-        var form = document.getElementById('profitForm');
-        form.addEventListener('change', function () {
-            var formData = new FormData(form);
-            var url = form.getAttribute('action');
-            var method = form.getAttribute('method').toUpperCase();
-            if (method === 'GET') {
-                url += '?' + new URLSearchParams(formData).toString();
-                formData = null;
-            }
-
-            fetch(url, {
-                method: method,
-                body: formData
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data.finalresults);
-                    updateChart(data.finalresults);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-
-        // Initial load
         var initialData = {!! $finalresults !!};  // Decode JSON to JavaScript object
         updateChart(initialData);
+        $('#profitForm').on('change', function (e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var url = $(this).attr('action');
+            var method = "GET"
+
+            $.ajax({
+                url: url,
+                type: method,
+                data: formData,
+                success: function (data) {
+                    console.log(data.finalresults);
+                    updateChart(data.finalresults);
+                },
+                error: function (error) {
+                    console.error('Error:', error);
+                }
+            });
+        });
     });
 </script>

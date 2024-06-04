@@ -5,13 +5,13 @@
             <div class="flex w-full justify-between mb-3">
                 <select name="jenis_riwayat"
                     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black mr-2">
-                    <option value="">All Types</option>
+                    <option value="">Semua Riwayat</option>
                     <option value="masuk">Masuk</option>
                     <option value="keluar">Keluar</option>
                 </select>
                 <select name="year"
                     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black mr-2">
-                    <option value="">All Years</option>
+                    <option value="">Semua Tahun</option>
                     @foreach($years as $year)
                         <option value="{{ $year->year }}">{{ $year->year }}</option>
                     @endforeach
@@ -19,7 +19,7 @@
 
                 <select name="month"
                     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black mr-2">
-                    <option value="">All Months</option>
+                    <option value="">Semua Bulan</option>
                     @foreach($months as $month)
                         <option value="{{ $month->month }}">{{ date("F", mktime(0, 0, 0, $month->month, 10)) }}</option>
                     @endforeach
@@ -27,13 +27,13 @@
 
                 <select name="week"
                     class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black">
-                    <option value="">All Weeks</option>
-                    <option value="today">Today</option>
-                    <option value="1">Week 1</option>
-                    <option value="2">Week 2</option>
-                    <option value="3">Week 3</option>
-                    <option value="4">Week 4</option>
-                    <option value="5">Week 5</option>
+                    <option value="">Semua Minggu</option>
+                    <option value="today">Hari ini</option>
+                    <option value="1">Minggu 1</option>
+                    <option value="2">Minggu 2</option>
+                    <option value="3">Minggu 3</option>
+                    <option value="4">Minggu 4</option>
+                    <option value="5">Minggu 5</option>
                 </select>
             </div>
 
@@ -50,10 +50,10 @@
 
 <div class="mt-8 bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between items-center">
-        <h2 class="text-xl font-semibold">Recent Transactions</h2>
+        <h2 class="text-xl font-semibold">Semua Transaksi</h2>
     </div>
     @if ($riwayatTerbaru->count() == 0)
-        <p class="text-center text-gray-500">No data found</p>
+        <p class="text-center text-gray-500">Belum ada data</p>
     @endif
     @foreach ($riwayatTerbaru as $riwayat)
         <ul

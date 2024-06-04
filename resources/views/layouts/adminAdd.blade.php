@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="password_confirmation" class="block text-sm font-bold mb-2" >Confirm
+                        <label for="password_confirmation" class="block text-sm font-bold mb-2">Konfirmasi
                             Password:</label>
                         <input type="password" id="password_confirmation" name="password_confirmation" required minlength="8"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">

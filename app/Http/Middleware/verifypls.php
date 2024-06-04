@@ -20,7 +20,7 @@ class verifypls
             if (Auth::user()->email_verified_at == null && !$request->routeIs('stokBarang', 'search')) {
                 return redirect()->route('verification.notice');
             }
-            if (Auth::user()->edited==true) {
+            if (Auth::user()->edited=="true") {
                 Auth::logout();
                 return redirect('/');
             }

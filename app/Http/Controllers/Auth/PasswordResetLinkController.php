@@ -32,8 +32,8 @@ class PasswordResetLinkController extends Controller
             'g-recaptcha-response'=>['required', new Recaptca]
         ]);
         $userReset=User::where('email',$request->email)->first();
-        if($userReset->email_verified_at==null)
-            return redirect()->back()->withErrors('Akun ini belum verifikasi email');
+        if($userReset&&$userReset->email_verified_at==null)
+            return redirect()->back()->withErrors(['email' => 'Akun ini belum verifikasi email']);
         // We will send the password reset link to this user. Once we have attempted
         // to send the link, we will examine the response then see the message we
         // need to show to the user. Finally, we'll send out a proper response.

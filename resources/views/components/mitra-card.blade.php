@@ -8,7 +8,7 @@
             src="https://tokoman.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitra->images}}" alt="Gambar {{ $mitra->name }}">
     @endif
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2 text-blue-800">{{ $mitra->name }}</div>
+        <div class="font-bold text-xl mb-2 text-blue-800 dark:text-teal-500">{{ $mitra->name }}</div>
         <p class="text-black text-base dark:text-white">
             <strong>Alamat:</strong> {{ $mitra->address }}<br>
         </p>

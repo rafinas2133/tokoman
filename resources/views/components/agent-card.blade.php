@@ -9,7 +9,7 @@
             alt="Gambar {{ $agent->name }}">
     @endif
     <div class="px-6 py-4">
-        <div class="font-bold text-xl mb-2 text-blue-800">{{ $agent->name }}</div>
+        <div class="font-bold text-xl mb-2 text-blue-800 dark:text-teal-500">{{ $agent->name }}</div>
         <p class="text-black text-base dark:text-white">
             <strong>Alamat:</strong> {{ $agent->address }}<br>
         </p>

@@ -60,7 +60,7 @@
             @endif
         @endif
         <div class="px-6 py-4">
-            <div class="font-bold text-xl mb-2 text-blue-800">{{ $barang->nama_barang }}</div>
+            <div class="font-bold text-xl mb-2 text-blue-800 dark:text-teal-500">{{ $barang->nama_barang }}</div>
             <p class="text-black text-base dark:text-white">
                 <strong>Jenis Tutup:</strong> {{ $barang->jenis_tutup }}<br>
             </p>

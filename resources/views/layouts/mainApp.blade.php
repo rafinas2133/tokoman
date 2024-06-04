@@ -8,4 +8,4 @@
         </aside>
     </div>
 </x-app-layout>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/pusherTokoman.js"></script>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/pusherTokoman.js"></script>

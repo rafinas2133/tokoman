@@ -28,7 +28,7 @@
             </div>
         </div>
     </body>
-    <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/TokomanScript.js"></script>
+    <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/TokomanScript.js"></script>
     <!-- <script>
     window.onload = function() {
         if(performance.navigation.type == 2) {

@@ -47,9 +47,9 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/TokomanScript.js"></script>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/modalPusher.js"></script>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/pusherLogout.js"></script>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/TokomanScript.js"></script>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/modalPusher.js"></script>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/pusherLogout.js"></script>
 
 <!-- <script>
     window.onload = function() {

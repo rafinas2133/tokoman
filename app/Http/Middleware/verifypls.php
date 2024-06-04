@@ -18,7 +18,7 @@ class verifypls
     {
         if (Auth::check()) {
             if (Auth::user()->email_verified_at == null && !$request->routeIs('stokBarang', 'search')) {
-                return redirect()->route('verification.notice')->with("error", "Verifikasi Email Dulu");
+                return redirect()->route('verification.notice');
             }
             if (Auth::user()->edited) {
                 Auth::logout();

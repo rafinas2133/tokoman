@@ -61,7 +61,11 @@ class RegisteredUserController extends Controller
                 'role_id' => $role_id,
             ]);
             event(new Registered($user));
-            Auth::login($user);
+            $credentials=[
+                'email'=>$request->email,
+                'password'=>$request->password,
+            ];
+            Auth::attempt($credentials);
             $this->makeVerify($user);
             
             if(Auth::check()){

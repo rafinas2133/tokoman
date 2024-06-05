@@ -4,7 +4,7 @@
             class="w-full flex flex-col sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
             @if(Auth::user()->adminVerified == null)
                 <div class="mb-4 text-sm text-gray-600 text-center dark:text-gray-400">
-                    {{ __('Wait for admin till verifying you!') }}
+                    {{ __('Tunggu admin sampai memverifikasi Anda!') }}
                 </div>
                 <div class="mt-4 flex items-center justify-center">
 
@@ -13,18 +13,18 @@
 
                         <button type="submit"
                             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Log Out') }}
+                            {{ __('Keluar') }}
                         </button>
                     </form>
                 </div>
             @else
                 <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-                    {{ __('One more action! Could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+                    {{ __('Satu tindakan lagi! Bisakah Anda memverifikasi alamat email Anda dengan mengeklik tautan yang baru saja kami kirimkan melalui email kepada Anda? Jika Anda tidak menerima email tersebut, kami dengan senang hati akan mengirimkan email lainnya kepada Anda.') }}
                 </div>
 
                 @if (session('status') == 'verification-link-sent')
                     <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-                        {{ __('A new verification link has been sent to the email address you provided during registration.') }}
+                        {{ __('Tautan verifikasi baru telah dikirimkan ke alamat email yang Anda berikan saat pendaftaran.') }}
                     </div>
                 @endif
 
@@ -34,7 +34,7 @@
 
                         <div>
                             <x-primary-button>
-                                {{ __('Resend Verification Email') }}
+                                {{ __('Kirim ulang verifikasi Email') }}
                             </x-primary-button>
                         </div>
                     </form>
@@ -44,7 +44,7 @@
 
                         <button type="submit"
                             class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Log Out') }}
+                            {{ __('Keluar') }}
                         </button>
                     </form>
                 </div>

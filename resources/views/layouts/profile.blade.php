@@ -4,15 +4,15 @@
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
                     <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
-                        {{ __('Your account isn'."'".'t accepted by admin, wait till admin verify you') }}
+                        {{ __('Akun Anda belum diterima oleh admin, tunggu hingga admin memverifikasi Anda') }}
                     </h2>
 
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        {{ __('Here is your account detail:') }}
+                        {{ __('Berikut detail akun Anda:') }}
                     </p>
                     
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                        {{ __('Name: ').Auth::user()->name }}
+                        {{ __('Nama: ').Auth::user()->name }}
                     </p>
                     <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
                         {{ __('Email: ').Auth::user()->email }}

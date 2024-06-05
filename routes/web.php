@@ -129,7 +129,6 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback','edited'])->gro
 // Route Guest unAuth()
 Route::get('/', [welcomeController::class, 'index'])->middleware(['noback','auth.session','edited'])->name('stokBarang');
 Route::get('/wa/{id}', [welcomeController::class, 'reqWa']);
-Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth')->name('theAPI');
 // RouteSearch
 Route::get('/search', [SearchController::class, 'index'])->name('search')->middleware(['noback','auth.session','edited']);
 
@@ -140,3 +139,5 @@ Route::middleware(['auth', 'auth.session', 'noback','edited'])->group(function (
 });
 
 require __DIR__ . '/auth.php';
+
+require __DIR__ . '/api.php';

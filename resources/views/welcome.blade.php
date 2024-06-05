@@ -25,7 +25,7 @@
         @include('layouts.footer')
     </div>
 </body>
-<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/TokomanScripts.js"></script>
+<script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/TokomanScript.js"></script>
 @auth
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/modalPusher.js"></script>

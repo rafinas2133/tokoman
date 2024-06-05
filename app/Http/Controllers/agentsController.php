@@ -13,7 +13,7 @@ class agentsController extends Controller
 {
     public function index()
     {
-        $agents = Agents::all();
+        $agents = Agents::paginate(6);
         return view('agents.index', compact('agents'));
     }
 

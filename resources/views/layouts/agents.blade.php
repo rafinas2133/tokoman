@@ -46,4 +46,7 @@
             </div>
         @endforeach
     </div>
+    <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto mb-2">
+        {{ $agents->appends(request()->query())->onEachSide(1)->links() }}
+    </div>
 </div>

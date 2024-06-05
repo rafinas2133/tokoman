@@ -27,7 +27,8 @@
                         class="absolute right-0 mr-3 mt-2 top-12 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg p-1 z-20">
                         <a href="{{ route('mitra.edit', $mitras->id) }}"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Edit</a>
-                        <form id="deleteForm{{$mitras->id}}" action="{{ route('mitra.destroy', $mitras->id) }}" method="POST">
+                        <form id="deleteForm{{$mitras->id}}" action="{{ route('mitra.destroy', $mitras->id) }}"
+                            method="POST">
                             @csrf
                             @method('delete')
                             <button type="button" onclick="validasiForm{{$mitras->id}}()"
@@ -43,5 +44,8 @@
                 </div>
             </div>
         @endforeach
+        <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto mb-2">
+            {{ $mitras->appends(request()->query())->onEachSide(1)->links() }}
+        </div>
     </div>
 </div>

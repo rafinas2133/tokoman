@@ -13,7 +13,7 @@ class mitraController extends Controller
 {
     public function index()
     {
-        $mitra = Mitra::all();
+        $mitra = Mitra::paginate(6);
         return view('mitra.index', compact('mitra'));
     }
 

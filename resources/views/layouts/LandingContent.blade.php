@@ -13,12 +13,12 @@
                 <div class="flex w-full justify-between mb-3">
                     <select name="stock"
                         class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black mr-2">
-                        <option value="">All Stocks</option>
-                        <option value="high">High Stock (>20)</option>
+                        <option value="">Semua Stok</option>
+                        <option value="high">Stok banyak (>20)</option>
                     </select>
                     <select name="type"
                         class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline text-black">
-                        <option value="">All Types</option>
+                        <option value="">Semua Tipe</option>
                         <option value="tinggi">Tinggi</option>
                         <option value="rendah">Rendah</option>
                     </select>

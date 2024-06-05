@@ -5,7 +5,7 @@ $line = 1;
 <div class="flex flex-col items-center justify-center mt-10">
     <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Laporan</h1>
     <div class="flex items-center justify-center space-x-4 mb-2 ">
-        <form action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
+        <form id="addForm" action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
             <input type="hidden" name="line" id="line" value="1">
             <div>
@@ -54,7 +54,7 @@ $line = 1;
                                 laporan lain</button>
                         </div>
                         <div class="mt-4">
-                            <button type="Submit"
+                            <button type="button" onclick="validasiForm()"
                                 class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah</button>
                         </div>
                     </div>
@@ -160,3 +160,4 @@ $line = 1;
 
 </div>
 </div>
+@include('modalCustom.themodal', ['message' => 'Yakin Mau Tambahkan Data?', 'form' => 'addForm'])

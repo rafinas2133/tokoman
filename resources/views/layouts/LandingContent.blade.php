@@ -37,10 +37,10 @@
         </form>
     </div>
     @if($barangs->isEmpty()){
-        <h1 class="text-black dark:text-white text-center">Belum ada produk</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl mt-10">Belum ada produk</h1>
         }
     @else
-        <h1 class="text-black dark:text-white text-center">Produk kami:</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl mt-10">Produk kami:</h1>
         <div class="w-full flex justify-center items-center">
             <div class="container my-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 max-lg:gap-4">
@@ -55,10 +55,10 @@
         </div>
     @endif
     @if($agents->isEmpty()){
-        <h1 class="text-black dark:text-white text-center">Belum ada agen</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl ">Belum ada agen</h1>
         }
     @else
-        <h1 class="text-black dark:text-white text-center">Kerjasama agen:</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl ">Kerjasama Agen</h1>
         <div class="w-full flex justify-center items-center">
             <div class="container my-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 max-lg:gap-4">
@@ -73,10 +73,10 @@
         </div>
     @endif
     @if($mitra->isEmpty()){
-        <h1 class="text-black dark:text-white text-center">Belum ada mitra</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl">Belum ada mitra</h1>
         }
     @else
-        <h1 class="text-black dark:text-white text-center">Kerjasama mitra:</h1>
+        <h1 class="text-black dark:text-white text-center text-3xl">Kerjasama Mitra</h1>
         <div class="w-full flex justify-center items-center">
             <div class="container my-10">
                 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 lg:grid-cols-2 max-lg:gap-4">

@@ -16,11 +16,13 @@ class editedLogout
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::check())
-        if (Auth::user()->edited=="true") {
-            Auth::logout();
-            return redirect('/');
-        }
+        if (Auth::check())
+            if (Auth::user()->edited == "true") {
+                Auth::guard('web')->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect('/');
+            }
         return $next($request);
     }
 }

@@ -33,15 +33,15 @@ class AuthenticatedSessionController extends Controller
         $users=User::where('id',Auth::user()->id)->first();
         $users->edited=null;
         $users->save();
-        Auth::logoutOtherDevices($request->password);
         $string=Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2');
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
             'massage' => 'Akun kamu telah login di device lain, silahkan login ulang',
             'id' => \Auth::user()->id
         ]);
+        
         $request->session()->regenerate();
-    
+        Auth::logoutOtherDevices($request->password);
         return redirect()->intended(route('dashboard', absolute: false))->with('login','true');
     }
     /**

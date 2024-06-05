@@ -16,7 +16,7 @@
             <div class="dark:bg-gray-500 bg-white p-4 rounded shadow relative">
                 <div class="flex justify-between items-center pb-4" x-data="{ open: false }">
                     <h1 class="text-xl font-bold">{{ $agent->name }}</h1>
-                    <button @click="open = !open"
+                    <button @click="open = !open" onclick="document.getElementById('modal{{$agent->id}}').classList.remove('hidden')"
                         class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-1 text-center inline-flex items-center dark:bg-blue-500 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         type="button">
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -24,8 +24,8 @@
                                 d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
                         </svg>
                     </button>
-                    <div x-show="open" @click.away="open = false"
-                        class="absolute right-0 mr-3 mt-2 top-12 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg p-1 z-20">
+                    <div id="modal{{$agent->id}}" x-show="open" @click.away="open = false"
+                        class="absolute right-0 mr-3 mt-2 top-12 w-24 bg-white dark:bg-gray-700 rounded-md shadow-lg p-1 z-20 hidden">
                         <a href="{{ route('agents.edit', $agent->id) }}"
                             class="block px-4 py-2 text-sm text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-600">Edit</a>
                         <button type="click" onclick="validasiForm{{$agent->id}}()"

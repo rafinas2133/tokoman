@@ -31,7 +31,7 @@
                         <td class="{{$usr->id == Auth::user()->id ? 'bg-green-200' : ''}} border px-4 py-2">{{ $usr->name }}</td>
                         <td class="{{$usr->id == Auth::user()->id ? 'bg-green-200' : ''}} border px-4 py-2 text-center">
                         @if($usr->adminVerified != null)
-                            <i class="fas fa-check-circle text-green-500"></i>
+                            <i class="fas fa-check-circle {{$usr->id == Auth::user()->id ? 'text-blue-500' : 'text-green-500'}}"></i>
                         @else
                             <i class="fas fa-times-circle text-red-500"></i>
                         @endif

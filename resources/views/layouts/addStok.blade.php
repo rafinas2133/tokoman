@@ -5,7 +5,7 @@
                 <a href="/stok"
                     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3 inline-block">Kembali</a>
 
-                <form action="{{url('/stok/addsave')}}" method="post" class="needs-validation"
+                <form id="addForm" action="{{url('/stok/addsave')}}" method="post" class="needs-validation"
                     enctype="multipart/form-data">
                     @csrf
                     <div class="mb-4">
@@ -57,7 +57,7 @@
                         <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
-                    <button type="submit"
+                    <button type="button" onclick="validasiForm()"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan
                         Data</button>
                 </form>
@@ -67,3 +67,4 @@
         </div>
     </div>
 </div>
+@include('modalCustom.themodal', ['message' => 'Yakin Mau Tambahkan Data?', 'form' => 'addForm'])

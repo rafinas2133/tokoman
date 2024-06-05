@@ -79,7 +79,6 @@
                 type: method,
                 data: formData,
                 success: function (data) {
-                    console.log(data.finalresults);
                     updateChart(data.finalresults);
                 },
                 error: function (error) {

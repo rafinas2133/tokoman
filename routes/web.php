@@ -14,15 +14,9 @@ use App\Http\Controllers\riwayatController;
 use App\Http\Controllers\welcomeController;
 use Illuminate\Support\Facades\Route;
 
-Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');
-// Route untuk user terAuth()
 
-
+// Route untuk user terAuth
 Route::middleware(['auth', 'auth.session', 'verifypls', 'noback','edited'])->group(function () {
-    //API Profit
-    Route::get("/api", [ProfitController::class, "apiFetch"])->name("ApiFetch");
-    //API Penjualan
-    Route::get("/api/sales", [dashboardController::class, "apiFetch"])->name("ApiSales");
     //Agents Mitra
     Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
     Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');

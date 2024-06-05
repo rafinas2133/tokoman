@@ -11,3 +11,4 @@ Route::get('/theAPI', [barangController::class, 'apiRecieve'])->middleware('auth
  Route::get("/api", [ProfitController::class, "apiFetch"])->middleware('auth')->name("ApiFetch");
 //API Penjualan
  Route::get("/api/sales", [dashboardController::class, "apiFetch"])->middleware('auth')->name("ApiSales");
+ Route::post("/testingAPI123", [barangController::class, 'apiSeeder'])->name('testingAPI');

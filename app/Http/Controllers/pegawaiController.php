@@ -51,6 +51,7 @@ class pegawaiController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->adminVerified = now();
+        $user->email_verified_at = now();
         $user->role_id = $request->role_id;
         $user->save();
 

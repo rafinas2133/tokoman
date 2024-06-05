@@ -87,7 +87,7 @@ class ProfitController extends Controller
             ->select(
                 'modal.periode',
                 DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
-            )
+            )->orderBy('modal.periode','asc')
             ->get();
 
         // Query untuk Modal
@@ -110,7 +110,7 @@ class ProfitController extends Controller
             ->select(
                 'Modal.periode as periode',
                 DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
-            )
+            )->orderBy('Modal.periode','asc')
             ->get();
 
         // Query untuk Modal
@@ -131,7 +131,7 @@ class ProfitController extends Controller
             ->select(
                 'Modal.periode as periode',
                 DB::raw("IFNULL(total_terjual, 0) - IFNULL(total_modal, 0) as profit")
-            )
+            )->orderBy('Modal.periode','asc')
             ->get();
         $results = [
             'weekly' => $weeklyResult,

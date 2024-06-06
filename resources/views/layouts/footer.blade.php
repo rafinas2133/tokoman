@@ -19,13 +19,13 @@
         <!-- Right Section: Contacts -->
         <div class="flex flex-col items-center text-center self-center max-md:mt-12 justify-end space-y-2">
             <h3 class="font-semibold">Kontak Kami</h3>
-            <a href="tel:+621234567890" target="_blank" class="flex  hover:text-gray-400">
-                <i class="fa mr-2"></i> 📞 +62 823-3476-3809
+            <a href="tel:+6285856038173" target="_blank" class="flex  hover:text-gray-400">
+                <i class="fa mr-2"></i> 📞 +62 858-5603-8173
             </a>
-            <a href="https://wa.me/6282334763809" target="_blank" class="flex items-center hover:text-gray-400">
+            <a href="https://wa.me/6285856038173" target="_blank" class="flex items-center hover:text-gray-400">
                 <img class="max-w-[25px] max-h-[25px] ml-2 mr-2"
                     src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com.png" alt="">
-                +62 823-3476-3809
+                    +62 858-5603-8173
             </a>
             <a href="mailto:sujiani.birojasa@gmail.com" target="_blank" class="flex items-center hover:text-gray-400">
                 <i class="fas mr-2"></i>✉️ sujiani.birojasa@gmail.com

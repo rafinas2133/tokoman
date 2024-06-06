@@ -169,12 +169,12 @@ class dashboardController extends Controller
             "dashboard",
 
             [
-                'profit' => $totalProfit,
+                'profit' => number_format($totalProfit, 0, ',', '.'),
                 'profitData' => json_encode($profitData),
                 'riwayatTerbaru' => $riwayatTerbaru,
-                'totalToday' => $totalToday,
+                'totalToday' =>number_format($totalToday, 0, ',', '.'),
                 'differencePercentage' => number_format($differencePercentage, 2, '.', ','),
-                'dataThisMonth' => $dataThisMonth,
+                'dataThisMonth' => number_format($dataThisMonth, 0, ',', '.'),
                 'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),
                 'barangPenjualan' => $barangPenjualan,
                 'combinedData' => json_encode($combinedData),

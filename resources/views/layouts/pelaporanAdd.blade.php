@@ -3,7 +3,7 @@ $line = 1;
 ?>
 </style>
 <div class="flex flex-col items-center justify-center mt-10">
-    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Laporan</h1>
+    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Penjualan</h1>
     <div class="flex items-center justify-center space-x-4 mb-2 ">
         <form id="addForm" action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf
@@ -51,7 +51,7 @@ $line = 1;
                         <div class="mt-4">
                             <button type="button" id="addLineBtn"
                                 class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah
-                                laporan lain</button>
+                                penjualan lain</button>
                         </div>
                         <div class="mt-4">
                             <button type="button" onclick="validasiForm()"

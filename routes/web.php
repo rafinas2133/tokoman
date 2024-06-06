@@ -20,7 +20,7 @@ Route::middleware(['auth', 'auth.session', 'verifypls', 'noback','edited'])->gro
     //Agents Mitra
     Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
     Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');
-
+    Route::put('/TokenEdits',[pegawaiController::class, 'newToken'])->middleware('greateradmin')->name('newToken');
     Route::prefix('agents')->group(function () {
         Route::name('agents.')->group(function () {
             Route::get('/', [agentsController::class, 'index'])->name('index');

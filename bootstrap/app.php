@@ -28,6 +28,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['verifypls' => \App\Http\Middleware\verifypls::class]);
     })->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['edited' => \App\Http\Middleware\editedLogout::class]);
+    })->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['greateradmin' => \App\Http\Middleware\rootadmin::class]);
     })
     
     ->withExceptions(function (Exceptions $exceptions) {

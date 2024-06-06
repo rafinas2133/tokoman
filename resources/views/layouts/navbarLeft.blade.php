@@ -52,7 +52,7 @@
                 <a href="{{ route('laporan') }}"
                     class="{{ request()->routeIs('laporan') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                     <span>📝</span>
-                    <span>Laporan</span>
+                    <span>Penjualan</span>
                 </a>
             </li>
             <li>

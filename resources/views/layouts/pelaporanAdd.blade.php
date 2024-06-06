@@ -3,7 +3,7 @@ $line = 1;
 ?>
 </style>
 <div class="flex flex-col items-center justify-center mt-10">
-    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Laporan</h1>
+    <h1 class="text-3xl text-black dark:text-white font-semibold mb-4">Formulir Penjualan</h1>
     <div class="flex items-center justify-center space-x-4 mb-2 ">
         <form id="addForm" action="{{route('pelaporan.postData')}}" method="post" id="reportingForm">
             @csrf

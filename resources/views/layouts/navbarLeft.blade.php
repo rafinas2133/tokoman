@@ -29,13 +29,22 @@
                     <span>Manajemen Stok</span>
                 </a>
             </li>
-            @if(Auth::user()->role_id == 0)
+            @if(in_array(Auth::user()->role_id, [0, 2]))
                 <li>
                     <a href="{{ route('admin.index') }}"
                         class="{{ request()->routeIs('admin.*') ? 'bg-blue-500 text-white px-3 py-1 rounded-md shadow' : '' }} flex items-center space-x-2 py-1 hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
                         <span>🧑‍💼</span>
                         <span>Manajemen Pegawai</span>
                     </a>
+                </li>
+            @endif
+            @if(Auth::user()->role_id == 2)
+                <li>
+                    <button onclick="document.getElementById('parrentMu').classList.remove('hidden')"
+                        class="flex items-center text-left space-x-2 py-1 w-full hover:bg-gray-700 hover:text-white hover:rounded-md hover:shadow">
+                        <span>🥮</span>
+                        <span>Ubah Token Register</span>
+                    </button>
                 </li>
             @endif
         </ul>

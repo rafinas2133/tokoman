@@ -24,7 +24,8 @@
             </thead>
             <tbody>
                 @foreach($users as $usr)
-                    <tr class="bg-gray-100">
+                @if ($usr->role_id!=2)
+                <tr class="bg-gray-100">
                         <td class="{{$usr->id == Auth::user()->id ? 'bg-green-200' : ''}} border px-4 py-2">{{ $usr->email }}</td>
                         <td class="{{$usr->id == Auth::user()->id ? 'bg-green-200' : ''}} border px-4 py-2">
                             {{ $usr->role_id == 0 ? 'admin' : 'pegawai' }}</td>
@@ -68,6 +69,7 @@
                         </td>
                     </tr>
                     @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus User ' . $usr->name, 'form' => 'deleteForm' . $usr->id, 'theVal' => $usr->id])
+                @endif
                 @endforeach
             </tbody>
         </table>

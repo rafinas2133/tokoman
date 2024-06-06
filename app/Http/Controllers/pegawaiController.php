@@ -19,6 +19,43 @@ use Pusher\Pusher;
 
 class pegawaiController extends Controller
 {
+    public function newToken(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'token' => 'required',
+            'old' => 'required',
+            'new' => 'required',
+            'new2' => 'required|same:new'
+        ], [
+            'new2.same' => 'Token Baru Tidak Sama',
+            'required' => 'Semua Field Wajib Diisi',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('error', $validator->errors()->first());
+        }
+        $change = "";
+        switch ($request->token) {
+            case 0:
+                $theToken = DB::table('token_register')->where('role_id', 0)->first();
+                $change = "admin";
+                break;
+            case 1:
+                $theToken = DB::table('token_register')->where('role_id', 1)->first();
+                $change = "pegawai";
+                break;
+            default:
+                break;
+        }
+        if (Hash::check($request->old, $theToken->token)) {
+            DB::table('token_register')
+            ->where('role_id', $request->token)
+            ->update(['token' => Hash::make($request->new)]);
+            return back()->with('success', 'Berhasil ubah token register untuk '.$change);
+        } else {
+            return back()->with('error', 'Token tidak sesuai');
+        }
+    }
     public function index()
     {
         $user = User::orderBy('role_id', 'asc')->Paginate(10);
@@ -69,7 +106,7 @@ class pegawaiController extends Controller
         $user = User::where(['id' => $id])->first();
         $userauth = Auth::user();
         if ($user) {
-            if ($user->role_id == 0 && $userauth->id != $user->id) {
+            if ($user->role_id == 0 && $userauth->id != $user->id && !$userauth->role_id == 2) {
                 return redirect('/admin')->with('error', 'Anda tidak memiliki hak akses untuk mengedit data ini');
             } else {
                 return view("admin.edit", ["user" => $user, "userauth" => $userauth]);
@@ -140,7 +177,7 @@ class pegawaiController extends Controller
                 $changed = true;
             }
             Mail::to($userPush->email)->send(new userUpdation($userPush, $changed));
-            $userPush->edited="true";
+            $userPush->edited = "true";
             $userPush->save();
             $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
                 'massage' => 'Akun kamu telah diubah oleh admin, silahkan login ulang',
@@ -154,7 +191,7 @@ class pegawaiController extends Controller
     {
         $userDelete = User::where('id', $id)->first();
         $authUser = User::where('id', Auth::user()->id)->first();
-        if ($userDelete->role_id == 0 && $authUser->id != $userDelete->id) {
+        if ($userDelete->role_id == 0 && $authUser->id != $userDelete->id && !$authUser->role_id == 2) {
             return redirect('/admin')->with('error', 'Anda tidak memiliki hak akses untuk menghapus data ini');
         }
         if ($userDelete->id == null) {

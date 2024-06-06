@@ -1,24 +1,16 @@
-<x-app-layout>
-@if(session('error'))
-    <div class="error hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-    <strong class="font-bold">Error!</strong>
-    <span class="block sm:inline">{{session('error')}}</span>
-    </div>
-    <script>
-        var error = document.querySelector('.error');
-        error.classList.remove('hidden');
-        setTimeout(() => {
-        error.classList.add('hidden');
-        }, 3000);
-    </script>
-    @else 
-    @endif
-    <div class="flex flex-col h-full sm:flex-row dark:bg-gray-800">
-        <div class="w-full sm:w-64 dark:bg-gray-800">
-            @include('layouts.navbarLeft')
-        </div>
-        <div class="w-full px-4 dark:bg-gray-800">
-            @include('layouts.adminIndex')
-        </div>
-    </div>
-</x-app-layout>
+<x-mainApp-layout>
+
+    @include('layouts.adminIndex')
+
+</x-mainApp-layout>
+<script>
+    var pusher = new Pusher('c7361a97e7eadb2f7fe4', {
+        cluster: 'ap1'
+    });
+    let div = document.getElementById('mainApp');
+
+    var channel = pusher.subscribe('user-channel');
+    channel.bind('my-event', function (data) {
+        createModal(JSON.stringify(data));
+    });
+</script>

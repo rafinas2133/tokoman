@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Mail\VerifyAdmin;
+use App\Models\unverifiedUser;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -14,6 +16,9 @@ use Illuminate\View\View;
 use App\Models\tokenRegister;
 use App\Rules\Recaptca;
 use App\Rules\TokenHashCheck;
+use Mail;
+use Pusher\Pusher;
+use Str;
 
 class RegisteredUserController extends Controller
 {
@@ -55,11 +60,32 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
                 'role_id' => $role_id,
             ]);
-    
             event(new Registered($user));
-    
-            Auth::login($user);
+            $credentials=[
+                'email'=>$request->email,
+                'password'=>$request->password,
+            ];
+            Auth::attempt($credentials);
+            $this->makeVerify($user);
+            
+            if(Auth::check()){
+                $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
+                $pusher->trigger('admin-channel', 'my-event', [
+                    'massage' => 'User ' . Auth::user()->name . ' telah berhasil mendaftarkan diri ke Tokoman App sebagai ' . (Auth::user()->role_id == 0 ? 'Admin' : 'Employee'),
+                    'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
+                    'id' => Auth::user()->id,
+                ]);
+            }
     
             return redirect(route('verification.notice', absolute: false));
+    }
+    public function makeVerify($param){
+        $tokenForVerify =Str::random(60);
+        unverifiedUser::create([
+            'email'=> $param->email,
+            'token'=> Hash::make($tokenForVerify),
+            'id_user'=>$param->id,
+        ]);
+        Mail::to('tokomananekabotolplastik@gmail.com')->send(new VerifyAdmin($param, $tokenForVerify ));
     }
 }

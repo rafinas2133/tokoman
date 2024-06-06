@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,17 @@ class admin
      */
     public function handle(Request $request, Closure $next)
     {
-        $roleId = $request->session()->get('role_id');
-        switch ($roleId) {
-            case '0': return $next($request);
-            case '1': return redirect('/dashboard');
-            default : return redirect('/');
+        if (Auth::guard("web")->check()) {
+            $roleId = Auth::user()->role_id;
+            switch ($roleId) {
+                case '0':
+                    return $next($request);
+                case '1':
+                    return redirect('/dashboard');
+                default:
+                    return redirect('/');
+            }
         }
+        return redirect('/');
     }
 }

@@ -1,10 +1,15 @@
-<x-app-layout>
-    <div class="flex flex-col h-full sm:flex-row dark:bg-gray-800">
-        <div class="w-full sm:w-64 dark:bg-gray-800">
-            @include('layouts.navbarLeft') 
-        </div>
-        <div class="w-full px-4 py-2 dark:bg-black">
-        @include('layouts.homeContent')
-        </div>
-    </div>
-</x-app-layout>
+<x-mainApp-layout>
+    @include('layouts.homeContent')
+</x-mainApp-layout>
+<script>
+    var pusher = new Pusher('c7361a97e7eadb2f7fe4', {
+        cluster: 'ap1'
+    });
+    let div = document.getElementById('mainApp');
+
+    var channel = pusher.subscribe('report-channel');
+    channel.bind('my-event', function (data) {
+        createModal(JSON.stringify(data));
+    });
+</script>
+

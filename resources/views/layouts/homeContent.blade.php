@@ -42,22 +42,22 @@
 
     <!-- Profit Chart -->
     <div class="mt-8 bg-white p-4 rounded-lg shadow w-full">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col items-center justify-center md:flex-row md:justify-between gap-4">
             <h2 class="text-xl font-semibold">Profit</h2>
+            <button id="openProfit"
+            class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buka Chart di tab baru</button>
             <button onclick="exportProfit()"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
-        <button id="openProfit"
-            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
-            Chart in New Tab</button>
+       
         @include('layouts.profitHomeContent')
 
     </div>
 
     <!-- Traffic Sources -->
     <div class="mt-8 bg-white p-4 rounded-lg shadow w-full">
-        <div class="flex justify-between items-center mb-2">
-            <h2 class="text-xl font-semibold">Traffic Sources</h2>
+        <div class="flex flex-col items-center justify-center md:flex-row md:justify-between gap-4">
+            <h2 class="text-xl font-semibold">Riwayat barang</h2>
             <form target="_blank" id="hiddenForm" action="/export-pdf" method="post">
                 @csrf
                 <input type="hidden" id="hiddenImage" name="chart_image" accept="image/*">
@@ -67,7 +67,7 @@
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export PDF</button>
         </div>
         <!-- Placeholder for traffic sources -->
-        <div class="flex gap-4">
+        <div class="flex flex-col items-center justify-center md:flex-row md:justify-between">
             <form id="barangForm" action="{{ route('ApiSales') }}" method="get">
                 <select id="timeFilter" name="timeFilter"
                     class="bg-blue-500 text-white font-bold py-2 px-4 w-64 my-2 rounded">
@@ -77,10 +77,10 @@
                     <option value="yearly" {{$choosenPeriod == 'yearly' ? 'selected' : ''}}>Tahunan</option>
                 </select>
             </form>
+            <button id="openChart"
+            class=" py-2 px-4 w-64 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded">Buka Chart di tab baru</button>
         </div>
-        <button id="openChart"
-            class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full">Open
-            Chart in New Tab</button>
+        
         <div class="w-full overflow-auto bg-gray-200 rounded-lg mt-4">
             <div id="parentBrg" class="h-[600px] rounded-lg mt-4 w-[1000px] min-[1250px]:w-full">
                 <canvas id="barangChart"></canvas>
@@ -197,8 +197,8 @@
 <!-- Recent Transactions -->
 <div class="mt-8 bg-white p-4 rounded-lg shadow">
     <div class="flex justify-between items-center">
-        <h2 class="text-xl font-semibold">Recent Transactions</h2>
-        <a href="/riwayat" class="hover:text-blue-500">Show all ></a>
+        <h2 class="text-xl font-semibold">Transaksi terkini</h2>
+        <a href="/riwayat" class="hover:text-blue-500">Lihat semua ></a>
     </div>
     @foreach ($riwayatTerbaru as $riwayat)
         <ul

@@ -1,7 +1,7 @@
 <!-- Hamburger Button -->
 <div class="flex items-center justify-center space-x-4">
     <button id="menuButton"
-        class="sm:hidden p-4 focus:outline-none flex justify-center bg-transparent text-black dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 rounded-md"
+        class="md:hidden p-4 focus:outline-none flex justify-center bg-transparent text-black dark:text-gray-500 hover:text-gray-500 dark:hover:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-900 focus:bg-gray-100 dark:focus:bg-gray-900 focus:text-gray-500 dark:focus:text-gray-400 rounded-md"
         onclick="toggleNavbar()">
         <!-- Hamburger Icon -->
         <svg id="hamburgerIcon" class="w-10 h-6" fill="none" stroke="currentColor" viewBox="0 0 40 24"
@@ -18,7 +18,7 @@
 </div>
 
 <div
-    class=" dark:text-white text-black h-full border-r border-t dark:border-gray-700 transform -translate-x-full sm:translate-x-0 max-[640px]:hidden transition-transform duration-300 this">
+    class=" dark:text-white text-black h-full border-r border-t dark:border-gray-700 transform -translate-x-full sm:translate-x-0 max-md:hidden transition-transform duration-300 this">
     @if (Auth::user()->email_verified_at != null)
         <div class="p-4 text-xl font-semibold border-b dark:border-gray-700">Manajemen</div>
         <ul class="space-y-2 p-5">
@@ -112,10 +112,10 @@
         const menuButton = document.getElementById('menuButton');
         hamburgerIcon.classList.toggle('hidden');
         crossIcon.classList.toggle('hidden');
-        if (navbar.classList.contains('max-[640px]:hidden')) {
-            navbar.classList.remove('max-[640px]:hidden');
+        if (navbar.classList.contains('max-md:hidden')) {
+            navbar.classList.remove('max-md:hidden');
         } else {
-            navbar.classList.add('max-[640px]:hidden');
+            navbar.classList.add('max-md:hidden');
         }
         navbar.classList.toggle('-translate-x-full');
     }

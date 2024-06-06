@@ -79,14 +79,14 @@
             <div class="text-black text-base dark:text-white">
                 <strong>Minat?</strong>
             </div>
-            <button onclick="openWhatsapp()"
+            <button onclick="openWhatsapp{{$barang->id}}()"
                 class="w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">Order di sini
                 <img class="max-w-[30px] max-h-[30px] ml-2" src="{{ $pathimage }}" alt="">
             </button>
         </div>
     </div>
     <script>
-        function openWhatsapp(){
+        function openWhatsapp{{$barang->id}}(){
             window.open('/wa/{{$barang->nama_barang}}')
         }
     </script>

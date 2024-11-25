@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 // Route untuk user terAuth
-Route::middleware(['auth', 'auth.session', 'verifypls', 'noback','edited'])->group(function () {
+Route::middleware(['noback','edited'])->group(function () {
     //Agents Mitra
     Route::get('/permissionAPI/{id}', [barangController::class, 'channelRecieve'])->name('APIPermission');
     Route::get('/getAuthID', [pegawaiController::class, 'getAuthID'])->name('getAuthID');

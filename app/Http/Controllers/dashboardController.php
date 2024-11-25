@@ -8,7 +8,7 @@ use Egulias\EmailValidator\Validation\RFCValidation;
 use App\Mail\LoginNotification;
 use App\Models\Laporan;
 use App\Models\Riwayat;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Agents;
 use App\Models\Mitra;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\StokBarang; // Model untuk jenis barang
 

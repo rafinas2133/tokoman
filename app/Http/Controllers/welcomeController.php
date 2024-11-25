@@ -6,7 +6,7 @@ use App\Models\Agents;
 use App\Models\kontak;
 use App\Models\Mitra;
 use App\Models\StokBarang;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class welcomeController extends Controller

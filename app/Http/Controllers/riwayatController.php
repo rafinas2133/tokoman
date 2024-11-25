@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Riwayat;
 use Carbon\Carbon;

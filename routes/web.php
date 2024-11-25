@@ -96,7 +96,7 @@ Route::middleware(['noback','edited'])->group(function () {
     });
 
     // Khusus Admin
-    Route::prefix('admin')->middleware(['admin'])->group(function () {
+    Route::prefix('admin')->group(function () {
         Route::name('admin.')->group(function () {
             Route::controller(pegawaiController::class)->group(function () {
                 Route::get('/', 'index')->name('index');

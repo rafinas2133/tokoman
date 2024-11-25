@@ -6,12 +6,14 @@ use App\Models\Agents;
 use App\Models\kontak;
 use App\Models\Mitra;
 use App\Models\StokBarang;
+use Auth;
 use Illuminate\Http\Request;
 
 class welcomeController extends Controller
 {
     public function index()
     {
+        Auth::authenticate();
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(6);
         $agents = Agents::paginate(6);

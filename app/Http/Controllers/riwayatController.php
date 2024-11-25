@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Laporan;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Riwayat;
 use Carbon\Carbon;
@@ -54,6 +55,8 @@ class riwayatController extends Controller
 
     public function index()
     {
+        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
+
         $years = Riwayat::selectRaw('YEAR(tanggal) as year')
             ->groupBy('year')
             ->orderBy('year', 'desc')

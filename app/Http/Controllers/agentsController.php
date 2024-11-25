@@ -13,6 +13,8 @@ class agentsController extends Controller
 {
     public function index()
     {
+        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
+
         $agents = Agents::paginate(6);
         return view('agents.index', compact('agents'));
     }

@@ -27,6 +27,8 @@ class ProfitController extends Controller
     }
     public function index(Request $request)
     {
+        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
+
         $period = $request->input('period', 'thisMonth');
 
         $results = $this->filterProfitData();

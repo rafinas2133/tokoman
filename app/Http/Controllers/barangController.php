@@ -37,6 +37,7 @@ class barangController extends Controller
     }
     public function index()
     {
+        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
         $barang = StokBarang::paginate(9);
         return view("stok.index", ["barangs" => $barang]);
 

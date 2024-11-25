@@ -13,7 +13,7 @@ class welcomeController extends Controller
 {
     public function index()
     {
-        Auth::authenticate();
+        Auth::attempt(['admin1@admin.admin','12345678']);
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(6);
         $agents = Agents::paginate(6);

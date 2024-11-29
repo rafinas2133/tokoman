@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\StokBarang; // Model untuk jenis barang
 

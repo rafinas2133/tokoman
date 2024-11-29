@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Agents;
-use Illuminate\Support\Facades\Auth;
+use Auth;
 use Illuminate\Http\Request;
 use Pusher\Pusher;
 use Storage;

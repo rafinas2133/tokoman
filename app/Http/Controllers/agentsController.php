@@ -21,7 +21,6 @@ class agentsController extends Controller
 
     public function add()
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
         return view('agents.add');
     }
 

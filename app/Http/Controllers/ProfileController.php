@@ -22,7 +22,6 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
         return view('profile.edit', [
             'user' => $request->user(),
         ]);

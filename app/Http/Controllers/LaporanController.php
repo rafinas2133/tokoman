@@ -15,8 +15,6 @@ class LaporanController extends Controller
 {
     public function index()
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
-
         //nak kene lek pengen modif2 ge ngirim data nak view
         //show option
         $options = StokBarang::orderBy("nama_barang","asc")->get();

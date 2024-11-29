@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use App\Models\StokBarang; // Model untuk jenis barang
 
@@ -10,8 +9,6 @@ class SearchStok extends Controller
 {
     public function index(Request $request)
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
-
         $query = $request->input('search');
         $type = $request->input('type');
 

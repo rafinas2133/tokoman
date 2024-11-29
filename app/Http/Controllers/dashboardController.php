@@ -61,7 +61,6 @@ class dashboardController extends Controller
     }
     public function index(Request $request)
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
         if (session()->get('login') == 'true') {
             $user = Auth::user();
             $sessionId = session()->getId();

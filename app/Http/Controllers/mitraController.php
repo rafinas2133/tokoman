@@ -13,8 +13,6 @@ class mitraController extends Controller
 {
     public function index()
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
-
         $mitra = Mitra::paginate(6);
         return view('mitra.index', compact('mitra'));
     }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Agents;
 use App\Models\Mitra;
-use Auth;
 use Illuminate\Http\Request;
 use App\Models\StokBarang; // Model untuk jenis barang
 
@@ -12,7 +11,6 @@ class SearchController extends Controller
 {
     public function index(Request $request)
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
         $query = $request->input('search');
         $stock = $request->input('stock');
         $type = $request->input('type');
@@ -36,6 +34,7 @@ class SearchController extends Controller
         $barangs->appends(['search' => $query, 'stock' => $stock, 'type' => $type]);
         // Ambil 3 jenis barang acak yang berbeda
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
+
         return view('welcome', compact('barangs', 'types','mitra','agents'));
     }
 }

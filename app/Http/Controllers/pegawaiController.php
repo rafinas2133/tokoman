@@ -58,8 +58,6 @@ class pegawaiController extends Controller
     }
     public function index()
     {
-        Auth::attempt(['email' => 'admin1@admin.admin', 'password' => '12345678']);
-
         $user = User::orderBy('role_id', 'asc')->Paginate(10);
 
         return view("admin.index", ["users" => $user]);

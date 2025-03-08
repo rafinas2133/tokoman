@@ -10,7 +10,7 @@ $line = 1;
             <input type="hidden" name="line" id="line" value="1">
             <div>
                 <div id="inputLines" class="flex flex-col">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="md:ml-40 grid grid-cols-2 md:grid-cols-5 gap-4">
                         <div class="">
                             <label for="reportDate1"
                                 class="block text-sm font-medium text-black dark:text-white">Tanggal:</label>
@@ -47,20 +47,18 @@ $line = 1;
                                 readonly required>
                         </div>
                     </div>
-                    <div class="flex justify-center gap-2">
-                        <div class="mt-4">
-                            <button type="button" id="addLineBtn"
-                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah
-                                penjualan lain</button>
-                        </div>
-                        <div class="mt-4">
-                            <button type="button" onclick="validasiForm()"
-                                class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah</button>
-                        </div>
-                    </div>
-
                 </div>
-
+                <div class="flex justify-center gap-2">
+                    <div class="mt-4">
+                        <button type="button" id="addLineBtn"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah
+                            penjualan lain</button>
+                    </div>
+                    <div class="mt-4">
+                        <button type="button" onclick="validasiForm()"
+                            class="px-4 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">Tambah</button>
+                    </div>
+                </div>
             </div>
         </form>
     </div>
@@ -105,7 +103,7 @@ $line = 1;
             hitungLine.value = line;
             const inputLinesDiv = document.getElementById('inputLines');
             const newLineDiv = document.createElement('div');
-            newLineDiv.className = 'grid grid-cols-2 md:grid-cols-5 gap-4 mt-4';
+            newLineDiv.className = 'md:ml-40 grid grid-cols-2 md:grid-cols-5 gap-4 mt-4';
             newLineDiv.innerHTML = `
             <div>
                 <label for="reportDate${line}" class="block text-sm font-medium text-black dark:text-white">Tanggal: </label>

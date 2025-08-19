@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <title>{{ config('app.name', 'Tokoman') }}</title>
-        <link rel="icon" type="image/png" href="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/logo.png">
+        <link rel="icon" type="image/png" href="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/img/logo.png">
         <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </body>
-    <script src="https://tokoman.s3.ap-southeast-2.amazonaws.com/js/TokomanScript.js"></script>
+    <script src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/js/TokomanScript.js"></script>
     <!-- <script>
     window.onload = function() {
         if(performance.navigation.type == 2) {

@@ -8,7 +8,7 @@
 
     <title>{{ config('app.name', 'Tokoman') }}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="icon" type="image/png" href="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/logo.png">
+    <link rel="icon" type="image/png" href="https://tokoman-s3.s3.ap-southeast-1.amazonaws.com/img/logo.png">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />

@@ -1,7 +1,7 @@
 <div class="bg-white dark:bg-gray-800 shadow">
     <div class="relative h-[600px]">
         <img id="slideshow" class="absolute inset-0 w-full h-full object-fill opacity-50 fade"
-            src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/TokoPlastik.jpg" alt="Gambar Toko">
+            src="https://tokoman-s3.s3.ap-southeast-1.amazonaws.com/img/TokoPlastik.jpg" alt="Gambar Toko">
         <div class="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold text-center">
             <h1 class="text-7xl font-bold">Toko Aneka Botol Plastik</h1>
         </div>
@@ -10,9 +10,9 @@
 
 <script>
     const images = [
-        "https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/TokoPlastik.jpg",
-        "https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pelastik.jpg",
-        "https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pelastikstore.jpg"
+        "https://tokoman-s3.s3.ap-southeast-1.amazonaws.com/img/TokoPlastik.jpg",
+        "https://tokoman-s3.s3.ap-southeast-1.amazonaws.com/img/pelastik.jpg",
+        "https://tokoman-s3.s3.ap-southeast-1.amazonaws.com/img/pelastikstore.jpg"
     ];
     let currentIndex = 0;
 

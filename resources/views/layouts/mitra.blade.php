@@ -39,7 +39,7 @@
                 <p class=" break-words">{{ $mitras->address}}</p>
                 <p>{{ $mitras->noTelp }}</p>
                 <div class>
-                    <img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitras->images}}" alt="Image"
+                    <img src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitras->images}}" alt="Image"
                         class="w-full h-60 object-cover my-2">
                 </div>
             </div>

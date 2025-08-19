@@ -30,6 +30,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias(['edited' => \App\Http\Middleware\editedLogout::class]);
     })->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['greateradmin' => \App\Http\Middleware\rootadmin::class]);
+    })->withMiddleware(function(Middleware $middleware){
+        $middleware->trustProxies("*");
     })
     
     ->withExceptions(function (Exceptions $exceptions) {

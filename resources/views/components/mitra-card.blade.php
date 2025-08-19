@@ -5,7 +5,7 @@
             src="https://placeholder.pics/svg/300" alt="Gambar {{ $mitra->name }}">
     @else
         <img class=" rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]"
-            src="https://tokoman.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitra->images}}" alt="Gambar {{ $mitra->name }}">
+            src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitra->images}}" alt="Gambar {{ $mitra->name }}">
     @endif
     <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2 text-blue-800 dark:text-teal-500">{{ $mitra->name }}</div>
@@ -19,7 +19,7 @@
             class="w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">Klik untuk
             melihat alamat lengkap
             <img class="max-w-[30px] max-h-[30px] ml-2"
-                src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(4).png" alt="">
+                src="https://tokoman.s3.ap-southeast-2.amazonaws.com/img/pngwing.com+(4).png" alt="">
         </button>
     </div>
 </div>

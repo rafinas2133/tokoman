@@ -5,7 +5,7 @@
             src="https://placeholder.pics/svg/300" alt="Gambar {{ $agent->name }}">
     @else
         <img class=" rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]"
-            src="https://tokoman.s3.ap-southeast-2.amazonaws.com/agents/{{$agent->images}}"
+            src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/agents/{{$agent->images}}"
             alt="Gambar {{ $agent->name }}">
     @endif
     <div class="px-6 py-4">

@@ -21,6 +21,10 @@ pipeline {
 
         stage('Build and Deploy Application') {
             steps {
+
+                echo 'Menghapus volume lama...'
+                sh 'docker compose down -v || true'
+
                 echo '--- MEMBANGUN IMAGE APLIKASI BARU ---'
                 sh 'docker compose build --no-cache'
 

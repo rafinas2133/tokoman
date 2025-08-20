@@ -20,7 +20,6 @@ class welcomeController extends Controller
     }
     public function reqWa($name)
     {
-        $phone = kontak::where('name', 'admin')->first();
-        return redirect("https://wa.me/$phone->noHp?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
+        return redirect("https://wa.me/" . config('app.admin_phone') . "?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
     }
 }

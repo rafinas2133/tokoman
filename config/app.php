@@ -121,6 +121,6 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'aws_url' => env("AWS_OBJECT_URL")
-
+    'aws_url' => env("AWS_OBJECT_URL"),
+    'admin_phone' => env("ADMIN_PHONE"),
 ];

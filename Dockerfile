@@ -18,15 +18,10 @@ WORKDIR /var/www/tokoman
 
 FROM node:20-alpine AS vite_build
 WORKDIR /var/www/tokoman
-
-COPY package.json package-lock.json vite.config.js tailwind.config.js postcss.config.js ./
+COPY package*.json ./
 RUN npm ci
-
+COPY tailwind.config.js postcss.config.js vite.config.js ./
 COPY resources ./resources
-COPY resources/views ./resources/views
-COPY vite.config.js ./vite.config.js
-
-# build assets
 RUN npm run build
 
 

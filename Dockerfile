@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2.8.10 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/tokoman
 
-FROM node:20-alpine AS vite_build
+FROM node:22-alpine AS vite_build
 WORKDIR /var/www/tokoman
 COPY package*.json ./
 RUN npm ci
@@ -24,7 +24,7 @@ COPY tailwind.config.js postcss.config.js vite.config.js ./
 COPY resources ./resources
 RUN npm run build
 
-
+RUN ls -lhR public/build
 
 FROM php_base AS app
 

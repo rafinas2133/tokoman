@@ -4,14 +4,6 @@ set -e
 php artisan config:clear
 php artisan package:discover
 
-echo "Waiting for database to be ready..."
-until nc -z -v -w30 db-mysql 3306
-do
-  echo "Database is not ready yet. Retrying in 2 seconds..."
-  sleep 2
-done
-echo "Database is ready!"
-
 php artisan key:generate --force
 php artisan optimize:clear
 php artisan optimize

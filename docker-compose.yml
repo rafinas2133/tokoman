@@ -13,9 +13,9 @@ services:
     networks:
       - shared-network
   
-  web-minilemon:
+  web-tokoman:
     image: nginx:alpine
-    container_name: minilemon_web
+    container_name: tokoman_web
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=tokoman.self.web.id

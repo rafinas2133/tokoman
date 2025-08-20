@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\kontak;
 use App\Models\tokenRegister;
 use Illuminate\Support\Facades\Hash;
 
@@ -49,10 +48,6 @@ class DatabaseSeeder extends Seeder
         tokenRegister::insert([
             'role_id'=>'1',
             'token'=>Hash::make('karyregis11'),
-        ]);
-        kontak::insert([
-            'name'=>'ZidanElek',
-            'noHp'=>'6281335760738',
         ]);
         $this->call(barangSeeder::class);
     }

@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
             'name'=>'ZidanElek',
             'noHp'=>'6281335760738',
         ]);
-        $this ->call(BarangSeeder::class);
+        $this->call(barangSeeder::class);
     }
 }
 

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\kontak;
 use App\Models\tokenRegister;
-use Faker\Factory as Faker;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder

@@ -12,8 +12,6 @@ services:
       - .:/var/www/tokoman
     networks:
       - shared-network
-    depends_on:
-      - db-mysql
   
   web-minilemon:
     image: nginx:alpine

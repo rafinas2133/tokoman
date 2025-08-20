@@ -21,7 +21,7 @@
         <div class="mb-4">
             <label for="images" class="block">Gambar</label>
             <input type="file" accept=".jpg, .jpeg, .png" name="images" class="w-full px-4 py-2 text-black bg-white mb-2">
-            <img class="w-[100px] h-[100px]" src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/mitra/{{$mitra->images}}" alt="">
+            <img class="w-[100px] h-[100px]" src="{{config("app.aws_url")}}/mitra/{{$mitra->images}}" alt="">
 
         </div>
         <div class="mb-4">

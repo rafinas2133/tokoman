@@ -5,7 +5,7 @@
             src="https://placeholder.pics/svg/300" alt="Gambar {{ $agent->name }}">
     @else
         <img class=" rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]"
-            src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/agents/{{$agent->images}}"
+            src="{{ config("app.aws_url") }}/agents/{{$agent->images}}"
             alt="Gambar {{ $agent->name }}">
     @endif
     <div class="px-6 py-4">
@@ -18,7 +18,7 @@
         </p>
         <button onclick="opengappsagent{{$agent->id}}()"
             class="w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2 flex">Klik untuk melihat alamat lengkap
-            <img class="max-w-[30px] max-h-[30px] ml-2" src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/pngwing.com+(4).png" alt="">
+            <img class="max-w-[30px] max-h-[30px] ml-2" src="{{config("app.aws_url")}}/img/maps.png" alt="">
         </button>
     </div>
 </div>

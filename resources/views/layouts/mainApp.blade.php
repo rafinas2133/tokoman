@@ -14,4 +14,4 @@
             </aside>
         </div>
 </x-app-layout>
-<script src="https://tokoman-s3.s3.ap-southeast-2.amazonaws.com/js/pusherTokomans.js"></script>
+<script src="{{config("app.aws_url")}}/js/pusherTokomans.js"></script>

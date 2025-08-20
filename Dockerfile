@@ -22,13 +22,8 @@ COPY package*.json ./
 RUN npm ci
 COPY tailwind.config.js postcss.config.js vite.config.js ./
 COPY resources ./resources
-COPY vite.config.js ./vite.config.js
-
-RUN find resources -type f -exec ls -lh {} +
-
 RUN npm run build
 
-RUN ls -lhR public/build
 
 FROM php_base AS app
 

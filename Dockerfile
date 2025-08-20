@@ -20,11 +20,11 @@ FROM node:20-alpine AS vite_build
 WORKDIR /var/www/tokoman
 
 COPY package.json package-lock.json vite.config.js tailwind.config.js postcss.config.js ./
-COPY resources ./resources
-
 RUN npm install
 
+COPY resources ./resources
 RUN npm run build
+
 
 
 FROM php_base AS app

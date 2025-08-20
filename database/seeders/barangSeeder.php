@@ -14,7 +14,7 @@ class barangSeeder extends Seeder
         $csrfToken = csrf_token();
         $faker = Faker::create('id_ID');
         $client = new Client([
-            'base_uri' => 'http://127.0.0.1:8000/', // Ganti dengan URL aplikasi Laravel Anda
+            'base_uri' => config('app.url'), // Ganti dengan URL aplikasi Laravel Anda
             'timeout'  => 10.0,
             'cookies' => true ,
         ]);

@@ -9,8 +9,7 @@ services:
     env_file:
       - ./.env
     volumes:
-      - laravel_storage:/var/www/tokoman/storage
-      - laravel_cache:/var/www/tokoman/bootstrap/cache
+      - app_vol:/var/www/tokoman
     networks:
       - shared-network
   
@@ -23,8 +22,7 @@ services:
       - LETSENCRYPT_HOST=tokoman.self.web.id
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - laravel_storage:/var/www/tokoman/storage
-      - laravel_cache:/var/www/tokoman/bootstrap/cache
+      - app_vol:/var/www/tokoman
     networks:
       - shared-network
     depends_on:
@@ -35,5 +33,4 @@ networks:
     external: true
 
 volumes:
-  laravel_storage:
-  laravel_cache:
+  app_vol:

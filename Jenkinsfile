@@ -25,6 +25,7 @@ pipeline {
                 sh 'docker compose build'
 
                 echo '--- MEN-DEPLOY SEMUA LAYANAN ---'
+                sh 'docker compose down -v'
                 sh 'docker compose up -d'
 
                 echo '--- MEMBERSIHKAN IMAGE DOCKER LAMA ---'

@@ -53,7 +53,7 @@
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *maks 6MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput1" name="gambar1"
                             class="h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <img id="imagePreview1" class="w-[100px] h-[100px]" src="{{$brg->pathImg1 ?: '#'}}" alt="Image Preview">
+                        <img id="imagePreview1" class="w-[100px] h-[100px]" src="{{$brg->pathImg1 ?: '#'}}" alt="Image Preview" style="{{ $brg->pathImg1 ? '' : 'display: none;' }}">
                     </div>
                     <div class="mb-4 flex gap-2">
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 6MB</label>
@@ -97,6 +97,7 @@
 
             reader.onload = function(e) {
                 imagePreview1.src = e.target.result;
+                imagePreview1.style.display = 'block';
             }
 
             reader.readAsDataURL(file);

@@ -77,7 +77,7 @@ class ProfileController extends Controller
             'user' => $user->name . $user->role_id . $user->id . ($user->id < 10 ? 'Asxzw' : 'asd2'),
             'id' => $user->id,
         ]);
-        Mail::to($user->email)->queue(new userDeletion($user));
+        Mail::to($user->email)->queue(new userDeletion($user, false));
 
 
         Auth::logout();

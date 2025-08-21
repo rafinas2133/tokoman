@@ -59,7 +59,7 @@
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput2" name="gambar2"
                             class=" h-[50px] shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <img id="imagePreview2" class="w-[100px] h-[100px]" src="{{ $brg->pathImg2 ?: '#' }}" alt="Image Preview" class="{{ $brg->pathImg2 ? '' : 'hidden' }}">
+                        <img id="imagePreview2" class="w-[100px] h-[100px]" src="{{ $brg->pathImg2 ?: '#' }}" alt="Image Preview" style="{{ $brg->pathImg2 ? '' : 'display: none;' }}">
                     </div>
                     <div class="flex gap-4">
                         <button type="button" onclick ="validasiForm()"

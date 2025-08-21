@@ -29,7 +29,7 @@ class mitraController extends Controller
             [
                 'name' => 'required',
                 'address' => 'required',
-                'images' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+                'images' => 'required|image|mimes:jpeg,png,jpg|max:6144',
                 'gmaps' => [
                     'required',
                     function ($attribute, $value, $fail) {
@@ -48,7 +48,7 @@ class mitraController extends Controller
                 'noTelp.required' => 'Nomor telepon wajib diisi.',
                 'images.image' => 'File harus berupa gambar.',
                 'images.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'max.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+                'max.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB'
             ]
         );
         if ($validator->fails()) {
@@ -102,7 +102,7 @@ class mitraController extends Controller
             [
                 'name' => 'required',
                 'address' => 'required',
-                'images' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'images' => 'nullable|image|mimes:jpeg,png,jpg|max:6144',
                 'noTelp' => 'required|numeric',
                 'gmaps' => [
                     'required',
@@ -120,7 +120,7 @@ class mitraController extends Controller
                 'noTelp.required' => 'Nomor telepon wajib diisi.',
                 'images.image' => 'File harus berupa gambar.',
                 'images.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'images.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+                'images.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB.'
             ]
         );
         if ($validator->fails()) {

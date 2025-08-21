@@ -99,18 +99,18 @@ class barangController extends Controller
                 'buy' => 'required',
                 'sell' => 'required',
                 'ukuran' => 'required',
-                'gambar1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-                'gambar2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'gambar1' => 'nullable|image|mimes:jpeg,png,jpg|max:6144',
+                'gambar2' => 'nullable|image|mimes:jpeg,png,jpg|max:6144',
             ],
             [
                 'stok.integer' => 'Stok harus berupa angka.',
                 'bal.integer' => 'Jumlah bal harus berupa angka.',
                 'gambar1.image' => 'File harus berupa gambar.',
                 'gambar1.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
+                'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB.',
                 'gambar2.image' => 'File harus berupa gambar.',
                 'gambar2.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+                'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB.'
             ]
         );
 
@@ -240,18 +240,18 @@ class barangController extends Controller
                 'buy' => 'required',
                 'sell' => 'required',
                 'ukuran' => 'required',
-                'gambar1' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-                'gambar2' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'gambar1' => 'nullable|image|mimes:jpeg,png,jpg|max:6144',
+                'gambar2' => 'nullable|image|mimes:jpeg,png,jpg|max:6144',
             ],
             [
                 'stok.integer' => 'Stok harus berupa angka.',
                 'bal.integer' => 'Jumlah bal harus berupa angka.',
                 'gambar1.image' => 'File harus berupa gambar.',
                 'gambar1.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.',
+                'gambar1.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB.',
                 'gambar2.image' => 'File harus berupa gambar.',
                 'gambar2.mimes' => 'Gambar harus berformat jpeg, png, atau jpg.',
-                'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 2048 kilobytes.'
+                'gambar2.max' => 'Ukuran gambar tidak boleh lebih dari 6 MB.'
             ]
 
         );

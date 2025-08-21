@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <img src="https://tokoman.s3.ap-southeast-2.amazonaws.com/asset/logo.png" width="300" height="300" alt="Logo">
+    <img src="{{config('app.aws_url')}}/img/logo.png" width="300" height="300" alt="Logo">
     <h1>Hello, Greater Admin</h1>
     <p>There Is Someone Requesting to Join Tokoman App</p>
     <p>Here Is The Account Detail:</p>

@@ -30,7 +30,7 @@ class VerifyEmailController extends Controller
             event(new Verified($request->user()));
         }
         if (Auth::check()) {
-            Mail::to(Auth::user()->email)->send(new newUserVerified(Auth::user()));
+            Mail::to(Auth::user()->email)->queue(new newUserVerified(Auth::user()));
             $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
             $pusher->trigger('admin-channel', 'my-event', [
                 'massage' => 'User ' . Auth::user()->name . ' telah memverifikasi emailnya',

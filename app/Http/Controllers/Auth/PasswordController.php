@@ -27,7 +27,7 @@ class PasswordController extends Controller
         ]);
         $user = $request->user();
         $changed = true;
-        Mail::to($user->email)->send(new userUpdation($user, $changed));
+        Mail::to($user->email)->queue(new userUpdation($user, $changed));
 
         $request->user()->update([
             'password' => Hash::make($validated['password']),

@@ -65,7 +65,7 @@ class dashboardController extends Controller
             $user = Auth::user();
             $sessionId = session()->getId();
             $sessionData = \DB::table('sessions')->where('id', $sessionId)->first();
-            Mail::to($user->email)->send(new LoginNotification($user, $sessionData));
+            Mail::to($user->email)->queue(new LoginNotification($user, $sessionData));
 
         }
         $modifiedRequest = clone $request;

@@ -45,7 +45,7 @@ class ProfileController extends Controller
         }
         $request->user()->save();
 
-        Mail::to($oldEmail)->send(new userUpdation($request->user(), $changed));
+        Mail::to($oldEmail)->queue(new userUpdation($request->user(), $changed));
 
         if(Auth::user()->role_id != 0) {
             if ($kirimemail==true) {

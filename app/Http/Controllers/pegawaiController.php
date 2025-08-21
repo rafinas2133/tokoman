@@ -176,7 +176,7 @@ class pegawaiController extends Controller
             if ($request->filled('password') && $request->filled('password_confirmation')) {
                 $changed = true;
             }
-            Mail::to($userPush->email)->send(new userUpdation($userPush, $changed));
+            Mail::to($userPush->email)->queue(new userUpdation($userPush, $changed));
             $userPush->edited = "true";
             $userPush->save();
             $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [

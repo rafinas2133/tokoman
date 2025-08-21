@@ -86,6 +86,6 @@ class RegisteredUserController extends Controller
             'token'=> Hash::make($tokenForVerify),
             'id_user'=>$param->id,
         ]);
-        Mail::to(config('mail.from.address'))->send(new VerifyAdmin($param, $tokenForVerify ));
+        Mail::to(config('mail.from.address'))->queue(new VerifyAdmin($param, $tokenForVerify ));
     }
 }

@@ -48,13 +48,13 @@
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     </div>
                     <div class="mb-4">
-                        <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib maks 2MB</label>
+                        <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib maks 6MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput1" name="gambar1" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <img id="imagePreview1" class="w-[100px] h-[100px] hidden" src="#" alt="">
                     </div>
                     <div class="mb-4">
-                        <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
+                        <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 6MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput2" name="gambar2"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                         <img id="imagePreview2" class="w-[100px] h-[100px] hidden" src="#" alt="">

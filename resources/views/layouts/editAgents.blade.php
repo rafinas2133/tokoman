@@ -17,7 +17,7 @@
             <input type="text" name="gmaps" value="{{ $agents->gmaps }}" class="w-full px-4 py-2 text-black" required>
         </div>
         <div class="mb-4">
-            <label for="images" class="block">Gambar</label>
+            <label for="images" class="block">Gambar (Maks 6 MB)</label>
             <input id="imageInput" type="file" accept=".jpg, .jpeg, .png" name="images" class="w-full px-4 py-2 text-black bg-white mb-2">
             <img id="imagePreview" class="w-[100px] h-[100px]" src="{{config("app.aws_url")}}/agents/{{$agents->images}}" alt="">
         </div>

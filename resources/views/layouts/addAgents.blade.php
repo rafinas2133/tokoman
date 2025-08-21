@@ -16,7 +16,7 @@
             <input class="text-black w-full" type="text" name="gmaps" class="w-full px-4 py-2" required>
         </div>
         <div class="mb-4">
-            <label for="images" class="block">Gambar</label>
+            <label for="images" class="block">Gambar (Maks 6 MB)</label>
             <input type="file" accept=".jpg, .jpeg, .png" name="images" id="imageInput" class="w-full px-4 py-2 text-black bg-white" required>
             <img id="imagePreview" class="w-[100px] h-[100px] hidden" src="#" alt="">
         </div>

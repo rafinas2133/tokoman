@@ -139,15 +139,15 @@ class barangController extends Controller
         $filename1 = '';
         $filename2 = '';
         if ($request->file('gambar1') != null) {
-            $file = $request->file('gambar1');
-            $filename1 = '-' . time() . '.' . $file->getClientOriginalExtension();
-            Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file));
+            $file1 = $request->file('gambar1');
+            $filename1 = uniqid() . '-' . time() . '.' . $file1->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file1));
             $path1 = $this->getUrlImg($filename1);
         }
         if ($request->file('gambar2') != null) {
-            $file = $request->file('gambar2');
-            $filename2 = '-' . time() . '.' . $file->getClientOriginalExtension();
-            Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file));
+            $file2 = $request->file('gambar2');
+            $filename2 = uniqid() . '-' . time() . '.' . $file2->getClientOriginalExtension();
+            Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file2));
             $path2 = $this->getUrlImg($filename2);
         }
 
@@ -268,14 +268,14 @@ class barangController extends Controller
         if ($request->file('gambar1') != null) {
             $this->timpaGambar1($barang);
             $file1 = $request->file('gambar1');
-            $filename1 = '-' . time() . '.' . $file1->getClientOriginalExtension();
+            $filename1 = uniqid() . '-' . time() . '.' . $file1->getClientOriginalExtension();
             Storage::disk('s3')->put('images/' . $filename1, file_get_contents($file1));
             $path1 = $this->getUrlImg($filename1);
         }
         if ($request->file('gambar2') != null) {
             $this->timpaGambar2($barang);
             $file2 = $request->file('gambar2');
-            $filename2 = '-' . time() . '.' . $file2->getClientOriginalExtension();
+            $filename2 = uniqid() . '-' . time() . '.' . $file2->getClientOriginalExtension();
             Storage::disk('s3')->put('images/' . $filename2, file_get_contents($file2));
             $path2 = $this->getUrlImg($filename2);
         }

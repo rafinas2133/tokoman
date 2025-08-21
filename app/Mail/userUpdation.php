@@ -20,7 +20,7 @@ class userUpdation extends Mailable implements ShouldQueue
     public function __construct($user, $a)
     {
         $this->user = $user;
-        $this->admin = null;
+        $this->admin = "yourself";
         if ((Auth::user()->role_id == 0 && Auth::user()->id != $this->user->id))
             $this->admin = "admin";
         $this->change = $a;

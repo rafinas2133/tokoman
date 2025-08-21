@@ -201,8 +201,9 @@ class pegawaiController extends Controller
         if ($userDelete->name == $authUser->name) {
             return redirect('/admin')->with('error', 'Hapus Akunmu Lewat Mekanisme Profil');
         }
-        User::where('id', $id)->delete();
+        
         Mail::to($userDelete->email)->queue(new userDeletion($userDelete, true));
+        User::where('id', $id)->delete();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $pusher->trigger('admin-channel', 'my-event', [
             'massage' => 'User ' . $userDelete->name . ' Berhasil Dihapus oleh Admin ' . Auth::user()->name,

@@ -81,7 +81,7 @@
                 <tr>
                     <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Last Activity:</td>
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">
-                        {{ $sessionData->last_activity->format('d F Y, H:i') }}
+                        {{ $sessionData->last_activity ? date('Y-m-d H:i:s', $sessionData->last_activity) : 'N/A' }}
                         WIB</td>
                 </tr>
             </table>

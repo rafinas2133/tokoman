@@ -96,7 +96,7 @@
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                imagePreview.src = e.target.result;
+                imagePreview1.src = e.target.result;
                 imagePreview1.classList.remove('hidden');
             }
 

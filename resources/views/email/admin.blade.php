@@ -85,6 +85,13 @@
                         WIB</td>
                 </tr>
             </table>
+            <p>Silakan klik tombol di bawah untuk memverifikasi dan mengaktifkan akun pengguna ini.</p>
+
+            <div class="button-container">
+                <a href="{{ $verificationUrl }}" class="button">
+                    Verify User
+                </a>
+            </div>
 
             <p>Jika Anda tidak ingin menerima pengguna ini, tidak perlu ada tindakan lebih lanjut.</p>
             <p>Terima kasih,<br>Tim Tokoman App</p>

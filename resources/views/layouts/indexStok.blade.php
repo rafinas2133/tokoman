@@ -68,13 +68,15 @@
                                 <td class="border px-4 py-2 max-w-sm">{{ $usr->harga_beli }}</td>
                                 <td class="border px-4 py-2 max-w-sm">{{ $usr->harga_jual }}</td>
                                 <td class="border px-4 py-2 w-sm">
-                                    <form action="/tambahstok/{{$usr->id_barang}}" method="post">
+                                    <form action="/tambahstok/{{$usr->id_barang}}" method="post"
+                                        id="addStockForm{{ $usr->id }}">
                                         @csrf
                                         @method('put')
                                         <input type="number" placeholder="Stok..." name="stok" id="stok" class="w-24" required>
-                                        <button type="submit"
+                                        <button type="button" onclick="validasiFormStock{{ $usr->id }}()"
                                             class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Tambah</button>
                                     </form>
+                                    @include('modalCustom.themodal', ['message' => 'Yakin Mau Tambahkan Stok?', 'form' => 'addStockForm' . $usr->id, 'theVal' => "Stock" . $usr->id])
                                 </td>
                                 <td class="border px-4 py-2 ">
                                     <div class="flex items-center justify-center">
@@ -91,7 +93,7 @@
                                     </div>
                                 </td>
                             </tr>
-                            @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus Barang '.$usr->nama_barang, 'form' => 'deleteForm'.$usr->id,'theVal'=>$usr->id])
+                            @include('modalCustom.themodal', ['message' => 'Yakin Mau Hapus Barang ' . $usr->nama_barang, 'form' => 'deleteForm' . $usr->id, 'theVal' => $usr->id])
                         @endforeach
                     </tbody>
                 </table>

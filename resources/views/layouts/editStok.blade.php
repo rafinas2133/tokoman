@@ -97,7 +97,6 @@
 
             reader.onload = function(e) {
                 imagePreview1.src = e.target.result;
-                imagePreview1.classList.remove('hidden');
             }
 
             reader.readAsDataURL(file);
@@ -112,6 +111,7 @@
 
             reader.onload = function(e) {
                 imagePreview2.src = e.target.result;
+                imagePreview2.style.display = 'block';
             }
 
             reader.readAsDataURL(file);

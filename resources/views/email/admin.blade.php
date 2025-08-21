@@ -67,12 +67,11 @@
 
         <div class="content">
             <p>Hello Admin,</p>
-            <p>Ada pengguna baru, <strong>{{ $user->name }}</strong>, yang ingin bergabung dengan Tokoman App dengan
-                detail sebagai berikut:</p>
+            <p>There is new user, <strong>{{ $user->name }}</strong>, who wants to join Tokoman App with the following details:</p>
 
             <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 30%;">Nama</td>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 30%;">Name</td>
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->name }}</td>
                 </tr>
                 <tr>
@@ -80,12 +79,12 @@
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->email }}</td>
                 </tr>
                 <tr>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Tanggal Daftar</td>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Registration Date</td>
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->created_at->format('d F Y, H:i') }}
                         WIB</td>
                 </tr>
             </table>
-            <p>Silakan klik tombol di bawah untuk memverifikasi dan mengaktifkan akun pengguna ini.</p>
+            <p>Please click the button below to verify and activate this user account.</p>
 
             <div class="button-container">
                 <a href="{{ $verificationUrl }}" class="button">
@@ -93,8 +92,8 @@
                 </a>
             </div>
 
-            <p>Jika Anda tidak ingin menerima pengguna ini, tidak perlu ada tindakan lebih lanjut.</p>
-            <p>Terima kasih,<br>Tim Tokoman App</p>
+            <p>If you do not wish to accept this user, no further action is required.</p>
+            <p>Thank you,<br>Tokoman App Team</p>
         </div>
 
         <div class="footer">

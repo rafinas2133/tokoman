@@ -16,10 +16,10 @@ class userDeletion extends Mailable implements ShouldQueue
 
     public $user;
     public $admin;
-    public function __construct($user)
+    public function __construct($user, $admin = null)
     {
         $this->user = $user;
-        $this->admin = null;
+        $this->admin = $admin;
     }
 
     public function build()
@@ -27,7 +27,7 @@ class userDeletion extends Mailable implements ShouldQueue
         return $this->view('email.deleteUser')
             ->with([
                 'user' => $this->user,
-                'admin'=> $this->user->role_id==0&&Auth::user()->id!=$this->user->id?'admin':$this->admin,
+                'admin'=> $this->admin? "admin":"yourself",
             ]);
     }
 }

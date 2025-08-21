@@ -89,7 +89,7 @@
     const imageInput2 = document.getElementById('imageInput2');
     const imagePreview2 = document.getElementById('imagePreview2');
 
-    imageInput.addEventListener('change', function() {
+    imageInput1.addEventListener('change', function() {
         const file = this.files[0];
 
         if (file) {

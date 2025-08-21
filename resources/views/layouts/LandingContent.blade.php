@@ -54,9 +54,8 @@
             {{ $barangs->appends(request()->query())->onEachSide(1)->links() }}
         </div>
     @endif
-    @if($agents->isEmpty()){
+    @if($agents->isEmpty())
         <h1 class="text-black dark:text-white text-center text-3xl ">Belum ada agen</h1>
-        }
     @else
         <h1 class="text-black dark:text-white text-center text-3xl ">Kerjasama Agen</h1>
         <div class="w-full flex justify-center items-center">
@@ -72,9 +71,8 @@
             {{ $agents->appends(request()->query())->onEachSide(1)->links() }}
         </div>
     @endif
-    @if($mitra->isEmpty()){
+    @if($mitra->isEmpty())
         <h1 class="text-black dark:text-white text-center text-3xl">Belum ada mitra</h1>
-        }
     @else
         <h1 class="text-black dark:text-white text-center text-3xl">Kerjasama Mitra</h1>
         <div class="w-full flex justify-center items-center">

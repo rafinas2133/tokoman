@@ -66,7 +66,7 @@
         </div>
 
         <div class="content">
-            <p>Hello {{$username}},</p>
+            <p>Hello {{$user->name}},</p>
             <p>Welcome to Tokoman App</p>
             <p>You have been verified to Tokoman App</p>
 

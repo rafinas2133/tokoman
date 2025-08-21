@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Auth;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -12,12 +13,12 @@ use Illuminate\Queue\SerializesModels;
 
 class userUpdation extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
 
     public $user;
     public $admin;
     public $change;
-    public function __construct($user, $a)
+    public function __construct(User $user, $a)
     {
         $this->user = $user;
         $this->admin = "yourself";

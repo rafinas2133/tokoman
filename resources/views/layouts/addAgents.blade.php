@@ -18,7 +18,7 @@
         <div class="mb-4">
             <label for="images" class="block">Gambar</label>
             <input type="file" accept=".jpg, .jpeg, .png" name="images" id="imageInput" class="w-full px-4 py-2 text-black bg-white" required>
-            <img id="imagePreview" class="w-[100px] h-[100px]" src="#" alt="">
+            <img id="imagePreview" class="w-[100px] h-[100px]" src="#" alt="" class="hidden">
         </div>
         <div class="mb-4">
             <label for="noTelp" class="block">Telepon</label>
@@ -39,6 +39,7 @@
 
             reader.onload = function(e) {
                 imagePreview.src = e.target.result;
+                imagePreview.classList.remove('hidden');
             }
 
             reader.readAsDataURL(file);

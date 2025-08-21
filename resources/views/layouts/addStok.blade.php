@@ -51,13 +51,13 @@
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib maks 2MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput1" name="gambar1" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <img id="imagePreview1" class="w-[100px] h-[100px]" src="#" alt="">
+                        <img id="imagePreview1" class="w-[100px] h-[100px]" src="#" alt="" class="hidden">
                     </div>
                     <div class="mb-4">
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
                         <input type="file" accept=".jpg, .jpeg, .png" id="imageInput2" name="gambar2"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <img id="imagePreview2" class="w-[100px] h-[100px]" src="#" alt="">
+                        <img id="imagePreview2" class="w-[100px] h-[100px]" src="#" alt="" class="hidden">
                     </div>
                     <button type="button" onclick="validasiForm()"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan
@@ -83,7 +83,8 @@
             const reader = new FileReader();
 
             reader.onload = function(e) {
-                imagePreview.src = e.target.result;
+                imagePreview1.src = e.target.result;
+                imagePreview1.classList.remove('hidden');
             }
 
             reader.readAsDataURL(file);
@@ -98,6 +99,7 @@
 
             reader.onload = function(e) {
                 imagePreview2.src = e.target.result;
+                imagePreview2.classList.remove('hidden');
             }
 
             reader.readAsDataURL(file);

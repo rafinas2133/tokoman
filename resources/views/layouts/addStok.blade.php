@@ -49,13 +49,15 @@
                     </div>
                     <div class="mb-4">
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 1: *wajib maks 2MB</label>
-                        <input type="file" accept=".jpg, .jpeg, .png" id="gambar1" name="gambar1" required
+                        <input type="file" accept=".jpg, .jpeg, .png" id="imageInput1" name="gambar1" required
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <img id="imagePreview1" class="w-[100px] h-[100px]" src="#" alt="">
                     </div>
                     <div class="mb-4">
                         <label for="ukuran" class="block text-sm font-bold mb-2">Gambar 2: *maks 2MB</label>
-                        <input type="file" accept=".jpg, .jpeg, .png" id="gambar2" name="gambar2"
+                        <input type="file" accept=".jpg, .jpeg, .png" id="imageInput2" name="gambar2"
                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <img id="imagePreview2" class="w-[100px] h-[100px]" src="#" alt="">
                     </div>
                     <button type="button" onclick="validasiForm()"
                         class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan
@@ -68,3 +70,37 @@
     </div>
 </div>
 @include('modalCustom.themodal', ['message' => 'Yakin Mau Tambahkan Data?', 'form' => 'addForm'])
+<script>
+    const imageInput1 = document.getElementById('imageInput1');
+    const imagePreview1 = document.getElementById('imagePreview1');
+    const imageInput2 = document.getElementById('imageInput2');
+    const imagePreview2 = document.getElementById('imagePreview2');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+
+    imageInput2.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview2.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

@@ -20,8 +20,8 @@
         </div>
         <div class="mb-4">
             <label for="images" class="block">Gambar</label>
-            <input type="file" accept=".jpg, .jpeg, .png" name="images" class="w-full px-4 py-2 text-black bg-white mb-2">
-            <img class="w-[100px] h-[100px]" src="{{config("app.aws_url")}}/mitra/{{$mitra->images}}" alt="">
+            <input id="imageInput" type="file" accept=".jpg, .jpeg, .png" name="images" class="w-full px-4 py-2 text-black bg-white mb-2">
+            <img id="imagePreview" class="w-[100px] h-[100px]" src="{{config("app.aws_url")}}/mitra/{{$mitra->images}}" alt="">
 
         </div>
         <div class="mb-4">
@@ -31,3 +31,21 @@
         <button type="button" onclick="validasiForm()" class="bg-blue-500 text-white px-4 py-2 rounded">Update</button>
     </form>
 </div>
+<script>
+    const imageInput = document.getElementById('imageInput');
+    const imagePreview = document.getElementById('imagePreview');
+
+    imageInput.addEventListener('change', function() {
+        const file = this.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                imagePreview.src = e.target.result;
+            }
+
+            reader.readAsDataURL(file);
+        }
+    });
+</script>

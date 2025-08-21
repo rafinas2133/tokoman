@@ -9,7 +9,7 @@ $admin = ''.($admin ?? 'Urself');
 </head>
 
 <body>
-    <img src="{{config('app.aws_url')}}/img/logo.png" width="300" height="300" alt="Logo">
+    <img src="{{config('app.aws_url')}}/img/logo.png" width="150" height="150" alt="Logo">
     <h1>Hello, {{ $user->name }}</h1>
     <p>Here is A Recent Action in Your Account</p>
     <p>Ur Account has been edited by {{ $admin }}</p>

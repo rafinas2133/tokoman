@@ -9,7 +9,7 @@ $admin = ''.($admin ?? 'Urself');
 </head>
 
 <body>
-    <img src="{{config('app.aws_url')}}/img/logo.png" width="300" height="300" alt="Logo">
+    <img src="{{config('app.aws_url')}}/img/logo.png" width="150" height="150" alt="Logo">
     <h1>Hello, {{ $user->name }}</h1>
     <p>Welcome to TOKOMAN App</p>
     <p>May You Got Best Experience with Us</p>

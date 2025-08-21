@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <img src="{{config('app.aws_url')}}/img/logo.png" width="300" height="300" alt="Logo">
+    <img src="{{config('app.aws_url')}}/img/logo.png" width="150" height="150" alt="Logo">
     <h1>Hello, {{ $username }}</h1>
     <p>You have successfully logged in to TOKOMAN app. Here is your session data:</p>
     <ul>

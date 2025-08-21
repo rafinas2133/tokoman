@@ -15,7 +15,7 @@
                     <div class="relative h-[350px]">
                         <button onclick="showNextImage{{$barang->id_barang}}()"
                             class="absolute z-10 inset-0 w-[30px] h-[30px] mt-[175px] max-[400px]:translate-x-7"><img
-                                src="{{config("app.aws_url")}}/asset/pngwing.com+(3).png"></button>
+                                src="{{config("app.aws_url")}}/img/prev.png"></button>
 
                         <img src="{{$barang->pathImg1}}"
                             class="rounded-xl mx-auto max-[400px]:w-[300px] mt-[15px] w-[350px] h-[350px] {{$barang->nama_barang}} transition-opacity duration-1000 ease-in-out">
@@ -24,7 +24,7 @@
                             class="{{$barang->nama_barang}}2 hidden transition-opacity duration-1000 ease-in-out rounded-xl mx-auto mt-[15px] max-[400px]:w-[300px] w-[350px] h-[350px]">
                         <button onclick="showNextImage{{$barang->id_barang}}()"
                             class="absolute inset-0 w-[30px] h-[30px] mt-[175px] ml-[320px] max-[400px]:-translate-x-7"><img
-                                src="{{config("app.aws_url")}}/asset/pngwing.com+(2).png"></button>
+                                src="{{config("app.aws_url")}}/img/next.png"></button>
                         <script>
                             let {{$barang->jenis_tutup . $barang->id_barang . 'index'}}=0;
                             let {{$barang->jenis_tutup . $barang->id_barang}} = document.getElementsByClassName('{{$barang->nama_barang}}');

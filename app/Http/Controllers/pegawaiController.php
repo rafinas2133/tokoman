@@ -109,6 +109,8 @@ class pegawaiController extends Controller
         if ($user) {
             if ($user->role_id == 0 && $userauth->id != $user->id && !$userauth->role_id == 2) {
                 return redirect('/admin')->with('error', 'Anda tidak memiliki hak akses untuk mengedit data ini');
+            }elseif ($user->id ==  $userauth->id ) {
+                return redirect('/admin')->with('error', 'Edit akunmu lewat mekanisme profil');
             } else {
                 return view("admin.edit", ["user" => $user, "userauth" => $userauth]);
             }

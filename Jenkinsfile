@@ -22,7 +22,7 @@ pipeline {
         stage('Build and Deploy Application') {
             steps {
                 echo '--- MEMBANGUN IMAGE APLIKASI BARU ---'
-                sh 'docker compose build'
+                sh 'docker compose build --no-cache'
 
                 echo '--- MEN-DEPLOY SEMUA LAYANAN ---'
                 sh 'docker compose down -v'

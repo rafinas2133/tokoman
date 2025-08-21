@@ -12,6 +12,8 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \
     libxml2-dev \
     supervisor \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 COPY --from=composer:2.8.10 /usr/bin/composer /usr/bin/composer
@@ -34,6 +36,7 @@ COPY . .
 
 COPY --from=vite_build /var/www/tokoman/public/build ./public/build
 
+COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisor.conf /etc/supervisor/conf.d/laravel-worker.conf
 
 RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction

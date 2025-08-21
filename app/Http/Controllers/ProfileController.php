@@ -70,7 +70,7 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        $user = $request->user();
+        $user = Auth::user();
         $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
         $pusher->trigger('admin-channel', 'my-event', [
             'massage' => 'User ' . $user->name . ' Telah Menghapus Akunnya',

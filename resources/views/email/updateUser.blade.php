@@ -80,9 +80,13 @@
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->email }}</td>
                 </tr>
                 <tr>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Role: </td>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->role_id==0 ? 'Admin' : 'Pegawai' }}</td>
+                </tr>
+                <tr>
                     <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Password:</td>
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">
-                        {{ $change? 'Changed' : 'Not Changed' }}
+                        {{ $change ? 'Changed' : 'Not Changed' }}
                     </td>
                 </tr>
             </table>

@@ -79,6 +79,10 @@
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->email }}</td>
                 </tr>
                 <tr>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Role Requested</td>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->role_id==0 ? 'Admin' : 'Pegawai' }}</td>
+                </tr>
+                <tr>
                     <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">Registration Date</td>
                     <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $user->created_at->format('d F Y, H:i') }}
                         WIB</td>

@@ -8,7 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Lang;
 
 class VerifyAdmin extends Mailable implements ShouldQueue
 {
@@ -25,10 +27,10 @@ class VerifyAdmin extends Mailable implements ShouldQueue
 
     public function build()
     {
-        return $this->view('email.admin')
-            ->with([
-                'user',$this->user,
-                'token'=>($this->token),
-            ]);
+        return (new MailMessage)
+            ->subject(Lang::get('Verify User'))
+            ->line(Lang::get('There is user ' . $this->user->name . " who wants to join Tokoman App"))
+            ->action(Lang::get('Verify Email Address'), route('stokBarang').'/admin-verify/'.$this->token)
+            ->line(Lang::get('If you do not want accept it, no further action is required.'));
     }
 }

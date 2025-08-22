@@ -25,7 +25,7 @@ services:
     networks:
       - shared-network
     depends_on:
-      - app-tokoman
+      - app
 
   worker:
     build:
@@ -40,7 +40,7 @@ services:
     networks:
       - shared-network
     depends_on:
-      - app-tokoman
+      - app
 
 networks:
   shared-network:

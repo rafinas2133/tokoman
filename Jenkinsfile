@@ -40,31 +40,36 @@ pipeline {
                         sh """
                         set +e # Jangan hentikan pipeline jika curl gagal sementara
                         HEALTHY=false
+                        echo "--- Memulai Health Check untuk ${nextColor}..."
+                        
+                        # Loop selama 2 menit (24 x 5 detik)
                         for i in {1..24}; do
-                          # Dapatkan IP kontainer web yang baru
-                          NEW_WEB_CONTAINER_ID=\$(docker ps -qf "name=tokoman_${nextColor}_web-tokoman")
-                          if [ -z "\$NEW_WEB_CONTAINER_ID" ]; then
-                              echo "Kontainer web ${nextColor} tidak ditemukan. Menunggu..."
-                              sleep 5
-                              continue
-                          fi
-
-                          # Cek status kesehatan
-                          STATUS=\$(docker exec \$NEW_WEB_CONTAINER_ID curl -s -o /dev/null -w '%{http_code}' http://localhost/health)
-                          if [ "\$STATUS" -eq 200 ]; then
-                            echo "--- Kontainer ${nextColor} sehat! (Status: \$STATUS)"
-                            HEALTHY=true
-                            break
-                          else
-                            echo "--- Menunggu... percobaan \$i, status: \$STATUS"
-                            sleep 5
-                          fi
+                            WEB_CONTAINER_ID=\$(docker compose -p ${env.APP_NAME}_${nextColor} ps -q web)
+                        
+                            # Cek apakah ID-nya sudah ada (kontainer sudah dibuat)
+                            if [ -z "\$WEB_CONTAINER_ID" ]; then
+                                echo "Kontainer web ${nextColor} belum siap. Menunggu..."
+                                sleep 5
+                                continue
+                            fi
+                        
+                            # Jalankan curl menggunakan ID yang sudah pasti benar
+                            STATUS=\$(docker exec \$WEB_CONTAINER_ID curl -s -o /dev/null -w '%{http_code}' http://localhost/health)
+                            
+                            if [ "\$STATUS" -eq 200 ]; then
+                                echo "--- Kontainer ${nextColor} sehat! (Status: \$STATUS)"
+                                HEALTHY=true
+                                break
+                            else
+                                echo "--- Menunggu... percobaan \$i, status: \$STATUS"
+                                sleep 5
+                            fi
                         done
                         set -e
                         
                         if [ "\$HEALTHY" != "true" ]; then
-                          echo "--- Kontainer baru GAGAL health check. Melakukan rollback."
-                          exit 1 # Ini akan memicu blok failure
+                            echo "--- Kontainer baru GAGAL health check. Melakukan rollback."
+                            exit 1 # Ini akan memicu blok failure
                         fi
                         """
 

@@ -3,7 +3,7 @@
         <img id="slideshow" class="absolute inset-0 w-full h-full object-fill opacity-50 fade"
             src="{{config("app.aws_url")}}/img/TokoPlastik.jpg" alt="Gambar Toko">
         <div class="absolute inset-0 flex items-center justify-center text-white text-4xl font-bold text-center">
-            <h1 class="text-7xl font-bold">Toko Aneka Botol Plastik</h1>
+            <h1 class="text-7xl font-bold">Toko Aneka Botol Plastiks</h1>
         </div>
     </div>
 </div>

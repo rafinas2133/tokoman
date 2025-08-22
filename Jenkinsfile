@@ -8,7 +8,6 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                echo "Mengambil kode untuk aplikasi: ${env.APP_NAME}"
                 checkout scm
             }
         }
@@ -24,7 +23,7 @@ pipeline {
         stage('Blue-Green Deploy') {
             steps {
                 script {
-                    def composeFile = 'docker-compose-app.yml'
+                    def composeFile = 'docker-compose.yml'
                     def runningContainers = sh(script: "docker ps --format '{{.Names}}' | grep '${env.APP_NAME}_blue_web' || true", returnStdout: true).trim()
                     
                     def currentColor = 'green'
@@ -38,9 +37,10 @@ pipeline {
                     try {
                         def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
-                        sh "docker compose -p ${env.APP_NAME}_${nextColor} up -d --build --force-recreate --build-arg GIT_HASH=${commitHash}"
+                        withEnv(["GIT_HASH=${commitHash}"]) {
+                            sh "docker compose -p ${env.APP_NAME}_${nextColor} -f ${composeFile} up -d --build --force-recreate"
+                        }
 
-                        // Health Check (sudah benar)
                         sh """
                         APP_NAME="${env.APP_NAME}"
                         NEXT_COLOR="${nextColor}"
@@ -71,16 +71,17 @@ pipeline {
                         fi
                         """
 
+                        // Matikan versi lama (sudah benar)
                         def oldContainers = sh(script: "docker ps -qf 'name=${env.APP_NAME}_${currentColor}'", returnStdout: true).trim()
                         if (oldContainers) {
                             echo "--- Mematikan versi lama: ${currentColor}"
-                            sh "docker compose -p ${env.APP_NAME}_${currentColor} down -v"
+                            sh "docker compose -p ${env.APP_NAME}_${currentColor} -f ${composeFile} down -v"
                         }
                         echo "--- Deployment berhasil! Versi ${nextColor} sekarang aktif."
 
                     } catch (e) {
                         echo "--- Terjadi kesalahan, membersihkan deployment ${nextColor}..."
-                        sh "docker compose -p ${env.APP_NAME}_${nextColor} down -v --remove-orphans"
+                        sh "docker compose -p ${env.APP_NAME}_${nextColor} -f ${composeFile} down -v --remove-orphans"
                         currentBuild.result = 'FAILURE'
                         error("Deployment gagal: ${e.message}")
                     }

@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - GIT_HASH=${GIT_HASH}
     restart: unless-stopped
     working_dir: /var/www/tokoman
     env_file:
@@ -31,6 +33,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      args:
+        - GIT_HASH=${GIT_HASH}
     restart: unless-stopped
     command: /usr/bin/supervisord
     env_file:

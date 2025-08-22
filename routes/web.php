@@ -132,6 +132,10 @@ Route::middleware(['auth', 'auth.session', 'noback','edited'])->group(function (
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/health', function () {
+    return response('OK', 200);
+});
+
 require __DIR__ . '/auth.php';
 
 require __DIR__ . '/api.php';

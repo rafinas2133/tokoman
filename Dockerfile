@@ -39,7 +39,7 @@ COPY --from=vite_build /var/www/tokoman/public/build ./public/build
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisor.conf /etc/supervisor/conf.d/laravel-worker.conf
 
-RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction --dump-autoload
+RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
 RUN php artisan key:generate --force
 RUN php artisan optimize:clear

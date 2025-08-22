@@ -1,5 +1,5 @@
 services:
-  app-tokoman:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
     networks:
       - shared-network
   
-  web-tokoman:
+  web:
     image: nginx:alpine
     restart: unless-stopped
     environment:
@@ -27,7 +27,7 @@ services:
     depends_on:
       - app-tokoman
 
-  worker-tokoman:
+  worker:
     build:
       context: .
       dockerfile: Dockerfile

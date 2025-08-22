@@ -39,7 +39,13 @@ COPY --from=vite_build /var/www/tokoman/public/build ./public/build
 COPY supervisord.conf /etc/supervisor/supervisord.conf
 COPY supervisor.conf /etc/supervisor/conf.d/laravel-worker.conf
 
-RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction
+RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction --dump-autoload
+
+RUN php artisan key:generate --force
+RUN php artisan optimize:clear
+
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh

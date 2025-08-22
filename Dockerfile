@@ -32,6 +32,10 @@ FROM php_base AS app
 
 WORKDIR /var/www/tokoman
 
+ARG GIT_HASH
+
+RUN echo ${GIT_HASH} > .version
+
 COPY . .
 
 COPY --from=vite_build /var/www/tokoman/public/build ./public/build

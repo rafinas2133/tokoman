@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     def composeFile = 'docker-compose.yml'
-                    def runningContainers = sh(script: "docker ps --format '{{.Names}}' | grep '${env.APP_NAME}_blue_web' || true", returnStdout: true).trim()
+                    def runningContainers = sh(script: "docker ps --format '{{.Names}}' | grep '${env.APP_NAME}_blue-web' || true", returnStdout: true).trim()
                     
                     def currentColor = 'green'
                     if (runningContainers) {

@@ -42,7 +42,9 @@ COPY supervisor.conf /etc/supervisor/conf.d/laravel-worker.conf
 RUN composer install --no-scripts --no-dev --prefer-dist --no-interaction --optimize-autoloader
 
 RUN php artisan key:generate --force
-RUN php artisan optimize:clear
+RUN php artisan view:clear
+RUN php artisan route:clear
+RUN php artisan config:clear
 
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache

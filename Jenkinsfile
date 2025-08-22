@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        APP_NAME = 'tokoman' 
+        APP_NAME = 'tokoman'
     }
     
     stages {
@@ -25,8 +25,7 @@ pipeline {
             steps {
                 script {
                     def composeFile = 'docker-compose-app.yml'
-                    
-                    def runningContainers = sh(script: "docker ps --format '{{.Names}}' | grep '${env.APP_NAME}_blue_web_1' || true", returnStdout: true).trim()
+                    def runningContainers = sh(script: "docker ps --format '{{.Names}}' | grep '${env.APP_NAME}_blue_web' || true", returnStdout: true).trim()
                     
                     def currentColor = 'green'
                     if (runningContainers) {
@@ -37,30 +36,25 @@ pipeline {
                     echo "--- Versi aktif: ${currentColor}. Deploy versi baru: ${nextColor}"
 
                     try {
-                        sh "docker compose -p ${env.APP_NAME}_${nextColor} up -d --build"
+                        def commitHash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
 
+                        sh "docker compose -p ${env.APP_NAME}_${nextColor} up -d --build --force-recreate --build-arg GIT_HASH=${commitHash}"
+
+                        // Health Check (sudah benar)
                         sh """
-                        # Salin variabel Groovy ke variabel Shell agar tidak 'null'
                         APP_NAME="${env.APP_NAME}"
                         NEXT_COLOR="${nextColor}"
-
                         set +e
                         HEALTHY=false
                         echo "--- Memulai Health Check untuk \${NEXT_COLOR}..."
-
                         for i in {1..24}; do
-                            # Tanya ID kontainer 'web' langsung ke docker compose
                             WEB_CONTAINER_ID=\$(docker compose -p \${APP_NAME}_\${NEXT_COLOR} ps -q web)
-
                             if [ -z "\$WEB_CONTAINER_ID" ]; then
                                 echo "Kontainer web \${NEXT_COLOR} belum siap. Menunggu..."
                                 sleep 5
                                 continue
                             fi
-
-                            # Jalankan curl dari dalam kontainer web ke dirinya sendiri
                             STATUS=\$(docker exec \$WEB_CONTAINER_ID curl -s -o /dev/null -w '%{http_code}' http://localhost/health)
-                            
                             if [ "\$STATUS" -eq 200 ]; then
                                 echo "--- Kontainer \${NEXT_COLOR} sehat! (Status: \$STATUS)"
                                 HEALTHY=true
@@ -71,7 +65,6 @@ pipeline {
                             fi
                         done
                         set -e
-
                         if [ "\$HEALTHY" != "true" ]; then
                             echo "--- Kontainer baru GAGAL health check. Melakukan rollback."
                             exit 1
@@ -97,7 +90,6 @@ pipeline {
         
         stage('Clean Up Old Images') {
             steps {
-                echo '--- Membersihkan image Docker yang tidak terpakai ---'
                 sh 'docker image prune -f'
             }
         }

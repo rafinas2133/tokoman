@@ -3,7 +3,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tokoman_app
     restart: unless-stopped
     working_dir: /var/www/tokoman
     env_file:
@@ -16,7 +15,6 @@ services:
   
   web-tokoman:
     image: nginx:alpine
-    container_name: tokoman_web
     restart: unless-stopped
     environment:
       - VIRTUAL_HOST=tokoman.self.web.id
@@ -33,7 +31,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: tokoman_worker
     restart: unless-stopped
     command: /usr/bin/supervisord
     env_file:
@@ -44,9 +41,11 @@ services:
       - shared-network
     depends_on:
       - app-tokoman
+
 networks:
   shared-network:
     external: true
 
 volumes:
   app_vol:
+    name: ${COMPOSE_PROJECT_NAME}_app_vol

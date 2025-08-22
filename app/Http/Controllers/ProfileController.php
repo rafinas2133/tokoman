@@ -52,12 +52,6 @@ class ProfileController extends Controller
                 Auth::user()->sendEmailVerificationNotification();
             }
         }
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('admin-channel', 'my-event', [
-            'massage' => 'User ' . $old . ' Telah mengubah data diri',
-            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-            'id' => Auth::user()->id,
-        ]);
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
@@ -71,12 +65,6 @@ class ProfileController extends Controller
         ]);
 
         $user = Auth::user();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('admin-channel', 'my-event', [
-            'massage' => 'User ' . $user->name . ' Telah Menghapus Akunnya',
-            'user' => $user->name . $user->role_id . $user->id . ($user->id < 10 ? 'Asxzw' : 'asd2'),
-            'id' => $user->id,
-        ]);
         Mail::to($user->email)->queue(new userDeletion($user, false));
 
 

@@ -72,14 +72,6 @@ class barangController extends Controller
         $barang->stok += abs($inputanstok);
         $barang->save();
 
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', [
-            'massage' => 'Stok Barang ' . $barang->nama_barang . ' Berhasil Ditambahkan Sebanyak ' . $inputanstok . ' oleh user ' . Auth::user()->name,
-            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-            'id' => $barang->id_barang,
-            'excepturl' => ''
-        ]);
-
         return redirect('/stok')->with('success', 'Stok Berhasil Ditambahkan');
     }
     public function apiSeeder(Request $request)
@@ -175,15 +167,7 @@ class barangController extends Controller
         $riwayat->tanggal = now();
         $riwayat->id_barang = $barang->id;
         $riwayat->save();
-        if ($this->needPush) {
-            $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-            $pusher->trigger('my-channel', 'my-event', [
-                'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Ditambahkan oleh user ' . Auth::user()->name,
-                'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-                'id' => $barang->id_barang,
-                'excepturl' => ''
-            ]);
-        }
+
         return redirect('/stok')->with('success', 'Data Berhasil Ditambahkan');
     }
 
@@ -203,13 +187,7 @@ class barangController extends Controller
         $barang->pathImg2 = '';
         $barang->fileName2 = '';
         $barang->save();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', [
-            'massage' => 'Gambar 2 Barang ' . $barang->nama_barang . ' Berhasil Dihapus oleh user ' . Auth::user()->name,
-            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-            'id' => $barang->id_barang,
-            'excepturl' => 'dashboard,riwayat,riwayatfilter,stok,stoksearch'
-        ]);
+
         return redirect('/stok/edit/' . $id)->with('success', 'Gambar Berhasil Dihapus');
     }
     function timpaGambar1($barang)
@@ -294,18 +272,6 @@ class barangController extends Controller
         $barang->fileName2 = $filename2;
         $barang->save();
 
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger(
-            'my-channel',
-            'my-event',
-            [
-                'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Diubah oleh user ' . Auth::user()->name,
-                'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-                'id' => $barang->id_barang,
-                'excepturl' => 'dashboard,riwayat,riwayatfilter'
-            ]
-        );
-
         return redirect('/stok')->with('success', 'Data Berhasil Diubah');
     }
 
@@ -318,13 +284,7 @@ class barangController extends Controller
         }
         Storage::disk('s3')->delete('images/' . $barang->fileName1);
         StokBarang::destroy($id);
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('my-channel', 'my-event', [
-            'massage' => 'Barang ' . $barang->nama_barang . ' Berhasil Dihapus oleh user ' . Auth::user()->name,
-            'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-            'id' => $barang->id_barang,
-            'excepturl' => 'dashboard,riwayat,riwayatfilter'
-        ]);
+
         return redirect('/stok')->with('success', 'Data Berhasil Dihapus');
     }
 }

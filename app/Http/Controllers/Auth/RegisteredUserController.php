@@ -67,15 +67,6 @@ class RegisteredUserController extends Controller
             ];
             Auth::attempt($credentials);
             $this->makeVerify($user);
-            
-            if(Auth::check()){
-                $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-                $pusher->trigger('admin-channel', 'my-event', [
-                    'massage' => 'User ' . Auth::user()->name . ' telah berhasil mendaftarkan diri ke Tokoman App sebagai ' . (Auth::user()->role_id == 0 ? 'Admin' : 'Employee'),
-                    'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-                    'id' => Auth::user()->id,
-                ]);
-            }
     
             return redirect(route('verification.notice', absolute: false));
     }

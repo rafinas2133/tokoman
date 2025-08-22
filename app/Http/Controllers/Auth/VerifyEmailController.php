@@ -31,18 +31,9 @@ class VerifyEmailController extends Controller
         }
         if (Auth::check()) {
             Mail::to(Auth::user()->email)->queue(new newUserVerified(Auth::user()));
-            $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-            $pusher->trigger('admin-channel', 'my-event', [
-                'massage' => 'User ' . Auth::user()->name . ' telah memverifikasi emailnya',
-                'user' => Auth::user()->name . Auth::user()->role_id . Auth::user()->id . (Auth::user()->id < 10 ? 'Asxzw' : 'asd2'),
-                'id' => Auth::user()->id,
-            ]);
+            
             $pegawaicontroll=new pegawaiController();
             $string=$pegawaicontroll->generateDataPusher(Auth::user());
-            $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
-                'massage' => 'Kamu Telah Memverifikasi Email',
-                'id' => Auth::user()->id,
-            ]);
             
         }
         return redirect()->intended(route('dashboard', absolute: false) . '?verified=1');

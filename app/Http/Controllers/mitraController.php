@@ -67,16 +67,6 @@ class mitraController extends Controller
             'gmaps'=>$request->gmaps,
         ]);
 
-        //begin pusher
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('mitra-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menambahkan mitra ' . $mitra->name,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $mitra->id,
-        ]);
-
         $mitra->save();
 
         return redirect('/mitra')->with('success', 'Mitra ' . $mitra->name . ' Berhasil Ditambahkan!');
@@ -144,15 +134,6 @@ class mitraController extends Controller
             $mitra->save();
         }
 
-        //begin pusher
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('mitra-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil mengubah mitra ' . $oldNama,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $mitra->id,
-        ]);
 
         return redirect()->route('mitra.index')->with('success', 'Mitra ' . $oldNama . ' Terupdate!');
     }
@@ -161,14 +142,6 @@ class mitraController extends Controller
     {
         Storage::disk('s3')->delete('mitra/' . $mitra->images);
         $mitra->delete();
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('mitra-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menghapus mitra ' . $mitra->name,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $mitra->id,
-        ]);
         return redirect('/mitra')->with('success', 'Mitra ' . $mitra->name . ' Terhapus!');
     }
 }

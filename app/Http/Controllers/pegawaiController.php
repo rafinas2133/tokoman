@@ -93,13 +93,6 @@ class pegawaiController extends Controller
         $user->role_id = $request->role_id;
         $user->save();
 
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('admin-channel', 'my-event', [
-            'massage' => 'User ' . $user->name . ' Berhasil Ditambahkan ' . 'oleh Admin ' . Auth::user()->name,
-            'user' => $this->generateDataPusher(Auth::user()),
-            'id' => $user->id,
-        ]);
-
         return redirect('/admin')->with('success', 'Data berhasil disimpan!');
     }
     public function edit($id)
@@ -167,12 +160,6 @@ class pegawaiController extends Controller
         if ($dataToUpdate['email'] != $emailold && $id != \Auth::user()->id) {
             User::where('email', $dataToUpdate['email'])->first()->sendEmailVerificationNotification();
         }
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('admin-channel', 'my-event', [
-            'massage' => 'User ' . $userfirst->name . ' Berhasil Diubah oleh Admin ' . Auth::user()->name,
-            'user' => $this->generateDataPusher(Auth::user()),
-            'id' => $id,
-        ]);
 
         if (Auth::user()->id != $userPush->id) {
             $changed = false;
@@ -182,10 +169,6 @@ class pegawaiController extends Controller
             Mail::to($userPush->email)->queue(new userUpdation($userPush, $changed));
             $userPush->edited = "true";
             $userPush->save();
-            $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
-                'massage' => 'Akun kamu telah diubah oleh admin, silahkan login ulang',
-                'id' => \Auth::user()->id
-            ]);
         }
 
         return redirect('/admin')->with('success', 'Data berhasil diubah!');
@@ -206,20 +189,11 @@ class pegawaiController extends Controller
         
         Mail::to($userDelete->email)->queue(new userDeletion($userDelete, true));
         User::where('id', $id)->delete();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('admin-channel', 'my-event', [
-            'massage' => 'User ' . $userDelete->name . ' Berhasil Dihapus oleh Admin ' . Auth::user()->name,
-            'user' => $this->generateDataPusher(Auth::user()),
-            'id' => $id,
-        ]);
+
         if (Auth::user()->id != $userDelete->id) {
             $string = $this->generateDataPusher($userDelete);
             $userDelete->edited = 'true';
             $userDelete->save();
-            $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
-                'massage' => 'Akun kamu telah didelete oleh admin, selamat tinggal! D:',
-                'id' => \Auth::user()->id
-            ]);
         }
         DB::table('sessions')->where('user_id', $userDelete->id)->delete();
         return redirect('/admin')->with('success', 'Data berhasil dihapus!');

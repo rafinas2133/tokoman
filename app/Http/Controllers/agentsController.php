@@ -67,16 +67,6 @@ class agentsController extends Controller
             'gmaps'=>$request->gmaps,
         ]);
 
-        //begin pusher
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menambahkan agent ' . $agents->name,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $agents->id,
-        ]);
-
         $agents->save();
 
         return redirect('/agents')->with('success', 'Agent '.$agents->name.' Berhasil Ditambahkan!');
@@ -144,16 +134,6 @@ class agentsController extends Controller
             $agents->save();
         }
 
-        //begin pusher
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil mengubah agent ' . $oldNama,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $agents->id,
-        ]);
-
         return redirect()->route('agents.index')->with('success', 'Agent '.$oldNama.' Terupdate!');
     }
 
@@ -161,14 +141,6 @@ class agentsController extends Controller
     {
         Storage::disk('s3')->delete('agents/'.$agents->images);
         $agents->delete();
-        $generatePusher = new pegawaiController();
-        $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-        $pusher->trigger('agent-channel', 'my-event', [
-            'massage' => (Auth::user()->role_id == 0 ? 'Admin ' : 'Pegawai ') . Auth::user()->name .
-                ' berhasil menghapus agent ' . $agents->name,
-            'user' => $generatePusher->generateDataPusher(Auth::user()),
-            'id' => $agents->id,
-        ]);
         return redirect('/agents')->with('success', 'Agent '.$agents->name.' Terhapus!');
     }
 }

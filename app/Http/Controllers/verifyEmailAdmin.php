@@ -30,18 +30,6 @@ class verifyEmailAdmin extends Controller
                 $name->adminVerified = now();
                 $name->save();
                 $name->sendEmailVerificationNotification();
-                $pusher = new Pusher(config('broadcasting.connections.pusher.key'), config('broadcasting.connections.pusher.secret'), config('broadcasting.connections.pusher.app_id'), config('broadcasting.connections.pusher.options'));
-                $pusher->trigger('admin-channel', 'my-event', [
-                    'massage' => 'User ' . $name->name . ' telah diverifikasi Admin',
-                    'user' => 'special',
-                    'id' => 'special',
-                ]);
-                $pegawaicontroll = new pegawaiController();
-                $string = $pegawaicontroll->generateDataPusher($name);
-                $pusher->trigger(preg_replace('/\s+/', '', $string), 'my-event', [
-                    'massage' => 'Kamu Telah Diverifikasi Oleh Admin',
-                    'id' => $name->id,
-                ]);
 
                 return response()->json('Action Successfull');
             }

@@ -14,8 +14,8 @@ class welcomeController extends Controller
     {
         $types = StokBarang::select('jenis_tutup')->distinct()->inRandomOrder()->get();
         $barang = StokBarang::paginate(6);
-        $agents = Agents::paginate(6);
-        $mitra = Mitra::paginate(6);
+        $agents = Agents::all();
+        $mitra = Mitra::all();
         return view("welcome", ["barangs" => $barang,"agents"=>$agents,"mitra"=>$mitra], compact('types'));
     }
     public function reqWa($name)

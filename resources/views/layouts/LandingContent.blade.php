@@ -67,9 +67,6 @@
                 </div>
             </div>
         </div>
-        <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto mb-2">
-            {{ $agents->appends(request()->query())->onEachSide(1)->links() }}
-        </div>
     @endif
     @if($mitra->isEmpty())
         <h1 class="text-black dark:text-white text-center text-3xl">Belum ada mitra</h1>
@@ -83,9 +80,6 @@
                     @endforeach
                 </div>
             </div>
-        </div>
-        <div class="mt-8 flex min-[477px]:justify-center mx-auto overflow-auto mb-2">
-            {{ $mitra->appends(request()->query())->onEachSide(1)->links() }}
         </div>
     @endif
 </div>

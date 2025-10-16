@@ -20,6 +20,6 @@ class welcomeController extends Controller
     }
     public function reqWa($name)
     {
-        return redirect("https://wa.me/" . config('app.admin_phone') . "?text=Halo%20Tokoman,%20Saya%20Ingin%20Order%20Botol%20$name");
+        return redirect("https://wa.me/" . config('app.admin_phone') . "?text=Halo%20Tokoman,%20Saya%20Ingin%20Melakukan%20Order%20Botol%20$name");
     }
 }

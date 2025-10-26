@@ -21,7 +21,7 @@ services:
     environment:
       - VIRTUAL_HOST=kontol.self.web.id
       - LETSENCRYPT_HOST=kontol.self.web.id
-      - LETSENCRYPT_EMAIL=ahmad.fauzan.rozikin@gmail.com
+      - LETSENCRYPT_EMAIL=ahmadfauzanroziqin@gmail.com
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - app_vol:/var/www/tokoman

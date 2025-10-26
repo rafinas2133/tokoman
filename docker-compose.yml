@@ -19,8 +19,9 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=tokoman.self.web.id
-      - LETSENCRYPT_HOST=tokoman.self.web.id
+      - VIRTUAL_HOST=kontol.self.web.id
+      - LETSENCRYPT_HOST=kontol.self.web.id
+      - LETSENCRYPT_EMAIL=ahmad.fauzan.rozikin@gmail.com
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
       - app_vol:/var/www/tokoman

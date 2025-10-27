@@ -19,8 +19,8 @@ services:
     image: nginx:alpine
     restart: unless-stopped
     environment:
-      - VIRTUAL_HOST=kontol.self.web.id
-      - LETSENCRYPT_HOST=kontol.self.web.id
+      - VIRTUAL_HOST=tokoman.bornhub.cloud
+      - LETSENCRYPT_HOST=tokoman.bornhub.cloud
       - LETSENCRYPT_EMAIL=ahmadfauzanroziqin@gmail.com
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf

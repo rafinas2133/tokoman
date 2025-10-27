@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     && pecl install redis \
     && docker-php-ext-enable redis \
-    && docker-php-ext-install pdo_pgsql mbstring exif pcntl bcmath gd
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 
 COPY --from=composer:2.8.10 /usr/bin/composer /usr/bin/composer
 WORKDIR /var/www/tokoman

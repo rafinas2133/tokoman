@@ -20,8 +20,6 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias(['noback' => \App\Http\Middleware\noBack::class]);
     })->withMiddleware(function (Middleware $middleware) {
-        $middleware->trustProxies(at: '*');
-    })->withMiddleware(function (Middleware $middleware) {
         $middleware->validateCsrfTokens(except: [
             '/testingAPI123',
         ]);

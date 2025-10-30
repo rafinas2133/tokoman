@@ -14,21 +14,24 @@ class LoginNotification extends Mailable implements ShouldQueue
 
     public $user;
     public $sessionData;
+    public $realIp;
 
-    public function __construct($user, $sessionData)
+    public function __construct($user, $sessionData, $realIp)
     {
         $this->user = $user;
         $this->sessionData = $sessionData;
+        $this->realIp = $realIp;
     }
 
     public function build()
     {
         return $this->view('email.index')
-                    ->with([
-                        'username' => $this->user->name,
-                        'email'=> $this->user->email,
-                        'sessionData' => $this->sessionData,
-                        'token'=> $this->user->remember_token,
-                    ]);
+            ->with([
+                'username' => $this->user->name,
+                'email' => $this->user->email,
+                'sessionData' => $this->sessionData,
+                'token' => $this->user->remember_token,
+                'real_ip' => $this->realIp
+            ]);
     }
 }

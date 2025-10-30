@@ -72,7 +72,7 @@
             <table style="width: 100%; margin: 20px 0; border-collapse: collapse;">
                 <tr>
                     <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold; width: 30%;">IP address</td>
-                    <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $real_ip }}</td>
+                    <td style="padding: 8px; border: 1px solid #e2e8f0;">{{ $sessionData->ip_address }}</td>
                 </tr>
                 <tr>
                     <td style="padding: 8px; border: 1px solid #e2e8f0; font-weight: bold;">User Agent</td>

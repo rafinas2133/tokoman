@@ -65,10 +65,7 @@ class dashboardController extends Controller
             $user = Auth::user();
             $sessionId = session()->getId();
             $sessionData = \DB::table('sessions')->where('id', $sessionId)->first();
-            $real_ip = $request->header('CF-Connecting-IP')        // Cloudflare (tunnel/CDN)
-                ?? $request->header('True-Client-IP')          // Beberapa proxy/CDN lain
-                ?? $request->ip() ?? '';
-            Mail::to($user->email)->queue(new LoginNotification($user, $sessionData, $real_ip));
+            Mail::to($user->email)->queue(new LoginNotification($user, $sessionData));
         }
         $modifiedRequest = clone $request;
 

@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 // use Illuminate\Pagination\Paginator;
 
@@ -21,8 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        if (config('app.env') != 'local') {
-            \URL::forceScheme('https');
-        }
+        URL::forceScheme('https');
     }
 }

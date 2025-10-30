@@ -65,8 +65,10 @@ class dashboardController extends Controller
             $user = Auth::user();
             $sessionId = session()->getId();
             $sessionData = \DB::table('sessions')->where('id', $sessionId)->first();
+            $sessionData['real_ip'] = $request->header('CF-Connecting-IP')        // Cloudflare (tunnel/CDN)
+                ?? $request->header('True-Client-IP')          // Beberapa proxy/CDN lain
+                ?? $request->ip() ?? '';
             Mail::to($user->email)->queue(new LoginNotification($user, $sessionData));
-
         }
         $modifiedRequest = clone $request;
 
@@ -172,7 +174,7 @@ class dashboardController extends Controller
                 'profit' => number_format($totalProfit, 0, ',', '.'),
                 'profitData' => json_encode($profitData),
                 'riwayatTerbaru' => $riwayatTerbaru,
-                'totalToday' =>number_format($totalToday, 0, ',', '.'),
+                'totalToday' => number_format($totalToday, 0, ',', '.'),
                 'differencePercentage' => number_format($differencePercentage, 2, '.', ','),
                 'dataThisMonth' => number_format($dataThisMonth, 0, ',', '.'),
                 'percentageThisMonth' => number_format($percentageThisMonth, 2, '.', ','),

@@ -9,6 +9,11 @@ services:
     working_dir: /var/www/tokoman
     env_file:
       - ./.env
+    environment:
+      - VIRTUAL_HOST=tokoman.bornhub.cloud
+      - LETSENCRYPT_HOST=tokoman.bornhub.cloud
+      - LETSENCRYPT_EMAIL=ahmadfauzanroziqin@gmail.com
+      - VIRTUAL_PORT=9000
     volumes:
       - app_vol:/var/www/tokoman
       - ./php.ini:/usr/local/etc/php/conf.d/uploads.ini
